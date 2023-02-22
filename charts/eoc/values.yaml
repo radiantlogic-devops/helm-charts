@@ -6,6 +6,9 @@ global:
   prodEnvLimit: 1
   nonprodEnvLimit: 2
   fidLicense: ""
+  zones: 2
+  amiImageId: "ami-0fe74570d87750175"
+  minFidVersion: 
 
 ui:
   basePath: /eoc
@@ -23,6 +26,7 @@ ui:
   monitoringDashboardUrl: ""
   # override infrastructure name used for environment name prefix
   infrastructureName: ""
+  kibanaApiPath: /kibana/index-patterns
   image:
     repository: radiantone/eoc-ui
     pullPolicy: Always

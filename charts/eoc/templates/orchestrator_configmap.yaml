@@ -11,6 +11,8 @@ data:
   DUPLO_TOKEN: {{ .Values.orchestrator.duplo.token | quote }}
   DUPLO_BASE_URL: {{ .Values.orchestrator.duplo.baseUrl | quote }}
   DUPLO_SERVICES_TENANT_NAME: {{ .Values.orchestrator.duplo.servicesTenantName | quote }}
+  DUPLO_ZONES: {{ .Values.global.zones | quote }}
+  DUPLO_AMI_IMAGE_ID: {{ .Values.global.amiImageId | quote }}
 
   ARGO_CD_BASE_URL: {{ .Values.orchestrator.argocd.baseUrl | quote }}
   ARGO_CD_TOKEN: {{ .Values.orchestrator.argocd.token | quote }}
