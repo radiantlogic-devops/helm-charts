@@ -1,0 +1,207 @@
+# Default values for agent.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: registry.gitlab.com/radiant-logic-engineering/radiant-one-opa-server/sdc-server
+  pullPolicy: Always
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "latest"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: false
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: NodePort
+  port: 80
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+  # tenantname: duploservices-ensemble-svc
+tolerations: []
+affinity: {}
+
+agents:
+  database:
+    ConnectionStrings__AgentsDatabase: "Host=postgresql; Database=agentsdb; Username=agentsadmin; Password=xxxxx; SearchPath=agents"
+    DefaultApiClient__ClientId: "xxxxx"
+    DefaultApiClient__ClientSecret: "xxxxx"
+  jwtIssuer: "OPAServer"
+  imagePullSecretName: gitlab-pull-secret
+  dockerconfigjson: "xxxxx"
+
+tunnel:
+  tunnelname: r1tunnel
+  nodeSelector: {}
+  pregentokenname: pregentoken
+  token: "xxxxx"
+
+
+inlets:
+  license: "xxxxx"
+  enabled: true
+  # A router to work on a wildcard domain and to direct
+  # traffic according to request domain
+  clientRouter:
+    # Customer tunnels will connect with a URI of:
+    # wss://uplink.example.com/namespace/tunnel
+    domain: uplink.example.com
+
+    tls:
+      issuerName: "letsencrypt-prod"
+
+      issuer:
+        enabled: false
+        # Email address used for ACME registration
+        email: "user@example.com"
+
+      ingress:
+        enabled: false
+        class: "nginx"
+        annotations:
+          nginx.ingress.kubernetes.io/limit-connections: "300"
+          nginx.ingress.kubernetes.io/limit-rpm: "1000"
+          # 10 minutes for the websocket
+          nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+          nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+          # Up the keepalive timeout to max
+          nginx.ingress.kubernetes.io/keepalive-timeout: "350"
+          nginx.ingress.kubernetes.io/proxy-buffer-size: 128k
+
+      istio:
+        enabled: false
+
+  # A separate REST API for automation of inlets tunnels
+  clientApi:
+    enabled: false
+    image: "ghcr.io/openfaasltd/uplink-api:0.1.7"
+
+  # Deployments, Services and Secrets will be created in this namespace
+  # Leave blank for a cluster-wide scope, with tunnels in multiple namespaces
+  # tunnelsNamespace: "duploservices-nike-svc"
+
+  # inlets Pro release version for tunnel server Pods
+  # Check https://ghcr.io/inlets/inlets-pro for tags
+  inletsVersion: 0.9.12
+
+  # monitoring tunnels
+  prometheus:
+    image: prom/prometheus:v2.40.1
+    create: false
+    resources:
+      requests:
+        memory: "512Mi"
+    annotations: {}
+
+  nameOverride: ""
+  fullnameOverride: ""
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+
+cert-manager:
+  enabled: false
+  fullnameOverride: cert-manager
+  installCRDs: true
+  clusterResourceNamespace:
+  namespace:
+  nodeSelector: {}
+  webhook:
+    nodeSelector: {}
+  cainjector:
+    nodeSelector: {}
+  startupapicheck:
+    nodeSelector: {}
+
+postgresql:
+  enabled: false
+  fullnameOverride: postgresql
+  primary:
+    nodeSelector: {}
+      # tenantname: duploservices-ensemble-svc
+    initdb:
+      scripts:
+        01_agents_init_script.sql: |
+          CREATE DATABASE agentsdb;
+          CREATE USER agentsadmin WITH ENCRYPTED PASSWORD 'xxxxx';
+          GRANT ALL PRIVILEGES ON DATABASE agentsdb TO agentsadmin;
+        XX_create_schema_init_script.sh: |
+          #!/bin/bash
+          PGPASSWORD=$POSTGRES_PASSWORD psql -v ON_ERROR_STOP=1 <<-EOSQL
+            \connect agentsdb;
+            CREATE SCHEMA IF NOT EXISTS agents;
+            GRANT ALL ON SCHEMA agents TO agentsadmin;
+          EOSQL
+pgadmin4:
+  enabled: false
+  fullnameOverride: pgadmin4
+  nodeSelector: {}
+  persistentVolume:
+    enabled: false
+  env:
+    contextPath: "/pgadmin4"

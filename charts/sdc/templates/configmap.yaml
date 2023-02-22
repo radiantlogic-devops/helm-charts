@@ -1,0 +1,14 @@
+apiVersion: v1
+data:
+  ConnectionStrings__AgentsDatabase: {{ .Values.agents.database.ConnectionStrings__AgentsDatabase | quote }}
+  DefaultApiClient__ClientId: {{ .Values.agents.database.DefaultApiClient__ClientId | quote }}
+  DefaultApiClient__ClientSecret: {{ .Values.agents.database.DefaultApiClient__ClientSecret | quote }}
+  Jwt__Issuer: {{ .Values.agents.jwtIssuer | quote }}
+kind: ConfigMap
+metadata:
+  name: {{ template "agent.fullname" . }}
+  labels:
+    app: {{ template "agent.fullname" . }}
+    chart: "{{ template "agent.chart" . }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"

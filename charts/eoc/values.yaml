@@ -1,0 +1,156 @@
+global:
+  region: ""
+  domainName: ""
+  certificateArn: ""
+  infrastructureName: ""
+  prodEnvLimit: 1
+  nonprodEnvLimit: 2
+  fidLicense: ""
+
+ui:
+  basePath: /eoc
+  # example https://{fqdm}/eoc-backend
+  apiBaseUrl: ""
+  auth:
+    # local storage key to store jwt token
+    tokenStoreKey: token
+    # example https://{fqdm}
+    loginReturnUrl: ""
+  # link to kibana https://{fqdm}/kibana/app/discover
+  loggingUrl: ""
+  # full external links to public grafana dashboard
+  reportingDashboardUrl: ""
+  monitoringDashboardUrl: ""
+  # override infrastructure name used for environment name prefix
+  infrastructureName: ""
+  image:
+    repository: radiantone/eoc-ui
+    pullPolicy: Always
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: "dev"
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+
+backend:
+  basePath: eoc-backend
+  redis:
+    # redundant, will be removed
+    bullUrl: redis://redis-headless:6379
+    host: redis-headless
+    port: 6379
+  database:
+    name: eocdb
+    schema: eoc
+    host: postgresql
+    port: 5432
+    auth:
+      user: eocadmin
+      pass: "xxx"
+  jwt:
+    secret: mySecret
+    expiresIn: 60m
+  oauth:
+    # Get them from https://console.cloud.google.com/apis/credentials
+    google:
+      clientId: ""
+      clientSecret: ""
+    # Get them from https://github.com/settings/developers
+    github:
+      clientId: ""
+      clientSecret: ""
+  # mailer module
+  smtp:
+    user: user@outlook.com
+    pass: password
+    host: smtp.office365.com
+    port: 587
+  # Initial Admin user configuration
+  admin:
+    email: user@example.com
+    firstName: User
+    lastName: Example
+  # Default on *nix if not explicitly specified
+  # APP_ROOT_DIRECTORY=${HOME}/.cloudmanager
+  # Custom value (if running as a systemd service for example)
+  appRootDirectory: /var/lib/cloudmanager
+  # Should consist of exactly 32 chars because of the AES256 encryption algorithm usage
+  # openssl rand -hex 16
+  encryptionKey: 1194c5c206aa26d37091c4e6d09dc9de
+  kibana:
+    # https://{fqdn}/kibana/api/
+    apiUrl: "https://{fqdn}/kibana/api/"
+  grafana:
+    host: http://grafana
+    # used to create a service account for managing alerts and integrations
+    # should have enough permission to be able to create a service account
+    username: admin
+    password: xxxx
+  agents:
+    api:
+      endpoint: ""
+      clientId: ""
+      clientSecret: ""
+    inlets:
+      token: ""
+      # service name that fid uses | tunnel
+      # acmeco.duploservices-rliqa-svc.svc.cluster.local
+      serverName: ""
+      # external websocket
+      # client-router.dc.federated-identity.com/duploservices-rliqa-svc/acmeco
+      serverEndpoint: ""
+  image:
+    repository: radiantone/eoc-backend
+    pullPolicy: Always
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: "dev"
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+
+orchestrator:
+  duplo:
+    token: ""
+    baseUrl: ""
+    servicesTenantName: ""
+  git:
+    # ssh repo url
+    repo: ""
+    privateKey: |
+      -----BEGIN OPENSSH PRIVATE KEY-----
+      {private key needs to be multi-line and indented by 6}
+      -----END OPENSSH PRIVATE KEY-----
+  argocd:
+    baseUrl: http://argocd-server/argocd/api/v1
+    token: ""
+  redis:
+    host: redis-headless
+    port: 6379
+  image:
+    repository: radiantone/eoc-orchestrator
+    pullPolicy: Always
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: "dev"
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+
+redis:
+  enabled: true
+  fullnameOverride: redis
+  architecture: standalone
+  auth:
+    ## @param auth.enabled Enable password authentication
+    ##
+    enabled: false
+    ## @param auth.sentinel Enable password authentication on sentinels too
+    ##
+    sentinel: false
+  replica:
+    ## @param replica.replicaCount Number of Redis&reg; replicas to deploy
+    ##
+    replicaCount: 0
+  master:
+    nodeSelector: {}
+    tolerations: []
+    affinity: {}

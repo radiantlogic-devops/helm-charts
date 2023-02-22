@@ -1,0 +1,31 @@
+apiVersion: v2
+name: eoc
+description: Environment Operation Center (EOC) Helm Chart
+
+type: application
+
+# This is the chart version. This version number should be incremented each time you make changes
+# to the chart and its templates, including the app version.
+# Versions are expected to follow Semantic Versioning (https://semver.org/)
+version: 0.0.1-alpha.1
+
+# This is the version number of the application being deployed. This version number should be
+# incremented each time you make changes to the application. Versions are not expected to
+# follow Semantic Versioning. They should reflect the version the application is using.
+# It is recommended to use it with quotes.
+appVersion: "0.0.1-alpha.1"
+
+maintainers:
+  - name: pgodey
+    email: pgodey@radiantlogic.com
+    url: https://www.radiantlogic.com
+
+dependencies:
+- name: redis
+  version: 17.3.16
+  repository: https://charts.bitnami.com/bitnami
+  condition: redis.enabled
+# - name: common-services
+#   version: 1.0.1
+#   repository: https://radiantlogic-devops.github.io/helm
+#   condition: common-services.enabled
