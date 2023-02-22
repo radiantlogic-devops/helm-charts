@@ -8,7 +8,7 @@ global:
   fidLicense: ""
   zones: 2
   amiImageId: "ami-0fe74570d87750175"
-  minFidVersion: 
+  minFidVersion: "7.5.0"
 
 ui:
   basePath: /eoc
