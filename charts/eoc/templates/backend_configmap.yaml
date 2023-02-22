@@ -46,7 +46,11 @@ data:
   AGENTS_CLIENT_SECRET: {{ .Values.backend.agents.api.clientSecret | quote }}
   AGENTS_INLETS_TOKEN: {{ .Values.backend.agents.inlets.token | quote }}
   AGENTS_SERVER_NAME: {{ .Values.backend.agents.inlets.serverName | quote }}
-  AGENTS_SERVER_ENDPOINT: {{ .Values.backend.agents.inlets.serverEndpoint | quote }}  
+  AGENTS_SERVER_ENDPOINT: {{ .Values.backend.agents.inlets.serverEndpoint | quote }}
+
+  MIN_ENVIRONMENT_VERSION: {{ .Values.global.minFidVersion | quote }}
+  ENV_PREFIX: {{ .Values.global.infrastructureName | quote }}
+  DOMAIN_NAME: {{ .Values.global.domainName | quote }}
 kind: ConfigMap
 metadata:
   labels:
