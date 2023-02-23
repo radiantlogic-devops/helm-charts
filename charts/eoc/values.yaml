@@ -31,7 +31,7 @@ ui:
     repository: radiantone/eoc-ui
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
-    tag: "dev"
+    # tag: "dev"
   nodeSelector: {}
   tolerations: []
   affinity: {}
@@ -107,7 +107,7 @@ backend:
     repository: radiantone/eoc-backend
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
-    tag: "dev"
+    # tag: "dev"
   nodeSelector: {}
   tolerations: []
   affinity: {}
@@ -134,7 +134,7 @@ orchestrator:
     repository: radiantone/eoc-orchestrator
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
-    tag: "dev"
+    # tag: "dev"
   nodeSelector: {}
   tolerations: []
   affinity: {}
@@ -158,3 +158,23 @@ redis:
     nodeSelector: {}
     tolerations: []
     affinity: {}
+
+postgresql:
+  enabled: false
+  fullnameOverride: postgresql
+  primary:
+    nodeSelector: {}
+      # tenantname: duploservices-ensemble-svc
+    initdb:
+      scripts:
+        01_agents_init_script.sql: |
+          CREATE DATABASE eocdb;
+          CREATE USER eocadmin WITH ENCRYPTED PASSWORD 'eocadmin';
+          GRANT ALL PRIVILEGES ON DATABASE eocdb TO eocadmin;
+        XX_create_schema_init_script.sh: |
+          #!/bin/bash
+          PGPASSWORD=$POSTGRES_PASSWORD psql -v ON_ERROR_STOP=1 <<-EOSQL
+            \connect eocdb;
+            CREATE SCHEMA IF NOT EXISTS eoc;
+            GRANT ALL ON SCHEMA eoc TO eocadmin;
+          EOSQL
