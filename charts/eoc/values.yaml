@@ -31,7 +31,7 @@ ui:
     repository: radiantone/eoc-ui
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
-    tag: "dev"
+    # tag: "dev"
   nodeSelector: {}
   tolerations: []
   affinity: {}
@@ -107,7 +107,7 @@ backend:
     repository: radiantone/eoc-backend
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
-    tag: "dev"
+    # tag: "dev"
   nodeSelector: {}
   tolerations: []
   affinity: {}
@@ -134,7 +134,7 @@ orchestrator:
     repository: radiantone/eoc-orchestrator
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
-    tag: "dev"
+    # tag: "dev"
   nodeSelector: {}
   tolerations: []
   affinity: {}
