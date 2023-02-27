@@ -90,10 +90,21 @@ agents:
   dockerconfigjson: "xxxxx"
 
 tunnel:
-  tunnelname: r1tunnel
+  tunnelname: acmeco
   nodeSelector: {}
   pregentokenname: pregentoken
-  token: "xxxxx"
+  token: "p0bCIlZz6+CxWXjBNlsaDvJC3HUlKujKYFoKYaA2Dzc="
+  tcpPorts:
+    - 8080
+    - 5001
+    - 5002
+    - 5003
+    - 5004
+    - 5005
+    - 5006
+    - 5007
+    - 5008
+    - 5009
 
 
 inlets:

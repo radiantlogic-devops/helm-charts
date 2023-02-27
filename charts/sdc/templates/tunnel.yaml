@@ -9,12 +9,14 @@ spec:
   licenseRef: 
     name: inlets-uplink-license
     namespace: {{ .Release.Namespace }}
+{{- if .Values.tunnel.token }}
   tokenRef:
     name: {{ .Values.tunnel.pregentokenname }}
     namespace: {{ .Release.Namespace }}
+{{- end }}
+{{- with .Values.tunnel.tcpPorts }}
   tcpPorts:
-  - 8080
-  - 5001
+    {{- toYaml . | nindent 8 }}
 {{- with .Values.tunnel.nodeSelector }}
   nodeSelector:
     {{- toYaml . | nindent 8 }}

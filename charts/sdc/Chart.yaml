@@ -44,5 +44,5 @@ dependencies:
   - name: inlets-uplink-provider
     alias: inlets
     repository: oci://ghcr.io/openfaasltd
-    version: 0.2.2
+    version: 0.2.4
     condition: inlets.enabled
