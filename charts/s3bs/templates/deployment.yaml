@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "s3bs.fullname" . }}
+  labels:
+    {{- include "s3bs.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "s3bs.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      name: {{ include "s3bs.fullname" . | nindent 8 }}
+      labels:
+        {{- include "s3bs.selectorLabels" . | nindent 8 }}   
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+        - containerPort: 80
+        envFrom:
+          - configMapRef:
+              name: {{ template "s3bs.fullname" . }}
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          failureThreshold: 5
+          successThreshold: 1
+        readinessProbe:
+          httpGet:
+              path: /healthz
+              port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 30
+          failureThreshold: 5
+          successThreshold: 1
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

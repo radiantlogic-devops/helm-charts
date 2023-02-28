@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "s3bs.fullname" . }}-service
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - name: {{ include "s3bs.fullname" . }}-service-port
+      protocol: TCP
+      port: {{ .Values.service.port }}
+      targetPort: 80
+  selector:
+    {{- include "s3bs.selectorLabels" . | nindent 4 }}

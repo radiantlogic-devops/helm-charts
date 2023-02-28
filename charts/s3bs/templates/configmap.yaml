@@ -1,0 +1,18 @@
+apiVersion: v1
+data:
+  ASPNETCORE_URLS: "http://+:80"
+  DOTNET_RUNNING_IN_CONTAINER: "true"
+  AWSSettings__BucketName: {{ .Values.bucketName | quote }}
+  AWSSettings__Region: {{ .Values.s3.region | quote }}
+  AWSSettings__AccessKey: {{ .Values.s3.accessKey | quote }}
+  AWSSettings__SecretKey: {{ .Values.s3.secretKey | quote }}
+kind: ConfigMap
+metadata:
+  labels:
+    role: s3bs
+  name: {{ template "s3bs.fullname" . }}
+  labels:
+    app: {{ template "s3bs.fullname" . }}
+    chart: "{{ template "s3bs.chart" . }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
