@@ -17,6 +17,12 @@ tunnel:
     tenantname: xxxxx
   token: "xxxxx"
   pregentokenname: "pregentoken"
+  # Ports opened for tunnels
+  # For the below the ports opened will be 5001 to 5010
+  # Provide higher + 1 for the higher limit (port) intended
+  tcpPorts:
+    lower: 5001
+    higher: 5011
 
 inlets:
   license: "xxxxx"

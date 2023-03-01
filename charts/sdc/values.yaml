@@ -5,10 +5,10 @@
 replicaCount: 1
 
 image:
-  repository: registry.gitlab.com/radiant-logic-engineering/radiant-one-opa-server/sdc-server
+  repository: radiantone/sdc-server
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "latest"
+  tag: "0.1.0"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -85,6 +85,7 @@ agents:
     ConnectionStrings__AgentsDatabase: "Host=postgresql; Database=agentsdb; Username=agentsadmin; Password=xxxxx; SearchPath=agents"
     DefaultApiClient__ClientId: "xxxxx"
     DefaultApiClient__ClientSecret: "xxxxx"
+  # jwtIssuer value should match the url to be used for ingress for sdc 
   jwtIssuer: "OPAServer"
   imagePullSecretName: image-pull-secret
   dockerconfigjson: "xxxxx"
@@ -92,11 +93,15 @@ agents:
 tunnel:
   tunnelname: acmeco
   nodeSelector: {}
+  # If you are planning to use a pre-generated token rather than the one created by inlets
+  # Please provide a name and the token value below
   pregentokenname: pregentoken
-  #token: "p0bCIlZz6+CxWXjBNlsaDvJC3HUlKujKYFoKYaA2Dzc="
+  token: "p0bCIlZz6+CxWXjBNlsaDvJC3HUlKujKYFoKYaA2Dzc="
+  # Ports opened for tunnels
+  # Provide higher + 1 for the higher limit (port) intended
   tcpPorts:
     lower: 5001
-    higher: 5010
+    higher: 5011
 
 inlets:
   license: "xxxxx"
