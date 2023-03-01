@@ -86,26 +86,17 @@ agents:
     DefaultApiClient__ClientId: "xxxxx"
     DefaultApiClient__ClientSecret: "xxxxx"
   jwtIssuer: "OPAServer"
-  imagePullSecretName: gitlab-pull-secret
+  imagePullSecretName: image-pull-secret
   dockerconfigjson: "xxxxx"
 
 tunnel:
   tunnelname: acmeco
   nodeSelector: {}
   pregentokenname: pregentoken
-  token: "p0bCIlZz6+CxWXjBNlsaDvJC3HUlKujKYFoKYaA2Dzc="
+  #token: "p0bCIlZz6+CxWXjBNlsaDvJC3HUlKujKYFoKYaA2Dzc="
   tcpPorts:
-    - 8080
-    - 5001
-    - 5002
-    - 5003
-    - 5004
-    - 5005
-    - 5006
-    - 5007
-    - 5008
-    - 5009
-
+    lower: 5001
+    higher: 5010
 
 inlets:
   license: "xxxxx"
@@ -152,7 +143,7 @@ inlets:
 
   # inlets Pro release version for tunnel server Pods
   # Check https://ghcr.io/inlets/inlets-pro for tags
-  inletsVersion: 0.9.12
+  inletsVersion: 0.9.15
 
   # monitoring tunnels
   prometheus:

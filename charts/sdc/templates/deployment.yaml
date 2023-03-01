@@ -51,7 +51,7 @@ spec:
               containerPort: 80
               protocol: TCP
           envFrom:
-            - configMapRef:
+            - secretRef:
                 name: {{ template "agent.fullname" . }}
           # env:
           #   - name: "LdapServerConfiguration__RootUserPassword"

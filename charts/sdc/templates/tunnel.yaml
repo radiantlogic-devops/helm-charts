@@ -12,11 +12,16 @@ spec:
 {{- if .Values.tunnel.token }}
   tokenRef:
     name: {{ .Values.tunnel.pregentokenname }}
+    token: {{ .Values.tunnel.token }}
     namespace: {{ .Release.Namespace }}
 {{- end }}
-{{- with .Values.tunnel.tcpPorts }}
+
   tcpPorts:
-    {{- toYaml . | nindent 8 }}
+{{- range untilStep (.Values.tunnel.tcpPorts.lower | int) (.Values.tunnel.tcpPorts.higher | int) 1}}
+    - {{ . }}
+{{- end }}
+
+
 {{- with .Values.tunnel.nodeSelector }}
   nodeSelector:
     {{- toYaml . | nindent 8 }}
