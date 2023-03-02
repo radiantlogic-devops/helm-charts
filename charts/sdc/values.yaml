@@ -157,7 +157,6 @@ inlets:
   # inlets Pro release version for tunnel server Pods
   # Check https://ghcr.io/inlets/inlets-pro for tags
   inletsVersion: 0.9.15
-
   # monitoring tunnels
   prometheus:
     image: prom/prometheus:v2.40.1
