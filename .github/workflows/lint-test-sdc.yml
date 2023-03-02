@@ -59,4 +59,4 @@ jobs:
           kubectl get nodes --context kind-chart-testing
 
       - name: Run chart-testing (install)
-        run: ct install --charts=charts/sdc --debug --helm-extra-set-args="--set=postgresql.enabled=true"
+        run: ct install --charts=charts/sdc --debug --helm-extra-set-args="--set=postgresql.enabled=true" --upgrade
