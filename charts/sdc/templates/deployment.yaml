@@ -20,8 +20,10 @@ spec:
       labels:
         {{- include "agent.selectorLabels" . | nindent 8 }}
     spec:
+      {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
-        - name: {{ .Values.agents.imagePullSecretName }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       serviceAccountName: {{ include "agent.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}

@@ -16,7 +16,7 @@ spec:
     namespace: {{ .Release.Namespace }}
 {{- end }}
   tcpPorts:
-{{- range untilStep (.Values.tunnel.tcpPorts.lower | int) (.Values.tunnel.tcpPorts.higher | int ) 1 }}
+{{- range untilStep (.Values.tunnel.tcpPorts.start | int) (.Values.tunnel.tcpPorts.end | int ) 1 }}
     - {{ . }}
 {{- end }}
 {{- with .Values.tunnel.nodeSelector }}

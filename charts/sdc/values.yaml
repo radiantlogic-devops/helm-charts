@@ -10,7 +10,8 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: "0.1.0"
 
-imagePullSecrets: []
+imagePullSecrets:
+  - name: regcred
 nameOverride: ""
 fullnameOverride: ""
 
@@ -22,6 +23,11 @@ serviceAccount:
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
   name: ""
+
+# Enable prometheus to activate scraping the metrics from metrics end point
+# Prometheus needs to deployed and available
+prometheus:
+  enabled: false
 
 podAnnotations: {}
 
@@ -87,7 +93,6 @@ agents:
     DefaultApiClient__ClientSecret: "xxxxx"
   # jwtIssuer value should match the url to be used for ingress for sdc 
   jwtIssuer: "OPAServer"
-  imagePullSecretName: image-pull-secret
   dockerconfigjson: "xxxxx"
 
 tunnel:
@@ -96,12 +101,12 @@ tunnel:
   # If you are planning to use a pre-generated token rather than the one created by inlets
   # Please provide a name and the token value below
   pregentokenname: pregentoken
-  token: "p0bCIlZz6+CxWXjBNlsaDvJC3HUlKujKYFoKYaA2Dzc="
+  token: "xxxxx"
   # Ports opened for tunnels
-  # Provide higher + 1 for the higher limit (port) intended
+  # Provide end + 1 for the end (port) intended
   tcpPorts:
-    lower: 5001
-    higher: 5011
+    start: 5001
+    end: 5010
 
 inlets:
   license: "xxxxx"
@@ -112,6 +117,9 @@ inlets:
     # Customer tunnels will connect with a URI of:
     # wss://uplink.example.com/namespace/tunnel
     domain: uplink.example.com
+
+    service:
+      type: NodePort
 
     tls:
       issuerName: "letsencrypt-prod"
@@ -154,6 +162,8 @@ inlets:
   prometheus:
     image: prom/prometheus:v2.40.1
     create: false
+    service:
+      type: NodePort
     resources:
       requests:
         memory: "512Mi"
@@ -190,7 +200,7 @@ postgresql:
   fullnameOverride: postgresql
   primary:
     nodeSelector: {}
-      # tenantname: duploservices-ensemble-svc
+      # tenantname: xxxx
     initdb:
       scripts:
         01_agents_init_script.sql: |

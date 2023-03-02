@@ -92,9 +92,13 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
 
-imagePullSecrets: []
+imagePullSecrets:
+  - name: regcred
 nameOverride: ""
 fullnameOverride: ""
+
+prometheus:
+  enabled: false
 
 service:
   type: NodePort
@@ -109,7 +113,6 @@ agents:
     DefaultApiClient__ClientId: "xxxxxx"
     DefaultApiClient__ClientSecret: "xxxxxx"
   jwtIssuer: "OPAServer"
-  imagePullSecretName: gitlab-pull-secret
   dockerconfigjson: "xxxxxx"
 
 tunnel:
@@ -117,6 +120,9 @@ tunnel:
   nodeSelector: {}
   token: "xxxxxx"
   pregentokenname: "xxxx"
+  tcpPorts:
+    start: 5001
+    end: 5010
 
 inlets:
   token: "xxxxxx"
@@ -128,6 +134,9 @@ inlets:
     # Customer tunnels will connect with a URI of:
     # wss://uplink.example.com/namespace/tunnel
     domain: example.com
+
+    service:
+      type: NodePort
 
     tls:
       issuerName: "letsencrypt-prod"
@@ -230,7 +239,7 @@ pgadmin4:
 | image.pullPolicy | string | `"Always"` |  |
 | image.repository | string | `"registry.gitlab.com/radiant-logic-engineering/radiant-one-opa-server/sdc-server"` |  |
 | image.tag | string | `"latest"` |  |
-| imagePullSecrets | list | `[]` |  |
+| imagePullSecrets | list | `regcred` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
 | ingress.enabled | bool | `false` |  |
@@ -254,6 +263,7 @@ pgadmin4:
 | inlets.clientRouter.tls.issuer.enabled | bool | `false` |  |
 | inlets.clientRouter.tls.issuerName | string | `"letsencrypt-prod"` |  |
 | inlets.clientRouter.tls.istio.enabled | bool | `false` |  |
+| inlets.clientRouter.service.type | string | `NodePort` |  |
 | inlets.enabled | bool | `true` |  |
 | inlets.fullnameOverride | string | `""` |  |
 | inlets.inletsVersion | string | `"0.9.12"` |  |
@@ -269,6 +279,7 @@ pgadmin4:
 | inlets.tolerations | list | `[]` |  |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
+| prometheus.enabled | bool | `false` |  |
 | pgadmin4.enabled | bool | `false` |  |
 | pgadmin4.env.contextPath | string | `"/pgadmin4"` |  |
 | pgadmin4.fullnameOverride | string | `"pgadmin4"` |  |
@@ -292,8 +303,10 @@ pgadmin4:
 | serviceAccount.name | string | `""` |  |
 | tolerations | list | `[]` |  |
 | tunnel.nodeSelector | object | `{}` |  |
+| tunnel.tcpPorts.start | int | `5001` |  |
+| tunnel.tcpPorts.end | int | `5010` |  |
 | tunnel.pregentokenname | string | `"pregentoken"` |  |
-| tunnel.token | string | `"p0bCIlZz6+CxWXjBNlsaDvJC3HUlKujKYFoKYaA2Dzc="` |  |
+| tunnel.token | string | `"xxxxxxx"` |  |
 | tunnel.tunnelname | string | `"acmeco"` |  |
 
 ----------------------------------------------
