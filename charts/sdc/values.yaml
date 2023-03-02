@@ -91,6 +91,7 @@ agents:
     ConnectionStrings__AgentsDatabase: "Host=postgresql; Database=agentsdb; Username=agentsadmin; Password=xxxxx; SearchPath=agents"
     DefaultApiClient__ClientId: "xxxxx"
     DefaultApiClient__ClientSecret: "xxxxx"
+  # jwtIssuer value should match the url for sdc service
   jwtIssuer: "OPAServer"
   dockerconfigjson: "xxxxx"
 
