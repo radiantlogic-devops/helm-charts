@@ -214,6 +214,7 @@ postgresql:
             CREATE SCHEMA IF NOT EXISTS agents;
             GRANT ALL ON SCHEMA agents TO agentsadmin;
           EOSQL
+          
 pgadmin4:
   enabled: false
   fullnameOverride: pgadmin4
