@@ -1,6 +1,6 @@
 apiVersion: v2
-name: s3bs
-description: S3 Bucket Service (S3BS) Helm Chart
+name: sss
+description: Simple Storage Service (SSS) Helm Chart
 
 type: application
 

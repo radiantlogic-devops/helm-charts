@@ -1,9 +1,9 @@
-name: Lint and Test S3BS Charts
+name: Lint and Test SSS Charts
 
 on:
   pull_request:
     paths:
-      - 'charts/s3bs/**'
+      - 'charts/sss/**'
 
 jobs:
   lint-test:
@@ -55,4 +55,4 @@ jobs:
           kubectl get nodes --context kind-chart-testing
 
       - name: Run chart-testing (install)
-        run: ct install --charts=charts/s3bs --debug"
+        run: ct install --charts=charts/sss --debug"

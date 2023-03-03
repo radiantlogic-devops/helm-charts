@@ -1,20 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "s3bs.fullname" . }}
+  name: {{ include "sss.fullname" . }}
   labels:
-    {{- include "s3bs.labels" . | nindent 4 }}
+    {{- include "sss.labels" . | nindent 4 }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      {{- include "s3bs.selectorLabels" . | nindent 6 }}
+      {{- include "sss.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      name: {{ include "s3bs.fullname" . | nindent 8 }}
+      name: {{ include "sss.fullname" . | nindent 8 }}
       labels:
-        {{- include "s3bs.selectorLabels" . | nindent 8 }}   
+        {{- include "sss.selectorLabels" . | nindent 8 }}   
     spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 6 }}
+      {{- end }}
       containers:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
@@ -23,7 +27,7 @@ spec:
         - containerPort: 80
         envFrom:
           - configMapRef:
-              name: {{ template "s3bs.fullname" . }}
+              name: {{ template "sss.fullname" . }}
         livenessProbe:
           httpGet:
             path: /healthz

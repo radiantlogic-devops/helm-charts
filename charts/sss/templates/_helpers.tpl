@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "s3bs.name" -}}
+{{- define "sss.name" -}}
 {{- if .Values.nameOverride }}
 {{- printf "%s" .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -14,7 +14,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "s3bs.fullname" -}}
+{{- define "sss.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -31,15 +31,15 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "s3bs.chart" -}}
+{{- define "sss.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 {{/*
 Common labels
 */}}
-{{- define "s3bs.labels" -}}
-helm.sh/chart: {{ include "s3bs.chart" . }}
-{{ include "s3bs.selectorLabels" . }}
+{{- define "sss.labels" -}}
+helm.sh/chart: {{ include "sss.chart" . }}
+{{ include "sss.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -49,17 +49,17 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "s3bs.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "s3bs.name" . }}
+{{- define "sss.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "sss.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "s3bs.serviceAccountName" -}}
+{{- define "sss.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "s3bs.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "sss.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
