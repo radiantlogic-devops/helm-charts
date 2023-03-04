@@ -14,8 +14,8 @@ agents:
 tunnel:
   tunnelname: r1tunnel
   nodeSelector:
-    tenantname: xxxxx
-  token: "xxxxx"
+    tenantname: xxxxxxx
+  token: "xxxxxxx"
   pregentokenname: "pregentoken"
   # Ports opened for tunnels
   # For the below the ports opened will be 5001 to 5010
