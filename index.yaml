@@ -118,4 +118,19 @@ entries:
     urls:
     - https://github.com/radiantlogic-devops/helm-charts/releases/download/sdc-0.0.1-alpha.1/sdc-0.0.1-alpha.1.tgz
     version: 0.0.1-alpha.1
-generated: "2023-02-24T18:27:40.499561012Z"
+  sss:
+  - apiVersion: v2
+    appVersion: 0.0.1-alpha.1
+    created: "2023-03-06T18:31:59.461692064Z"
+    description: Simple Storage Service (SSS) Helm Chart
+    digest: 7fbfe39ab6c7b360a867b630e0fda194c212ba5c687d8d54f071dbe9229b5ae6
+    maintainers:
+    - email: pgodey@radiantlogic.com
+      name: pgodey
+      url: https://www.radiantlogic.com
+    name: sss
+    type: application
+    urls:
+    - https://github.com/radiantlogic-devops/helm-charts/releases/download/sss-0.0.1-alpha.1/sss-0.0.1-alpha.1.tgz
+    version: 0.0.1-alpha.1
+generated: "2023-03-06T18:31:59.461707064Z"
