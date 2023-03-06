@@ -47,16 +47,16 @@ Additionally CERT-MANAGER, POSTGRES and PGADMIN can also be deployed as dependen
 
 The R1-AGENT Server is a web server that has multiple functions:
 - It provides a REST API that can be used by Cloud Manager or external API clients to register, configure, and monitor the On-Prem Agents
-- It contains the business logic that orchestrates the entire R1-AGENT system (client and server) to make sure everything is in the desired state, and 
+- It contains the business logic that orchestrates the entire R1-AGENT system (client and server) to make sure everything is in the desired state, and
 that the desired configuration is applied.
-- It hosts the server part of the SignalR system (described in detail later in this document) that we use to send bidirectional messages 
-between the R1-AGENT Client and R1-AGENT Server. Note: this system is not used for tunneling traffic and is separate from the WebSocket Tunnel 
+- It hosts the server part of the SignalR system (described in detail later in this document) that we use to send bidirectional messages
+between the R1-AGENT Client and R1-AGENT Server. Note: this system is not used for tunneling traffic and is separate from the WebSocket Tunnel
 provided by Inlets.
 
 ### R1-AGENT Client
 
-- The R1-AGENT Client is mainly a wrapper around the Inlets Clients and HAProxy processes (described in detail later in this document). 
-- The R1-AGENT client will orchestrate these processes and re-configure them based on the commands that it receives from the R1-AGENT Server. 
+- The R1-AGENT Client is mainly a wrapper around the Inlets Clients and HAProxy processes (described in detail later in this document).
+- The R1-AGENT client will orchestrate these processes and re-configure them based on the commands that it receives from the R1-AGENT Server.
 - The R1-AGENT client process itself will be deployed as a containerized application that will be launched in the on-prem environment.
 (TBD, Design Decision) The R1-AGENT Client may run in a Kubernetes cluster for high availability and failover
 
@@ -105,13 +105,14 @@ service:
   port: 80
 
 nodeSelector: {}
-  # tenantname: 
+  # tenantname:
 
 agents:
   database:
     ConnectionStrings__AgentsDatabase: "Host=postgresql; Database=agentsdb; Username=agentsadmin; Password=xxxx; SearchPath=agents"
     DefaultApiClient__ClientId: "xxxxxx"
     DefaultApiClient__ClientSecret: "xxxxxx"
+    PortForward__Range: "5001-5009"
   jwtIssuer: "OPAServer"
   dockerconfigjson: "xxxxxx"
 
@@ -162,8 +163,8 @@ cert-manager:
   enabled: false
   fullnameOverride: cert-manager
   installCRDs: true
-  clusterResourceNamespace: 
-  namespace: 
+  clusterResourceNamespace:
+  namespace:
   nodeSelector: {}
   webhook:
     nodeSelector: {}
@@ -208,7 +209,7 @@ pgadmin4:
     enabled: false
   env:
     contextPath: "/pgadmin4"
-   
+
 ```
 
 ## Values
@@ -219,6 +220,7 @@ pgadmin4:
 | agents.database.ConnectionStrings__AgentsDatabase | string | `"Host=postgresql; Database=agentsdb; Username=agentsadmin; Password=9iKnkK4Xzi; SearchPath=agents"` |  |
 | agents.database.DefaultApiClient__ClientId | string | `"xxxxxx"` |  |
 | agents.database.DefaultApiClient__ClientSecret | string | `"xxxxxx"` |  |
+| agents.database.PortForward__Range | string | `"xxxxxx"` | Ports that have been selcted to be opened - start-end |
 | agents.dockerconfigjson | string | `"xxxxxxx"` |  |
 | agents.imagePullSecretName | string | `"gitlab-pull-secret"` |  |
 | agents.jwtIssuer | string | `"OPAServer"` |  |

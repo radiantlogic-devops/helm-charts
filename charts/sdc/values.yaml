@@ -11,9 +11,9 @@ image:
   tag: "0.1.0"
 
 imageCredentials:
-  registry: quay.io
+  registry: https://index.docker.io/v1/
   username: someone
-  password: sillyness
+  password: something
   email: someone@host.com
 
 imagePullSecrets:
@@ -97,9 +97,11 @@ agents:
     ConnectionStrings__AgentsDatabase: "Host=postgresql; Database=agentsdb; Username=agentsadmin; Password=xxxxx; SearchPath=agents"
     DefaultApiClient__ClientId: "xxxxx"
     DefaultApiClient__ClientSecret: "xxxxx"
+  # PortForward__Range should match the start and end ports provided under tunnel
+  # PortForward__Range can be a single port if only one port is opened
+    PortForward__Range: "xxx-xxx"
   # jwtIssuer value should match the url for sdc service
   jwtIssuer: "OPAServer"
-  dockerconfigjson: "xxxxx"
 
 tunnel:
   tunnelname: acmeco
