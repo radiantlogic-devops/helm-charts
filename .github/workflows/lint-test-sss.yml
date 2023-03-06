@@ -55,4 +55,4 @@ jobs:
           kubectl get nodes --context kind-chart-testing
 
       - name: Run chart-testing (install)
-        run: ct install --charts=charts/sss --debug"
+        run: ct install --charts=charts/sss --debug
