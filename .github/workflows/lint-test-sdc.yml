@@ -60,9 +60,8 @@ jobs:
 
       - name: Run chart-testing (install)
         run: |
-          ct install --charts=charts/sdc --debug \
-          --helm-extra-set-args="--set=imageCredentials.username=${{ secrets.DOCKER_USERNAME }} \
-          ---set=imageCredentials.password=${{ secrets.DOCKER_PASSWORD }} \
+          ct install --charts=charts/sdc --debug --helm-extra-set-args="--set=imageCredentials.username=${{ secrets.DOCKER_USERNAME }} \
+          --set=imageCredentials.password=${{ secrets.DOCKER_PASSWORD }} \
           --set=imageCredentials.email=${{ secrets.DOCKER_EMAIL }} \
           --set=inlets.license=${{ secrets.INLETS_LICENSE }} \
           --set=agents.database.DefaultApiClient__ClientId="SuperUser99" \
