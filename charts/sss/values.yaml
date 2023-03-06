@@ -12,7 +12,7 @@ image:
 imagePullSecrets: []
 s3:
   region: ''
-  # accessKey and secretKey are not required when used with eoc
+  # accessKey and secretKey are not required when used with eoc.
   accessKey: ''
   secretKey: ''
 
