@@ -1,0 +1,25 @@
+# Default values for agent.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: radiantone/sss
+  pullPolicy: Always
+  # Overrides the image tag whose default is the chart appVersion.
+  # tag: "latest"
+imagePullSecrets: []
+s3:
+  region: ''
+  # accessKey and secretKey are not required when used with eoc.
+  accessKey: ''
+  secretKey: ''
+
+service:
+  type: ClusterIP
+  port: 80
+
+nodeSelector: {}
+tolerations: []
+affinity: {}

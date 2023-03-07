@@ -1,9 +1,9 @@
-name: Lint and Test EOC Charts
+name: Lint and Test SSS Charts
 
 on:
   pull_request:
     paths:
-      - 'charts/eoc/**'
+      - 'charts/sss/**'
 
 jobs:
   lint-test:
@@ -55,4 +55,4 @@ jobs:
           kubectl get nodes --context kind-chart-testing
 
       - name: Run chart-testing (install)
-        run: ct install --charts=charts/eoc --debug --helm-extra-set-args="--set=postgresql.enabled=true" --upgrade
+        run: ct install --charts=charts/sss --debug
