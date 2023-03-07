@@ -2,7 +2,7 @@
 
 ## AGENTS-INLETS
 
-The following HELM charts deploy AGENTS-API server and INLETS-UPLINK.
+The following HELM charts deploy SDC server and INLETS-UPLINK.
 
 INLETS_UPLINK is deployed as dependency chart.
 
@@ -22,7 +22,7 @@ Additionally CERT-MANAGER, POSTGRES and PGADMIN can also be deployed as dependen
 | https://charts.bitnami.com/bitnami | postgresql | 12.1.3 |
 | https://charts.jetstack.io | cert-manager | 1.11.0 |
 | https://helm.runix.net | pgadmin4 | 1.13.8 |
-| oci://ghcr.io/openfaasltd | inlets(inlets-uplink-provider) | 0.2.2 |
+| oci://ghcr.io/openfaasltd | inlets(inlets-uplink-provider) | 0.2.4 |
 
 1. INLETS
 
@@ -43,40 +43,40 @@ Additionally CERT-MANAGER, POSTGRES and PGADMIN can also be deployed as dependen
 - PGAdmin is a web-based GUI tool used to interact with the Postgres database sessions, both locally and remote servers as well. You can use PGAdmin to perform any sort of database administration required for a Postgres database.
 
 
-### R1-AGENT Server
+### SDC Server
 
-The R1-AGENT Server is a web server that has multiple functions:
+The SDC Server is a web server that has multiple functions:
 - It provides a REST API that can be used by Cloud Manager or external API clients to register, configure, and monitor the On-Prem Agents
-- It contains the business logic that orchestrates the entire R1-AGENT system (client and server) to make sure everything is in the desired state, and
+- It contains the business logic that orchestrates the entire SDC system (client and server) to make sure everything is in the desired state, and
 that the desired configuration is applied.
 - It hosts the server part of the SignalR system (described in detail later in this document) that we use to send bidirectional messages
-between the R1-AGENT Client and R1-AGENT Server. Note: this system is not used for tunneling traffic and is separate from the WebSocket Tunnel
+between the SDC Client and SDC Server. Note: this system is not used for tunneling traffic and is separate from the WebSocket Tunnel
 provided by Inlets.
 
-### R1-AGENT Client
+### SDC Client
 
-- The R1-AGENT Client is mainly a wrapper around the Inlets Clients and HAProxy processes (described in detail later in this document).
-- The R1-AGENT client will orchestrate these processes and re-configure them based on the commands that it receives from the R1-AGENT Server.
-- The R1-AGENT client process itself will be deployed as a containerized application that will be launched in the on-prem environment.
-(TBD, Design Decision) The R1-AGENT Client may run in a Kubernetes cluster for high availability and failover
+- The SDC Client is mainly a wrapper around the Inlets Clients and HAProxy processes (described in detail later in this document).
+- The SDC client will orchestrate these processes and re-configure them based on the commands that it receives from the SDC Server.
+- The SDC client process itself will be deployed as a containerized application that will be launched in the on-prem environment.
+(TBD, Design Decision) The SDC Client may run in a Kubernetes cluster for high availability and failover
 
-### DEPLOYING R1-AGENT (without any dependencies)
+### DEPLOYING SDC (without any dependencies)
 
 ```
 helm -n <namespace> install <release_name> <chart> --set inlets.enabled=false --set cert-manager.enabled=false --set postgresql.enabled=false --set pgadmin4.enabled=false --debug
 ```
 
-#### Accessing R1-AGENT server
+#### Accessing SDC server
 
 ```
 kubectl port-forward svc/<release_name> -n <namespace> 80
 
 ```
 
-The R1-AGENT swagger page can be reached at http://localhost:80/swagger
+The SDC swagger page can be reached at http://localhost:80/swagger
 
 
-### DEPLOYING R1-AGENT (with dependencies)
+### DEPLOYING SDC (with dependencies)
 
 ```
 helm -n <namespace> install <release_name> <chart> --set inlets.enabled=true --set cert-manager.enabled=true --set postgresql.enabled=true --set pgadmin4.enabled=true --debug
@@ -85,130 +85,43 @@ helm -n <namespace> install <release_name> <chart> --set inlets.enabled=true --s
 ### Sample Values file
 
 ```
-
-image:
-  repository: registry.gitlab.com/radiant-logic-engineering/radiant-one-opa-server/sdc-server
-  pullPolicy: Always
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: "latest"
-
-imagePullSecrets:
-  - name: regcred
-nameOverride: ""
-fullnameOverride: ""
-
-prometheus:
-  enabled: false
-
-service:
-  type: NodePort
-  port: 80
-
 nodeSelector: {}
-  # tenantname:
+  # tenantname: xxxxx
 
 agents:
   database:
-    ConnectionStrings__AgentsDatabase: "Host=postgresql; Database=agentsdb; Username=agentsadmin; Password=xxxx; SearchPath=agents"
-    DefaultApiClient__ClientId: "xxxxxx"
-    DefaultApiClient__ClientSecret: "xxxxxx"
+    ConnectionStrings__AgentsDatabase: "Host=postgresql; Database=agentsdb; Username=agentsadmin; Password=xxxxx; SearchPath=agents"
+    DefaultApiClient__ClientId: "xxxxx"
+    DefaultApiClient__ClientSecret: "xxxxx"
+    # PortForward range should match the start-end values of the tcpPorts
     PortForward__Range: "5001-5009"
-  jwtIssuer: "OPAServer"
-  dockerconfigjson: "xxxxxx"
+  # jwtIssuer should match the url created for the ingress to sdc
+  # jwtIssuer: "sdc.example.com"
+  jwtIssuer: "xxxx"
 
 tunnel:
-  tunnelname: acmeco
+  tunnelname: r1tunnel
   nodeSelector: {}
-  token: "xxxxxx"
-  pregentokenname: "xxxx"
+    # tenantname: xxxxxxx
+  # Ports opened for tunnels
+  # For the below the ports opened will be 5001 to 5010
+  # Provide higher + 1 for the higher limit (port) intended
   tcpPorts:
     start: 5001
     end: 5010
 
 inlets:
-  token: "xxxxxx"
-  license: "xxxxxxx"
-  enabled: true
+  license: "xxxxx"
   # A router to work on a wildcard domain and to direct
   # traffic according to request domain
   clientRouter:
     # Customer tunnels will connect with a URI of:
     # wss://uplink.example.com/namespace/tunnel
-    domain: example.com
+    domain: uuplink.example.com/namespace/tunnel
 
-    service:
-      type: NodePort
-
-    tls:
-      issuerName: "letsencrypt-prod"
-
-      issuer:
-        enabled: false
-        # Email address used for ACME registration
-        email: "user@example.com"
-
-  # A separate REST API for automation of inlets tunnels
-  clientApi:
-    enabled: false
-    image: "ghcr.io/openfaasltd/uplink-api:0.1.7"
-
-  prometheus:
-    image: prom/prometheus:v2.40.1
-    create: false
-  nameOverride: ""
-  fullnameOverride: ""
-  nodeSelector: {}
-
-cert-manager:
-  enabled: false
-  fullnameOverride: cert-manager
-  installCRDs: true
-  clusterResourceNamespace:
-  namespace:
-  nodeSelector: {}
-  webhook:
-    nodeSelector: {}
-  cainjector:
-    nodeSelector: {}
-  startupapicheck:
-    nodeSelector: {}
-
+# Postgresql should be deployed prior to deployment or should be enabled from below
 postgresql:
   enabled: false
-  fullnameOverride: postgresql
-  primary:
-    nodeSelector: {}
-      # tenantname: duploservices-ensemble-svc
-    initdb:
-      scripts:
-        01_agents_init_script.sql: |
-          CREATE DATABASE agentsdb;
-          CREATE USER agentsadmin WITH ENCRYPTED PASSWORD 'xxxxxx';
-          GRANT ALL PRIVILEGES ON DATABASE agentsdb TO agentsadmin;
-        02_eoc_init_script.sql: |
-          CREATE DATABASE eocdb;
-          CREATE USER eocadmin WITH ENCRYPTED PASSWORD 'xxxxxx';
-          GRANT ALL PRIVILEGES ON DATABASE eocdb TO eocadmin;
-        XX_create_schema_init_script.sh: |
-          #!/bin/bash
-          PGPASSWORD=$POSTGRES_PASSWORD psql -v ON_ERROR_STOP=1 <<-EOSQL
-            \connect eocdb;
-            CREATE SCHEMA IF NOT EXISTS eoc;
-            GRANT ALL ON SCHEMA eoc TO eocadmin;
-            GRANT ALL ON SCHEMA public TO eocadmin;
-            \connect agentsdb;
-            CREATE SCHEMA IF NOT EXISTS agents;
-            GRANT ALL ON SCHEMA agents TO agentsadmin;
-          EOSQL
-
-pgadmin4:
-  enabled: false
-  fullnameOverride: pgadmin4
-  nodeSelector: {}
-  persistentVolume:
-    enabled: false
-  env:
-    contextPath: "/pgadmin4"
 
 ```
 
@@ -221,9 +134,7 @@ pgadmin4:
 | agents.database.DefaultApiClient__ClientId | string | `"xxxxxx"` |  |
 | agents.database.DefaultApiClient__ClientSecret | string | `"xxxxxx"` |  |
 | agents.database.PortForward__Range | string | `"xxxxxx"` | Ports that have been selcted to be opened - start-end |
-| agents.dockerconfigjson | string | `"xxxxxxx"` |  |
-| agents.imagePullSecretName | string | `"gitlab-pull-secret"` |  |
-| agents.jwtIssuer | string | `"OPAServer"` |  |
+| agents.jwtIssuer | string | `"https://sdc.example.com"` |  |
 | autoscaling.enabled | bool | `false` |  |
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
@@ -239,8 +150,8 @@ pgadmin4:
 | cert-manager.webhook.nodeSelector | object | `{}` |  |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"Always"` |  |
-| image.repository | string | `"registry.gitlab.com/radiant-logic-engineering/radiant-one-opa-server/sdc-server"` |  |
-| image.tag | string | `"latest"` |  |
+| image.repository | string | `"radiantone/sdc-server"` |  |
+| image.tag | string | `"0.1.1"` |  |
 | imagePullSecrets | list | `regcred` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
@@ -312,4 +223,3 @@ pgadmin4:
 | tunnel.tunnelname | string | `"acmeco"` |  |
 
 ----------------------------------------------
-Autogenerated from chart metadata using [helm-docs v1.11.0](https://github.com/norwoodj/helm-docs/releases/v1.11.0)

@@ -1,29 +1,28 @@
 
-nodeSelector:
-  tenantname: xxxxx
+nodeSelector: {}
+  # tenantname: xxxxx
 
 agents:
   database:
     ConnectionStrings__AgentsDatabase: "Host=postgresql; Database=agentsdb; Username=agentsadmin; Password=xxxxx; SearchPath=agents"
     DefaultApiClient__ClientId: "xxxxx"
     DefaultApiClient__ClientSecret: "xxxxx"
+    # PortForward range should match the start-end values of the tcpPorts
     PortForward__Range: "5001-5009"
-  jwtIssuer: "OPAServer"
-  imagePullSecretName: regcred
-  dockerconfigjson: "xxxxx"
+  # jwtIssuer should match the url created for the ingress to sdc
+  # jwtIssuer: "sdc.example.com"
+  jwtIssuer: "xxxx"
 
 tunnel:
   tunnelname: r1tunnel
-  nodeSelector:
-    tenantname: xxxxxxx
-  token: "xxxxxxx"
-  pregentokenname: "pregentoken"
+  nodeSelector: {}
+    # tenantname: xxxxxxx
   # Ports opened for tunnels
   # For the below the ports opened will be 5001 to 5010
   # Provide higher + 1 for the higher limit (port) intended
   tcpPorts:
     start: 5001
-    end: 5011
+    end: 5010
 
 inlets:
   license: "xxxxx"
@@ -34,5 +33,6 @@ inlets:
     # wss://uplink.example.com/namespace/tunnel
     domain: uuplink.example.com/namespace/tunnel
 
+# Postgresql should be deployed prior to deployment or should be enabled from below
 postgresql:
   enabled: false
