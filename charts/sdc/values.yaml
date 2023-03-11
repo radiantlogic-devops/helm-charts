@@ -112,9 +112,12 @@ tunnel:
   token: "xxxxx"
   # Ports opened for tunnels
   # Provide end + 1 for the end (port) intended
-  tcpPorts:
-    start: 5001
-    end: 5010
+  ports:
+    - 8080
+    - 8081
+  portRange:
+    - "5001-5009"
+    - "6001-6009"
 
 inlets:
   license: "xxxxx"
