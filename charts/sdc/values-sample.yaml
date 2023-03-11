@@ -18,11 +18,15 @@ tunnel:
   nodeSelector: {}
     # tenantname: xxxxxxx
   # Ports opened for tunnels
-  # For the below the ports opened will be 5001 to 5010
-  # Provide higher + 1 for the higher limit (port) intended
-  tcpPorts:
-    start: 5001
-    end: 5010
+  # To open single ports of choice provide values under "ports:"
+  # To open range of ports provide values under "portRange" like "5001-5010"
+  # Provide higher + 1 for the higher limit (port) intended (for portRange)
+  ports:
+    - 8080
+    - 8081
+  portRange:
+    - "5001-5010"
+    - "6001-6010"
 
 inlets:
   license: "xxxxx"
@@ -31,7 +35,7 @@ inlets:
   clientRouter:
     # Customer tunnels will connect with a URI of:
     # wss://uplink.example.com/namespace/tunnel
-    domain: uuplink.example.com/namespace/tunnel
+    domain: uplink.example.com/namespace/tunnel
 
 # Postgresql should be deployed prior to deployment or should be enabled from below
 postgresql:

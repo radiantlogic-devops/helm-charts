@@ -111,7 +111,9 @@ tunnel:
   pregentokenname: pregentoken
   token: "xxxxx"
   # Ports opened for tunnels
-  # Provide end + 1 for the end (port) intended
+  # To open single ports of choice provide values under "ports:"
+  # To open range of ports provide values under "portRange" like "5001-5010"
+  # Provide higher + 1 for the higher limit (port) intended (for portRange)
   ports:
     - 8080
     - 8081

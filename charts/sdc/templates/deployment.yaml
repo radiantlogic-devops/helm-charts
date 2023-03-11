@@ -55,12 +55,8 @@ spec:
           envFrom:
             - secretRef:
                 name: {{ template "agent.fullname" . }}
-          # env:
-          #   - name: "LdapServerConfiguration__RootUserPassword"
-          #     valueFrom:
-          #       secretKeyRef:
-          #         name: rootcreds-{{ template "agent.fullname" . }}
-          #         key:  password
+            - configMapRef:
+                name: {{ template "agent.fullname" . }}-env
           livenessProbe:
             tcpSocket:
               port: 80
