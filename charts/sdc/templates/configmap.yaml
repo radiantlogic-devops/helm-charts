@@ -8,10 +8,10 @@ metadata:
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
 data:
-  {{- if .Values.agents.database.PortForward__Range }}
-  PortForward__Range: {{ .Values.agents.database.PortForward__Range | quote }}
+  {{- if .Values.PortForward__Range }}
+  PortForward__Range: {{ .Values.PortForward__Range | quote }}
   {{- end }}
-  {{- if .Values.agents.jwtIssuer }}
-  Jwt__Issuer: {{ .Values.agents.jwtIssuer | quote }}
+  {{- if .Values.jwtIssuer }}
+  Jwt__Issuer: {{ .Values.jwtIssuer | quote }}
   {{- end }}
 

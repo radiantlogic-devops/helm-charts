@@ -28,7 +28,6 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       initContainers:
-  {{- if .Values.postgresql.enabled }}
         - name: check-postgresql
           image: alpine:latest
           imagePullPolicy: Always
@@ -39,14 +38,13 @@ spec:
             requests:
               cpu: 100m
               memory: 128Mi
-          command: ['sh', '-c', 'until nc -z postgresql 5432; do sleep 1; done']
+          command: ['sh', '-c', 'until nc -z {{ .Values.database.host }} 5432; do sleep 1; done']
           # until pg_isready --host=pgsql; do sleep 1; done
-  {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.image.repository }}:{{ $.Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http

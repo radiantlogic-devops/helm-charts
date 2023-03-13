@@ -64,7 +64,7 @@ jobs:
           --set=imageCredentials.password=${{ secrets.DOCKER_PASSWORD }} \
           --set=imageCredentials.email=${{ secrets.DOCKER_EMAIL }} \
           --set=inlets.license=${{ secrets.INLETS_LICENSE }} \
-          --set=agents.database.DefaultApiClient__ClientId="SuperUser99" \
-          --set=agents.database.DefaultApiClient__ClientSecret="$uperSecret45" \
-          --set=agents.database.PortForward__Range="5001-5009" \
+          --set=clientId="SuperUser99" \
+          --set=clientSecret="$uperSecret45" \
+          --set=PortForward__Range="5001-5009" \
           --set=postgresql.enabled=true" --upgrade

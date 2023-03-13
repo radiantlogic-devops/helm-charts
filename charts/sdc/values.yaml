@@ -92,16 +92,21 @@ nodeSelector: {}
 tolerations: []
 affinity: {}
 
-agents:
-  database:
-    ConnectionStrings__AgentsDatabase: "Host=postgresql; Database=agentsdb; Username=agentsadmin; Password=xxxxx; SearchPath=agents"
-    DefaultApiClient__ClientId: "xxxxx"
-    DefaultApiClient__ClientSecret: "xxxxx"
-  # PortForward__Range should match the start and end ports provided under tunnel
-  # PortForward__Range can be a single port if only one port is opened
-    PortForward__Range: "xxx-xxx"
-  # jwtIssuer value should match the url for sdc service
-  jwtIssuer: "OPAServer"
+
+database:
+  host: postgresql
+  database_name: agentsdb
+  searchPath: agents
+  auth:
+    password: xxxxx
+    username: agentsadmin
+clientId: "xxxxx"
+clientSecret: "xxxxx"
+# PortForward__Range should match the start and end ports provided under tunnel
+# PortForward__Range can be a single port if only one port is opened
+portForward__range: "xxx-xxx"
+# jwtIssuer value should match the url for sdc service
+jwtIssuer: "OPAServer"
 
 tunnel:
   tunnelname: "xxxx"
