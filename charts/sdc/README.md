@@ -130,11 +130,14 @@ postgresql:
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` |  |
-| agents.database.ConnectionStrings__AgentsDatabase | string | `"Host=postgresql; Database=agentsdb; Username=agentsadmin; Password=9iKnkK4Xzi; SearchPath=agents"` |  |
-| agents.database.DefaultApiClient__ClientId | string | `"xxxxxx"` |  |
-| agents.database.DefaultApiClient__ClientSecret | string | `"xxxxxx"` |  |
-| agents.database.PortForward__Range | string | `"xxxxxx"` | Ports that have been selcted to be opened - start-end |
-| agents.jwtIssuer | string | `"https://sdc.example.com"` |  |
+| agents.database.host | string | `"xxxxxx"` |  |
+| agents.database.name | string | `"xxxxxx"` |  |
+| agents.database.schema | string | `"xxxxxx"` |  |
+| agents.database.auth.username | string | `"xxxxxx"` |  |
+| agents.database.auth.password | string | `"xxxxxx"` |  |
+| agents.clientId | string | `"xxxxxx"` |  |
+| agents.clientSecret | string | `"xxxxxx"` |  |
+| agents.PortForward__Range | string | `"xxxxxx"` | Ports that have been selcted to be opened - start-end |
 | autoscaling.enabled | bool | `false` |  |
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |

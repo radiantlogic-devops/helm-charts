@@ -92,28 +92,26 @@ nodeSelector: {}
 tolerations: []
 affinity: {}
 
-
-database:
-  host: postgresql
-  database_name: agentsdb
-  searchPath: agents
-  auth:
-    password: xxxxx
-    username: agentsadmin
-clientId: "xxxxx"
-clientSecret: "xxxxx"
-# PortForward__Range should match the start and end ports provided under tunnel
-# PortForward__Range can be a single port if only one port is opened
-portForward__range: "xxx-xxx"
-# jwtIssuer value should match the url for sdc service
-jwtIssuer: "OPAServer"
+agents:
+  database:
+    host: postgresql
+    name: agentsdb
+    schema: agents
+    auth:
+      password: xxxxx
+      username: agentsadmin
+  clientId: "xxxxx"
+  clientSecret: "xxxxx"
+  # PortForward__Range should match the start and end ports provided under tunnel
+  # PortForward__Range can be a single port if only one port is opened
+  portForward__range: "xxx-xxx"
 
 tunnel:
   tunnelname: "xxxx"
   nodeSelector: {}
   # If you are planning to use a pre-generated token rather than the one created by inlets
   # Please provide a name and the token value below
-  pregentokenname: pregentoken
+  pregentokenname: "xxxx"
   token: "xxxxx"
   # Ports opened for tunnels
   # To open single ports of choice provide values under "ports:"
@@ -123,8 +121,7 @@ tunnel:
     - 8080
     - 8081
   portRange:
-    - "5001-5009"
-    - "6001-6009"
+    - "5001-5010"
 
 inlets:
   license: "xxxxx"
