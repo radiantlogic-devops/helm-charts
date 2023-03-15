@@ -152,6 +152,9 @@ postgresql:
 | cert-manager.startupapicheck.nodeSelector | object | `{}` |  |
 | cert-manager.webhook.nodeSelector | object | `{}` |  |
 | fullnameOverride | string | `""` |  |
+| hooks.post_upgrade.enabled | bool | false |  |
+| hooks.hooks_sa.enabled | bool | false |  |
+| fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"Always"` |  |
 | image.repository | string | `"radiantone/sdc-server"` |  |
 | image.tag | string | `"0.1.1"` |  |

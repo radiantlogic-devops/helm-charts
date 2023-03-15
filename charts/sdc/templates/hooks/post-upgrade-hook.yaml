@@ -1,0 +1,36 @@
+{{- if .Values.hooks.post_upgrade.enabled }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "agent.fullname" . }}-post-upgrade-job
+  labels:
+    {{- include "agent.labels" . | nindent 4 }}
+    app.kubernetes.io/core-name: {{ include "agent.name" . }}
+  annotations:
+    # This is what defines this resource as a hook. Without this line, the
+    # job is considered part of the release.
+    "helm.sh/hook": post-upgrade
+    # Comment the line below to keep the container created from the Hook
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+spec:
+  template:
+    metadata:
+      name: {{ include "agent.fullname" . }}-post-install-job
+    spec:
+      serviceAccountName: {{ include "agent.fullname" . }}-hook-account
+      restartPolicy: Never
+      containers:
+      - name: post-upgrade-job
+        image: bitnami/kubectl:latest
+        command:
+        - sh
+        - -c
+        - |
+          imageTag=$(kubectl get deployment/{{ .Values.tunnel.tunnelname }} -o yaml -n {{ .Release.Namespace }}  | grep "image:" | awk '{print $2}' | cut -d ":" -f 2)
+          if [ "$(printf '%s\n' {{ .Values.inlets.inletsVersion }} $imageTag | sort -V | head -n1)" != "{{ .Values.inlets.inletsVersion }}" ]; then
+            kubectl -n {{ .Release.Namespace }} set image deployment/{{ .Values.tunnel.tunnelname}} server=ghcr.io/inlets/inlets-pro:{{ .Values.inlets.inletsVersion }};
+          else
+            echo " Tunnel version matches the current inlets-uplink version, no action needed"
+          fi
+
+{{- end }}

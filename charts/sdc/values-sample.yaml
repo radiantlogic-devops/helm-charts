@@ -43,3 +43,10 @@ inlets:
 # Postgresql should be deployed prior to deployment or should be enabled from below
 postgresql:
   enabled: false
+
+
+hooks:
+  post_upgrade:
+    enabled: true
+  hooks_sa:
+    enabled: true
