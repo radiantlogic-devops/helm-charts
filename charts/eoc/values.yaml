@@ -50,25 +50,25 @@ backend:
     port: 5432
     auth:
       user: eocadmin
-      pass: "xxx"
+      pass: "eocadmin"
   jwt:
     secret: mySecret
     expiresIn: 60m
   oauth:
     # Get them from https://console.cloud.google.com/apis/credentials
     google:
-      clientId: ""
-      clientSecret: ""
+      clientId: "xxxxxx"
+      clientSecret: "xxxxxx"
     # Get them from https://github.com/settings/developers
     github:
-      clientId: ""
-      clientSecret: ""
+      clientId: "xxxxxx"
+      clientSecret: "xxxxxx"
   # mailer module
   smtp:
-    user: user@outlook.com
+    user: saas@radiantlogic.com
     pass: password
-    host: smtp.office365.com
-    port: 587
+    host: smtp-server
+    port: 25
   # Initial Admin user configuration
   admin:
     email: user@example.com
