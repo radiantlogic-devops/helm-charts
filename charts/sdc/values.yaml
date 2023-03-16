@@ -133,18 +133,14 @@ inlets:
     # Customer tunnels will connect with a URI of:
     # wss://uplink.example.com/namespace/tunnel
     domain: uplink.example.com
-
     service:
       type: NodePort
-
     tls:
       issuerName: "letsencrypt-prod"
-
       issuer:
         enabled: false
         # Email address used for ACME registration
         email: "user@example.com"
-
       ingress:
         enabled: false
         class: "nginx"
@@ -160,12 +156,10 @@ inlets:
 
       istio:
         enabled: false
-
   # A separate REST API for automation of inlets tunnels
   clientApi:
     enabled: false
     image: "ghcr.io/openfaasltd/uplink-api:0.1.7"
-
   # Deployments, Services and Secrets will be created in this namespace
   # Leave blank for a cluster-wide scope, with tunnels in multiple namespaces
   # tunnelsNamespace: "duploservices-nike-svc"
@@ -183,16 +177,13 @@ inlets:
       requests:
         memory: "512Mi"
     annotations: {}
-
   nameOverride: ""
   fullnameOverride: ""
-
   resources:
     requests:
       cpu: 100m
       memory: 128Mi
 
-  nodeSelector: {}
   tolerations: []
   affinity: {}
 
