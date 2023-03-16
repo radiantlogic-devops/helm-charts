@@ -15,6 +15,7 @@ s3:
   # accessKey and secretKey are not required when used with eoc.
   accessKey: ''
   secretKey: ''
+  bucketName: ''
 
 service:
   type: ClusterIP
