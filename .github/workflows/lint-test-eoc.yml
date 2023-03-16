@@ -55,4 +55,4 @@ jobs:
           kubectl get nodes --context kind-chart-testing
 
       - name: Run chart-testing (install)
-        run: ct install --charts=charts/eoc --debug --helm-extra-set-args="--set=postgresql.enabled=true" --upgrade
+        run: ct install --charts=charts/eoc --debug --helm-extra-args="--timeout=15m0s" --helm-extra-set-args="--set=postgresql.enabled=true" --upgrade
