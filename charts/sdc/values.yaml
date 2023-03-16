@@ -124,6 +124,7 @@ tunnel:
     - "5001-5010"
 
 inlets:
+  nodeSelector: {}
   license: "xxxxxx"
   enabled: true
   # A router to work on a wildcard domain and to direct
@@ -240,8 +241,6 @@ pgadmin4:
 
 # Enable hooks to run helm jobs that would update the Tunnel to the version mentioned in  "inletsVersion: x.x.x"
 # Enabling post_upgrade hook requires a Service Account to be created which can be done by enabling the hooks_sa
-
-
 hooks:
   post_upgrade:
     enabled: true

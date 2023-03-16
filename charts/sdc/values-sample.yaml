@@ -16,6 +16,17 @@ agents:
   # PortForward__Range can be a single port if only one port is opened
   portForward__range: "5001-5010, 8080, 8081"
 
+inlets:
+  nodeSelector: {}
+    # tenantname: xxxxxxx
+  license: "xxxxx"
+  # A router to work on a wildcard domain and to direct
+  # traffic according to request domain
+  clientRouter:
+    # Customer tunnels will connect with a URI of:
+    # wss://uplink.example.com/namespace/tunnel
+    domain: uplink.example.com/namespace/tunnel
+
 tunnel:
   tunnelname: r1tunnel
   nodeSelector: {}
@@ -29,19 +40,11 @@ tunnel:
     - 8081
   portRange:
     - "5001-5010"
-    - "6001-6010"
-
-inlets:
-  license: "xxxxx"
-  # A router to work on a wildcard domain and to direct
-  # traffic according to request domain
-  clientRouter:
-    # Customer tunnels will connect with a URI of:
-    # wss://uplink.example.com/namespace/tunnel
-    domain: uplink.example.com/namespace/tunnel
 
 # Postgresql should be deployed prior to deployment or should be enabled from below
 postgresql:
+  primary:
+    nodeSelector: {}
   enabled: false
 
 
