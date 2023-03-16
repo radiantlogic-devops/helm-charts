@@ -100,14 +100,14 @@ agents:
     auth:
       password: xxxxx
       username: agentsadmin
-  clientId: ""
-  clientSecret: ""
+  clientId: "xxxxx"
+  clientSecret: "xxxxx"
   # PortForward__Range should match the start and end ports provided under tunnel
   # PortForward__Range can be a single port if only one port is opened
   portForward__range: "5001-5009, 8080, 8081"
 
 tunnel:
-  tunnelname: ""
+  tunnelname: "xxxxx"
   nodeSelector: {}
   # If you are planning to use a pre-generated token rather than the one created by inlets
   # Please provide a name and the token value below
@@ -124,7 +124,7 @@ tunnel:
     - "5001-5010"
 
 inlets:
-  license: ""
+  license: "xxxxxx"
   enabled: true
   # A router to work on a wildcard domain and to direct
   # traffic according to request domain
