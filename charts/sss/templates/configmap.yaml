@@ -2,7 +2,7 @@ apiVersion: v1
 data:
   ASPNETCORE_URLS: "http://+:80"
   DOTNET_RUNNING_IN_CONTAINER: "true"
-  AWSSettings__BucketName: {{ .Values.bucketName | quote }}
+  AWSSettings__BucketName: {{ .Values.s3.bucketName | quote }}
   AWSSettings__Region: {{ .Values.s3.region | quote }}
   AWSSettings__AccessKey: {{ .Values.s3.accessKey | quote }}
   AWSSettings__SecretKey: {{ .Values.s3.secretKey | quote }}
