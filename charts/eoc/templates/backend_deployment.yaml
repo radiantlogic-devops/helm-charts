@@ -28,12 +28,18 @@ spec:
           httpGet:
             path: /eoc-backend/health
             port: 3000
-          initialDelaySeconds: 90
+          initialDelaySeconds: 120
+          periodSeconds: 30
+          failureThreshold: 5
+          successThreshold: 1
         readinessProbe:
           httpGet:
               path: /eoc-backend/health
               port: 3000
-          initialDelaySeconds: 90
+          initialDelaySeconds: 120
+          periodSeconds: 30
+          failureThreshold: 5
+          successThreshold: 1
       {{- with .Values.backend.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

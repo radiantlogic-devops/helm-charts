@@ -28,12 +28,18 @@ spec:
           httpGet:
             path: /eoc/login
             port: 80
-          initialDelaySeconds: 90
+          initialDelaySeconds: 120
+          periodSeconds: 30
+          failureThreshold: 5
+          successThreshold: 1
         readinessProbe:
           httpGet:
             path: /eoc/login
             port: 80
-          initialDelaySeconds: 90
+          initialDelaySeconds: 120
+          periodSeconds: 30
+          failureThreshold: 5
+          successThreshold: 1
       {{- with .Values.ui.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

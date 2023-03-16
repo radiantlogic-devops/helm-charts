@@ -28,10 +28,16 @@ spec:
           tcpSocket:
             port: 3001
           initialDelaySeconds: 60
+          periodSeconds: 30
+          failureThreshold: 5
+          successThreshold: 1
         livenessProbe:
           tcpSocket:
             port: 3001
           initialDelaySeconds: 60
+          periodSeconds: 30
+          failureThreshold: 5
+          successThreshold: 1
       {{- with .Values.orchestrator.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
