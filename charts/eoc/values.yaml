@@ -50,7 +50,7 @@ backend:
     port: 5432
     auth:
       user: eocadmin
-      pass: "eocadmin"
+      pass: eocadmin
   jwt:
     secret: mySecret
     expiresIn: 60m
