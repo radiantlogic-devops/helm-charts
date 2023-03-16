@@ -24,6 +24,16 @@ spec:
         envFrom:
           - configMapRef:
               name: {{ template "eoc-ui.fullname" . }}
+        livenessProbe:
+          httpGet:
+            path: /eoc/login
+            port: 80
+          initialDelaySeconds: 90
+        readinessProbe:
+          httpGet:
+            path: /eoc/login
+            port: 80
+          initialDelaySeconds: 90
       {{- with .Values.ui.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
