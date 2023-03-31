@@ -2,6 +2,9 @@
 nodeSelector: {}
   # tenantname: xxxxx
 
+imagePullSecrets: []
+  # - name: regcred
+
 agents:
   database:
     host: postgresql
