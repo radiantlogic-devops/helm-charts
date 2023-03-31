@@ -51,6 +51,7 @@ backend:
     auth:
       user: eocadmin
       pass: eocadmin
+  s3BucketName: ""
   jwt:
     secret: mySecret
     expiresIn: 60m
