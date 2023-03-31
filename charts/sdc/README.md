@@ -1,4 +1,8 @@
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.16.0](https://img.shields.io/badge/AppVersion-1.16.0-informational?style=flat-square)
+# sdc
+
+![Version: 0.0.1-alpha.2](https://img.shields.io/badge/Version-0.0.1--alpha.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.2.0](https://img.shields.io/badge/AppVersion-0.2.0-informational?style=flat-square)
+
+A Helm chart for Kubernetes
 
 ## AGENTS-INLETS
 
@@ -8,21 +12,6 @@ INLETS_UPLINK is deployed as dependency chart.
 
 Additionally CERT-MANAGER, POSTGRES and PGADMIN can also be deployed as dependencies as required.
 
-## PRE-REQUISITES
-
-- Kubernetes Cluster
-
-- Helm 3
-
-
-## Dependency Charts
-
-| Repository | Name | Version |
-|------------|------|---------|
-| https://charts.bitnami.com/bitnami | postgresql | 12.1.3 |
-| https://charts.jetstack.io | cert-manager | 1.11.0 |
-| https://helm.runix.net | pgadmin4 | 1.13.8 |
-| oci://ghcr.io/openfaasltd | inlets(inlets-uplink-provider) | 0.2.4 |
 
 1. INLETS
 
@@ -141,22 +130,34 @@ hooks:
   hooks_sa:
     enabled: true
 
+## Maintainers
 
-```
+| Name | Email | Url |
+| ---- | ------ | --- |
+| pgodey | <pgodey@radiantlogic.com> | <https://www.radiantlogic.com> |
+
+## Requirements
+
+| Repository | Name | Version |
+|------------|------|---------|
+| https://charts.bitnami.com/bitnami | postgresql | 12.1.3 |
+| https://charts.jetstack.io | cert-manager | 1.11.0 |
+| https://helm.runix.net | pgadmin4 | 1.13.8 |
+| oci://ghcr.io/openfaasltd | inlets(inlets-uplink-provider) | 0.2.9 |
 
 ## Values
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` |  |
-| agents.database.host | string | `"xxxxxx"` |  |
-| agents.database.name | string | `"xxxxxx"` |  |
-| agents.database.schema | string | `"xxxxxx"` |  |
-| agents.database.auth.username | string | `"xxxxxx"` |  |
-| agents.database.auth.password | string | `"xxxxxx"` |  |
-| agents.clientId | string | `"xxxxxx"` |  |
-| agents.clientSecret | string | `"xxxxxx"` |  |
-| agents.PortForward__Range | string | `"xxxxxx"` | Ports that have been selcted to be opened - start-end |
+| agents.clientId | string | `"xxxxx"` |  |
+| agents.clientSecret | string | `"xxxxx"` |  |
+| agents.database.auth.password | string | `"xxxxx"` |  |
+| agents.database.auth.username | string | `"agentsadmin"` |  |
+| agents.database.host | string | `"postgresql"` |  |
+| agents.database.name | string | `"agentsdb"` |  |
+| agents.database.schema | string | `"agents"` |  |
+| agents.portForward__range | string | `"5001-5009, 8080, 8081"` |  |
 | autoscaling.enabled | bool | `false` |  |
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
@@ -171,13 +172,15 @@ hooks:
 | cert-manager.startupapicheck.nodeSelector | object | `{}` |  |
 | cert-manager.webhook.nodeSelector | object | `{}` |  |
 | fullnameOverride | string | `""` |  |
-| hooks.post_upgrade.enabled | bool | false |  |
-| hooks.hooks_sa.enabled | bool | false |  |
-| fullnameOverride | string | `""` |  |
+| hooks.hooks_sa.enabled | bool | `true` |  |
+| hooks.post_upgrade.enabled | bool | `true` |  |
 | image.pullPolicy | string | `"Always"` |  |
 | image.repository | string | `"radiantone/sdc-server"` |  |
-| image.tag | string | `" "` |  |
-| imagePullSecrets | list | `regcred` |  |
+| imageCredentials.email | string | `"someone@host.com"` |  |
+| imageCredentials.password | string | `"something"` |  |
+| imageCredentials.registry | string | `"https://index.docker.io/v1/"` |  |
+| imageCredentials.username | string | `"someone"` |  |
+| imagePullSecrets[0].name | string | `"regcred"` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
 | ingress.enabled | bool | `false` |  |
@@ -189,6 +192,7 @@ hooks:
 | inlets.clientApi.enabled | bool | `false` |  |
 | inlets.clientApi.image | string | `"ghcr.io/openfaasltd/uplink-api:0.1.7"` |  |
 | inlets.clientRouter.domain | string | `"uplink.example.com"` |  |
+| inlets.clientRouter.service.type | string | `"NodePort"` |  |
 | inlets.clientRouter.tls.ingress.annotations."nginx.ingress.kubernetes.io/keepalive-timeout" | string | `"350"` |  |
 | inlets.clientRouter.tls.ingress.annotations."nginx.ingress.kubernetes.io/limit-connections" | string | `"300"` |  |
 | inlets.clientRouter.tls.ingress.annotations."nginx.ingress.kubernetes.io/limit-rpm" | string | `"1000"` |  |
@@ -201,23 +205,22 @@ hooks:
 | inlets.clientRouter.tls.issuer.enabled | bool | `false` |  |
 | inlets.clientRouter.tls.issuerName | string | `"letsencrypt-prod"` |  |
 | inlets.clientRouter.tls.istio.enabled | bool | `false` |  |
-| inlets.clientRouter.service.type | string | `NodePort` |  |
 | inlets.enabled | bool | `true` |  |
 | inlets.fullnameOverride | string | `""` |  |
-| inlets.inletsVersion | string | `"0.9.12"` |  |
-| inlets.license | string | `"xxxxxxx"` |  |
+| inlets.inletsVersion | string | `"0.9.18"` |  |
+| inlets.license | string | `"xxxxxx"` |  |
 | inlets.nameOverride | string | `""` |  |
 | inlets.nodeSelector | object | `{}` |  |
 | inlets.prometheus.annotations | object | `{}` |  |
 | inlets.prometheus.create | bool | `false` |  |
 | inlets.prometheus.image | string | `"prom/prometheus:v2.40.1"` |  |
 | inlets.prometheus.resources.requests.memory | string | `"512Mi"` |  |
+| inlets.prometheus.service.type | string | `"NodePort"` |  |
 | inlets.resources.requests.cpu | string | `"100m"` |  |
 | inlets.resources.requests.memory | string | `"128Mi"` |  |
 | inlets.tolerations | list | `[]` |  |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
-| prometheus.enabled | bool | `false` |  |
 | pgadmin4.enabled | bool | `false` |  |
 | pgadmin4.env.contextPath | string | `"/pgadmin4"` |  |
 | pgadmin4.fullnameOverride | string | `"pgadmin4"` |  |
@@ -225,12 +228,12 @@ hooks:
 | pgadmin4.persistentVolume.enabled | bool | `false` |  |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
-| postgresql.enabled | bool | `true` |  |
+| postgresql.enabled | bool | `false` |  |
 | postgresql.fullnameOverride | string | `"postgresql"` |  |
-| postgresql.primary.initdb.scripts."01_agents_init_script.sql" | string | `"CREATE DATABASE agentsdb;\nCREATE USER agentsadmin WITH ENCRYPTED PASSWORD '9iKnkK4Xzi';\nGRANT ALL PRIVILEGES ON DATABASE agentsdb TO agentsadmin;\n"` |  |
-| postgresql.primary.initdb.scripts."02_eoc_init_script.sql" | string | `"CREATE DATABASE eocdb;\nCREATE USER eocadmin WITH ENCRYPTED PASSWORD '9iKnkK4Xzi';\nGRANT ALL PRIVILEGES ON DATABASE eocdb TO eocadmin;\n"` |  |
-| postgresql.primary.initdb.scripts."XX_create_schema_init_script.sh" | string | `"#!/bin/bash\nPGPASSWORD=$POSTGRES_PASSWORD psql -v ON_ERROR_STOP=1 <<-EOSQL\n  \\connect eocdb;\n  CREATE SCHEMA IF NOT EXISTS eoc;\n  GRANT ALL ON SCHEMA eoc TO eocadmin;\n  GRANT ALL ON SCHEMA public TO eocadmin;\n  \\connect agentsdb;\n  CREATE SCHEMA IF NOT EXISTS agents;\n  GRANT ALL ON SCHEMA agents TO agentsadmin;\nEOSQL\n"` |  |
+| postgresql.primary.initdb.scripts."01_agents_init_script.sql" | string | `"CREATE DATABASE agentsdb;\nCREATE USER agentsadmin WITH ENCRYPTED PASSWORD 'xxxxx';\nGRANT ALL PRIVILEGES ON DATABASE agentsdb TO agentsadmin;\n"` |  |
+| postgresql.primary.initdb.scripts."XX_create_schema_init_script.sh" | string | `"#!/bin/bash\nPGPASSWORD=$POSTGRES_PASSWORD psql -v ON_ERROR_STOP=1 <<-EOSQL\n  \\connect agentsdb;\n  CREATE SCHEMA IF NOT EXISTS agents;\n  GRANT ALL ON SCHEMA agents TO agentsadmin;\nEOSQL\n"` |  |
 | postgresql.primary.nodeSelector | object | `{}` |  |
+| prometheus.enabled | bool | `false` |  |
 | replicaCount | int | `1` |  |
 | resources | object | `{}` |  |
 | securityContext | object | `{}` |  |
@@ -241,10 +244,11 @@ hooks:
 | serviceAccount.name | string | `""` |  |
 | tolerations | list | `[]` |  |
 | tunnel.nodeSelector | object | `{}` |  |
-| tunnel.tcpPorts.start | int | `5001` |  |
-| tunnel.tcpPorts.end | int | `5010` |  |
-| tunnel.pregentokenname | string | `"pregentoken"` |  |
-| tunnel.token | string | `"xxxxxxx"` |  |
-| tunnel.tunnelname | string | `"acmeco"` |  |
+| tunnel.portRange[0] | string | `"5001-5010"` |  |
+| tunnel.ports[0] | int | `8080` |  |
+| tunnel.ports[1] | int | `8081` |  |
+| tunnel.pregentokenname | string | `""` |  |
+| tunnel.token | string | `""` |  |
+| tunnel.tunnelname | string | `"xxxxx"` |  |
 
-----------------------------------------------
+
