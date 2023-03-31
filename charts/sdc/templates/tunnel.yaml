@@ -6,15 +6,36 @@ metadata:
   name: {{ .Values.tunnel.tunnelname }}
   namespace: {{ .Release.Namespace }}
 spec:
-  licenseRef: 
+  licenseRef:
     name: inlets-uplink-license
     namespace: {{ .Release.Namespace }}
+{{- if .Values.tunnel.token }}
   tokenRef:
     name: {{ .Values.tunnel.pregentokenname }}
+    token: {{ .Values.tunnel.token }}
     namespace: {{ .Release.Namespace }}
+{{- end }}
   tcpPorts:
-  - 8080
-  - 5001
+    {{- $allPorts := list }}
+
+    {{- if .Values.tunnel.portRange }}
+      {{- range $index, $range := .Values.tunnel.portRange }}
+        {{- $ports := regexSplit "-" $range -1 }}
+        {{- range untilStep (index $ports 0 | int) (index $ports 1 | int) 1 }}
+          {{- $allPorts = append $allPorts (. | int) }}
+        {{- end }}
+      {{- end }}
+    {{- end }}
+
+    {{- if .Values.tunnel.ports }}
+      {{- range $index, $port := .Values.tunnel.ports }}
+        {{- $allPorts = append $allPorts ($port | int) }}
+      {{- end }}
+    {{- end }}
+
+    {{- range $index, $port := $allPorts }}
+      - {{ $port }}
+    {{- end }}
 {{- with .Values.tunnel.nodeSelector }}
   nodeSelector:
     {{- toYaml . | nindent 8 }}

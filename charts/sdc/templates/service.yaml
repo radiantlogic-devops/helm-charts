@@ -4,6 +4,10 @@ metadata:
   name: {{ include "agent.fullname" . }}
   labels:
     {{- include "agent.labels" . | nindent 4 }}
+{{- if .Values.prometheus.enabled }}
+  annotations:
+    prometheus.io/scrape: 'true'
+{{- end }}
 spec:
   type: {{ .Values.service.type }}
   ports:

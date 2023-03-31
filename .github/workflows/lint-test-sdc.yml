@@ -59,4 +59,13 @@ jobs:
           kubectl get nodes --context kind-chart-testing
 
       - name: Run chart-testing (install)
-        run: ct install --charts=charts/sdc --debug --helm-extra-set-args="--set=postgresql.enabled=true" --upgrade
+        run: |
+          ct install --charts=charts/sdc --debug --helm-extra-set-args="--set=imageCredentials.username=${{ secrets.DOCKER_USERNAME }} \
+          --set=imageCredentials.password=${{ secrets.DOCKER_PASSWORD }} \
+          --set=imageCredentials.email=${{ secrets.DOCKER_EMAIL }} \
+          --set=inlets.license=${{ secrets.INLETS_LICENSE }} \
+          --set=agents.clientId="SuperUser99" \
+          --set=agents.clientSecret="$uperSecret45" \
+          --set=hooks.post_upgrade.enabled=true \
+          --set=hooks.hooks_sa.enabled=true \
+          --set=postgresql.enabled=true" --upgrade

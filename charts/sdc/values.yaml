@@ -5,12 +5,19 @@
 replicaCount: 1
 
 image:
-  repository: registry.gitlab.com/radiant-logic-engineering/radiant-one-opa-server/sdc-server
+  repository: radiantone/sdc-server
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "latest"
+  # tag: "0.1.1"
 
-imagePullSecrets: []
+imageCredentials:
+  registry: https://index.docker.io/v1/
+  username: someone
+  password: something
+  email: someone@host.com
+
+imagePullSecrets:
+  - name: regcred
 nameOverride: ""
 fullnameOverride: ""
 
@@ -22,6 +29,11 @@ serviceAccount:
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
   name: ""
+
+# Enable prometheus to activate scraping the metrics from metrics end point
+# Prometheus needs to deployed and available
+prometheus:
+  enabled: false
 
 podAnnotations: {}
 
@@ -82,22 +94,38 @@ affinity: {}
 
 agents:
   database:
-    ConnectionStrings__AgentsDatabase: "Host=postgresql; Database=agentsdb; Username=agentsadmin; Password=xxxxx; SearchPath=agents"
-    DefaultApiClient__ClientId: "xxxxx"
-    DefaultApiClient__ClientSecret: "xxxxx"
-  jwtIssuer: "OPAServer"
-  imagePullSecretName: gitlab-pull-secret
-  dockerconfigjson: "xxxxx"
+    host: postgresql
+    name: agentsdb
+    schema: agents
+    auth:
+      password: xxxxx
+      username: agentsadmin
+  clientId: "xxxxx"
+  clientSecret: "xxxxx"
+  # PortForward__Range should match the start and end ports provided under tunnel
+  # PortForward__Range can be a single port if only one port is opened
+  portForward__range: "5001-5009, 8080, 8081"
 
 tunnel:
-  tunnelname: r1tunnel
+  tunnelname: "xxxxx"
   nodeSelector: {}
-  pregentokenname: pregentoken
-  token: "xxxxx"
-
+  # If you are planning to use a pre-generated token rather than the one created by inlets
+  # Please provide a name and the token value below
+  pregentokenname: ""
+  token: ""
+  # Ports opened for tunnels
+  # To open single ports of choice provide values under "ports:"
+  # To open range of ports provide values under "portRange" like "5001-5010"
+  # Provide higher + 1 for the higher limit (port) intended (for portRange)
+  ports:
+    - 8080
+    - 8081
+  portRange:
+    - "5001-5010"
 
 inlets:
-  license: "xxxxx"
+  nodeSelector: {}
+  license: "xxxxxx"
   enabled: true
   # A router to work on a wildcard domain and to direct
   # traffic according to request domain
@@ -105,15 +133,14 @@ inlets:
     # Customer tunnels will connect with a URI of:
     # wss://uplink.example.com/namespace/tunnel
     domain: uplink.example.com
-
+    service:
+      type: NodePort
     tls:
       issuerName: "letsencrypt-prod"
-
       issuer:
         enabled: false
         # Email address used for ACME registration
         email: "user@example.com"
-
       ingress:
         enabled: false
         class: "nginx"
@@ -129,38 +156,34 @@ inlets:
 
       istio:
         enabled: false
-
   # A separate REST API for automation of inlets tunnels
   clientApi:
     enabled: false
     image: "ghcr.io/openfaasltd/uplink-api:0.1.7"
-
   # Deployments, Services and Secrets will be created in this namespace
   # Leave blank for a cluster-wide scope, with tunnels in multiple namespaces
   # tunnelsNamespace: "duploservices-nike-svc"
 
   # inlets Pro release version for tunnel server Pods
   # Check https://ghcr.io/inlets/inlets-pro for tags
-  inletsVersion: 0.9.12
-
+  inletsVersion: 0.9.18
   # monitoring tunnels
   prometheus:
     image: prom/prometheus:v2.40.1
     create: false
+    service:
+      type: NodePort
     resources:
       requests:
         memory: "512Mi"
     annotations: {}
-
   nameOverride: ""
   fullnameOverride: ""
-
   resources:
     requests:
       cpu: 100m
       memory: 128Mi
 
-  nodeSelector: {}
   tolerations: []
   affinity: {}
 
@@ -183,7 +206,7 @@ postgresql:
   fullnameOverride: postgresql
   primary:
     nodeSelector: {}
-      # tenantname: duploservices-ensemble-svc
+      # tenantname: xxxx
     initdb:
       scripts:
         01_agents_init_script.sql: |
@@ -197,6 +220,7 @@ postgresql:
             CREATE SCHEMA IF NOT EXISTS agents;
             GRANT ALL ON SCHEMA agents TO agentsadmin;
           EOSQL
+
 pgadmin4:
   enabled: false
   fullnameOverride: pgadmin4
@@ -205,3 +229,11 @@ pgadmin4:
     enabled: false
   env:
     contextPath: "/pgadmin4"
+
+# Enable hooks to run helm jobs that would update the Tunnel to the version mentioned in  "inletsVersion: x.x.x"
+# Enabling post_upgrade hook requires a Service Account to be created which can be done by enabling the hooks_sa
+hooks:
+  post_upgrade:
+    enabled: true
+  hooks_sa:
+    enabled: true
