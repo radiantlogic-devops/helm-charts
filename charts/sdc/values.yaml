@@ -18,7 +18,7 @@ imageCredentials: {}
 
 imagePullSecrets: []
   # - name: regcred
-  
+
 nameOverride: ""
 fullnameOverride: ""
 
