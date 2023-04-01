@@ -22,7 +22,7 @@ spec:
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
+        - name: {{ . }}
       {{- end }}
       serviceAccountName: {{ include "agent.serviceAccountName" . }}
       securityContext:

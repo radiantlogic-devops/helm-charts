@@ -16,8 +16,8 @@ imageCredentials: {}
   # password: something
   # email: someone@host.com
 
-imagePullSecrets: []
-  # - name: regcred
+imagePullSecrets: ""   
+
 nameOverride: ""
 fullnameOverride: ""
 

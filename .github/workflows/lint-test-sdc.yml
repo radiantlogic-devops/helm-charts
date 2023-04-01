@@ -63,6 +63,7 @@ jobs:
           ct install --charts=charts/sdc --debug --helm-extra-set-args="--set=imageCredentials.username=${{ secrets.DOCKER_USERNAME }} \
           --set=imageCredentials.password=${{ secrets.DOCKER_PASSWORD }} \
           --set=imageCredentials.email=${{ secrets.DOCKER_EMAIL }} \
+          --set=imagePullSecrets="regcred" \
           --set=inlets.license=${{ secrets.INLETS_LICENSE }} \
           --set=agents.clientId="SuperUser99" \
           --set=agents.clientSecret="$uperSecret45" \
