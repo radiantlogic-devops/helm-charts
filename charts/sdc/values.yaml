@@ -108,7 +108,7 @@ agents:
   portForward__range: "5001-5009, 8080, 8081"
 
 tunnel:
-  tunnelname: "xxxxx"
+  tunnelname: "r1tunnel"
   nodeSelector: {}
   # If you are planning to use a pre-generated token rather than the one created by inlets
   # Please provide a name and the token value below
