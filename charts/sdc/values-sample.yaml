@@ -2,6 +2,8 @@
 nodeSelector: {}
   # tenantname: xxxxx
 
+imageCredentials: {}
+
 imagePullSecrets: []
   # - name: regcred
 
