@@ -11,5 +11,5 @@ data:
   {{- if .Values.agents.portForward__range }}
   PortForward__Range: {{ .Values.agents.portForward__range | quote }}
   {{- end }}
-  Jwt__Issuer: {{ .Values.inlets.clientRouter.domain | quote }}
+  Jwt__Issuer: {{ .Values.agents.endpoint | quote }}
 
