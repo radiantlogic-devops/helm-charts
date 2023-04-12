@@ -68,6 +68,7 @@ jobs:
           --set=inlets.license=${{ secrets.INLETS_LICENSE }} \
           --set=agents.clientId="SuperUser99" \
           --set=agents.clientSecret="$uperSecret45" \
+          --set=agents.endpoint="https://sdc-envname.radiantlogic.io" \
           --set=hooks.post_upgrade.enabled=true \
           --set=hooks.hooks_sa.enabled=true \
           --set=postgresql.enabled=true" --upgrade

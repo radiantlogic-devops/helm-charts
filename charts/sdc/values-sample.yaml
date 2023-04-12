@@ -20,6 +20,7 @@ agents:
   # PortForward__Range should match the start and end ports provided under tunnel
   # PortForward__Range can be a single port if only one port is opened
   portForward__range: "5001-5010, 8080, 8081"
+  endpoint: https://sdc-envname.radiantlogic.io
 
 inlets:
   nodeSelector: {}
