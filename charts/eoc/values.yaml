@@ -182,8 +182,7 @@ postgresql:
           EOSQL
 sss:
   enabled: true
-  nodeSelector:
-    tenantname: {}
+  nodeSelector: {}
   s3:
     region: ""
     bucketName: ""
