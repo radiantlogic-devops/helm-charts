@@ -26,6 +26,7 @@ data:
   OAUTH_GITHUB_CLIENT_ID: {{ .Values.backend.oauth.github.clientId | quote }}
   OAUTH_GITHUB_CLIENT_SECRET: {{ .Values.backend.oauth.github.clientSecret | quote }}
 
+  EMAIL_FROM: {{ .Values.backend.smtp.from | quote }}
   EMAIL_ID: {{ .Values.backend.smtp.user | quote }}
   EMAIL_PASS: {{ .Values.backend.smtp.pass | quote }}
   EMAIL_HOST: {{ .Values.backend.smtp.host | quote }}

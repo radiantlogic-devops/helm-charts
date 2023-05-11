@@ -41,6 +41,7 @@ jobs:
             echo "::set-output name=changed::true"
           fi
           helm repo add bitnami https://charts.bitnami.com/bitnami
+          helm repo add radiantone https://radiantlogic-devops.github.io/helm-charts
           
       - name: Run chart-testing (lint)
         run: ct lint --target-branch ${{ github.event.repository.default_branch }}
@@ -59,4 +60,5 @@ jobs:
           ct install --charts=charts/eoc --debug --helm-extra-args="--timeout=15m0s" --helm-extra-set-args="--set=postgresql.enabled=true \
                       --set=backend.database.auth.pass=eocadmin --set=backend.oauth.google.clientId=xxxxxx \
                       --set=backend.oauth.google.clientSecret=xxxxxx --set=backend.oauth.github.clientId=xxxxxx \
-                      --set=backend.oauth.github.clientSecret=xxxxxx --set=backend.s3BucketName=r1-eoc" --upgrade
+                      --set=backend.oauth.github.clientSecret=xxxxxx --set=backend.s3BucketName=r1-eoc \
+                      --set=sss.s3.bucketName=r1-eoc --set=sss.s3.region=us-west-2" --upgrade

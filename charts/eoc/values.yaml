@@ -66,6 +66,7 @@ backend:
       clientSecret: "xxxxxx"
   # mailer module
   smtp:
+    from: ""
     user: saas@radiantlogic.com
     pass: password
     host: smtp-server
@@ -179,3 +180,9 @@ postgresql:
             CREATE SCHEMA IF NOT EXISTS eoc;
             GRANT ALL ON SCHEMA eoc TO eocadmin;
           EOSQL
+sss:
+  enabled: true
+  nodeSelector: {}
+  s3:
+    region: ""
+    bucketName: ""
