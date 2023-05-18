@@ -289,6 +289,20 @@ entries:
     version: 0.0.1-alpha.1
   sss:
   - apiVersion: v2
+    appVersion: 0.0.1
+    created: "2023-05-18T16:56:47.28245073Z"
+    description: Simple Storage Service (SSS) Helm Chart
+    digest: 036651389fd344c91650f8ef26469f15bb1584de115152fc498f7a457e035342
+    maintainers:
+    - email: pgodey@radiantlogic.com
+      name: pgodey
+      url: https://www.radiantlogic.com
+    name: sss
+    type: application
+    urls:
+    - https://github.com/radiantlogic-devops/helm-charts/releases/download/sss-0.0.1/sss-0.0.1.tgz
+    version: 0.0.1
+  - apiVersion: v2
     appVersion: 0.0.1-alpha.2
     created: "2023-03-16T17:31:57.353792137Z"
     description: Simple Storage Service (SSS) Helm Chart
@@ -316,4 +330,4 @@ entries:
     urls:
     - https://github.com/radiantlogic-devops/helm-charts/releases/download/sss-0.0.1-alpha.1/sss-0.0.1-alpha.1.tgz
     version: 0.0.1-alpha.1
-generated: "2023-05-11T20:10:51.517033495Z"
+generated: "2023-05-18T16:56:47.282520831Z"
