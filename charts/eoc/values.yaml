@@ -3,8 +3,7 @@ global:
   domainName: ""
   certificateArn: ""
   infrastructureName: ""
-  prodEnvLimit: 1
-  nonprodEnvLimit: 2
+  nodeLimit: 10
   fidLicense: ""
   zones: 2
   amiImageId: "ami-0fe74570d87750175"
@@ -62,6 +61,10 @@ backend:
       clientSecret: "xxxxxx"
     # Get them from https://github.com/settings/developers
     github:
+      clientId: "xxxxxx"
+      clientSecret: "xxxxxx"
+    # Get them from https://portal.azure.com/#view/Microsoft_AAD_RegisteredApps/ApplicationsListBlade
+    microsoft:
       clientId: "xxxxxx"
       clientSecret: "xxxxxx"
   # mailer module

@@ -26,6 +26,9 @@ data:
   OAUTH_GITHUB_CLIENT_ID: {{ .Values.backend.oauth.github.clientId | quote }}
   OAUTH_GITHUB_CLIENT_SECRET: {{ .Values.backend.oauth.github.clientSecret | quote }}
 
+  OAUTH_MICROSOFT_CLIENT_ID: {{ .Values.backend.oauth.microsoft.clientId | quote }}
+  OAUTH_MICROSOFT_CLIENT_SECRET: {{ .Values.backend.oauth.microsoft.clientSecret | quote }}
+
   EMAIL_FROM: {{ .Values.backend.smtp.from | quote }}
   EMAIL_ID: {{ .Values.backend.smtp.user | quote }}
   EMAIL_PASS: {{ .Values.backend.smtp.pass | quote }}
@@ -56,6 +59,8 @@ data:
   MIN_ENVIRONMENT_VERSION: {{ .Values.global.minFidVersion | quote }}
   ENV_PREFIX: {{ .Values.global.infrastructureName | quote }}
   DOMAIN_NAME: {{ .Values.global.domainName | quote }}
+
+  NODE_LIMIT: {{ .Values.global.nodeLimit | quote }}
 kind: ConfigMap
 metadata:
   labels:

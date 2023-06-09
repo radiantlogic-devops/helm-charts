@@ -9,8 +9,6 @@ data:
   VITE_REPORTING_URL: {{ .Values.ui.reportingDashboardUrl | quote }}
   VITE_MONITORING_URL: {{ .Values.ui.monitoringDashboardUrl | quote }}
   VITE_KIBANA_API_PATH: {{ .Values.ui.kibanaApiPath | quote }}
-  VITE_PROD_ENV_LIMIT: {{ .Values.global.prodEnvLimit | quote }}
-  VITE_NONPROD_ENV_LIMIT: {{ .Values.global.nonprodEnvLimit | quote }}
 kind: ConfigMap
 metadata:
   labels:
