@@ -97,6 +97,8 @@ backend:
     # should have enough permission to be able to create a service account
     username: admin
     password: xxxx
+  amplitude:
+    key: ""
   agents:
     api:
       endpoint: ""

@@ -9,6 +9,7 @@ data:
   VITE_REPORTING_URL: {{ .Values.ui.reportingDashboardUrl | quote }}
   VITE_MONITORING_URL: {{ .Values.ui.monitoringDashboardUrl | quote }}
   VITE_KIBANA_API_PATH: {{ .Values.ui.kibanaApiPath | quote }}
+  VITE_AMPLITUDE_KEY: {{ .Values.ui.amplitude.key | quote }}
 kind: ConfigMap
 metadata:
   labels:
