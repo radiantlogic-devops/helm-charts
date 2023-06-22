@@ -25,17 +25,28 @@ spec:
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         ports:
         - containerPort: 80
+        volumeMounts:
+          - mountPath: "/var/secrets"
+            name: secrets
+            readOnly: true
         envFrom:
           - configMapRef:
               name: {{ template "sss.fullname" . }}
         env:
 {{- if not .Values.mountSecrets }}
-  {{- if .Values.global.certificateArn }}
-          - name: CERTIFICATE_ARN
+  {{- if .Values.s3.accessKey }}
+          - name: AWSSettings__AccessKey
             valueFrom:
               secretKeyRef:
-                name: secrets-{{ template "eoc-orchestrator.fullname" . }}
-                key: certificate-arn
+                name: secrets-{{ template "sss.fullname" . }}
+                key: s3-accesskey
+  {{- end }}
+  {{- if .Values.s3.secretKey }}
+          - name: AWSSettings__SecretKey
+            valueFrom:
+              secretKeyRef:
+                name: secrets-{{ template "sss.fullname" . }}
+                key: s3-secretkey
   {{- end }}
 {{- end }}
         livenessProbe:
@@ -66,3 +77,7 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      volumes:
+        - name: secrets
+          secret:
+            secretName: secrets-{{ template "sss.fullname" . }}

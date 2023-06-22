@@ -21,9 +21,23 @@ spec:
         imagePullPolicy: {{ .Values.ui.image.pullPolicy }}
         ports:
         - containerPort: 80
+        volumeMounts:
+          - mountPath: "/var/secrets"
+            name: secrets
+            readOnly: true
         envFrom:
           - configMapRef:
               name: {{ template "eoc-ui.fullname" . }}
+        env:
+{{- if not .Values.global.mountSecrets }}
+  {{- if .Values.ui.amplitude.key }}
+          - name: VITE_AMPLITUDE_KEY
+            valueFrom:
+              secretKeyRef:
+                name: secrets-{{ template "eoc-ui.fullname" . }}
+                key: amplitude-key
+  {{- end }}
+{{- end }}
         livenessProbe:
           httpGet:
             path: /eoc/login
@@ -52,3 +66,7 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      volumes:
+        - name: secrets
+          secret:
+            secretName: secrets-{{ template "eoc-ui.fullname" . }}
