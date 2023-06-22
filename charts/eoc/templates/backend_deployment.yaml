@@ -21,9 +21,135 @@ spec:
         imagePullPolicy: {{ .Values.backend.image.pullPolicy }}
         ports:
         - containerPort: 80
+        volumeMounts:
+          - mountPath: "/var/secrets"
+            name: secrets
+            readOnly: true
         envFrom:
           - configMapRef:
               name: {{ template "eoc-backend.fullname" . }}
+        env:
+{{- if not .Values.global.mountSecrets }}
+  {{- if .Values.backend.database.auth.user }}
+          - name: DATABASE_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: secrets-{{ template "eoc-backend.fullname" . }}
+                key: database-auth-user
+  {{- end }}
+  {{- if .Values.backend.database.auth.pass }}
+          - name: DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: secrets-{{ template "eoc-backend.fullname" . }}
+                key: database-auth-pass
+  {{- end }}
+  {{- if .Values.backend.jwt.secret }}
+          - name: JWT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: secrets-{{ template "eoc-backend.fullname" . }}
+                key: jwt-secret
+  {{- end }}
+  {{- if .Values.backend.oauth.google.clientId }}
+          - name: OAUTH_GOOGLE_CLIENT_ID
+            valueFrom:
+              secretKeyRef:
+                name: secrets-{{ template "eoc-backend.fullname" . }}
+                key: oauth-google-clientid
+  {{- end }}
+  {{- if .Values.backend.oauth.google.clientSecret }}
+          - name: OAUTH_GOOGLE_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: secrets-{{ template "eoc-backend.fullname" . }}
+                key: oauth-google-clientsecret
+  {{- end }}
+  {{- if .Values.backend.oauth.github.clientId }}
+          - name: OAUTH_GITHUB_CLIENT_ID
+            valueFrom:
+              secretKeyRef:
+                name: secrets-{{ template "eoc-backend.fullname" . }}
+                key: oauth-github-clientid
+  {{- end }}
+  {{- if .Values.backend.oauth.google.clientSecret }}
+          - name: OAUTH_GOOGLE_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: secrets-{{ template "eoc-backend.fullname" . }}
+                key: oauth-github-clientsecret
+  {{- end }}
+  {{- if .Values.backend.oauth.microsoft.clientId }}
+          - name: OAUTH_MICROSOFT_CLIENT_ID
+            valueFrom:
+              secretKeyRef:
+                name: secrets-{{ template "eoc-backend.fullname" . }}
+                key: oauth-microsoft-clientid
+  {{- end }}
+  {{- if .Values.backend.oauth.microsoft.clientSecret }}
+          - name: OAUTH_MICROSOFT_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: secrets-{{ template "eoc-backend.fullname" . }}
+                key: oauth-microsoft-clientsecret
+  {{- end }}
+  {{- if .Values.backend.smtp.user }}
+          - name: EMAIL_ID
+            valueFrom:
+              secretKeyRef:
+                name: secrets-{{ template "eoc-backend.fullname" . }}
+                key: smtp-user
+  {{- end }}
+  {{- if .Values.backend.smtp.pass }}
+          - name: EMAIL_PASS
+            valueFrom:
+              secretKeyRef:
+                name: secrets-{{ template "eoc-backend.fullname" . }}
+                key: smtp-pass
+  {{- end }}
+  {{- if .Values.backend.encryptionKey }}
+          - name: ENCRYPTION_KEY
+            valueFrom:
+              secretKeyRef:
+                name: secrets-{{ template "eoc-backend.fullname" . }}
+                key: encryption-key
+  {{- end }}
+  {{- if .Values.backend.grafana.username }}
+          - name: GRAFANA_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: secrets-{{ template "eoc-backend.fullname" . }}
+                key: grafana-username
+  {{- end }}
+  {{- if .Values.backend.grafana.password }}
+          - name: GRAFANA_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: secrets-{{ template "eoc-backend.fullname" . }}
+                key: grafana-password
+  {{- end }}
+  {{- if .Values.backend.agents.api.clientId }}
+          - name: AGENTS_CLIENT_ID
+            valueFrom:
+              secretKeyRef:
+                name: secrets-{{ template "eoc-backend.fullname" . }}
+                key: agents-api-clientid
+  {{- end }}
+  {{- if .Values.backend.agents.api.clientSecret }}
+          - name: AGENTS_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: secrets-{{ template "eoc-backend.fullname" . }}
+                key: agents-api-clientsecret
+  {{- end }}
+  {{- if .Values.backend.agents.inlets.token }}
+          - name: AGENTS_INLETS_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: secrets-{{ template "eoc-backend.fullname" . }}
+                key: agents-inlets-token
+  {{- end }}
+{{- end }}
         livenessProbe:
           httpGet:
             path: /eoc-backend/health
@@ -52,3 +178,7 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      volumes:
+        - name: secrets
+          secret:
+            secretName: secrets-{{ template "eoc-backend.fullname" . }}

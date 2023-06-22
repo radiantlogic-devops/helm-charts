@@ -28,6 +28,16 @@ spec:
         envFrom:
           - configMapRef:
               name: {{ template "sss.fullname" . }}
+        env:
+{{- if not .Values.mountSecrets }}
+  {{- if .Values.global.certificateArn }}
+          - name: CERTIFICATE_ARN
+            valueFrom:
+              secretKeyRef:
+                name: secrets-{{ template "eoc-orchestrator.fullname" . }}
+                key: certificate-arn
+  {{- end }}
+{{- end }}
         livenessProbe:
           httpGet:
             path: /healthz

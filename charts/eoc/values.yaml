@@ -8,6 +8,8 @@ global:
   zones: 2
   amiImageId: "ami-0fe74570d87750175"
   minFidVersion: "7.5.0"
+  sealedSecrets: false
+  mountSecrets: false
 
 ui:
   basePath: /eoc

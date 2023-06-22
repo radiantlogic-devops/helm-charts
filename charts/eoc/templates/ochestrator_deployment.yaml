@@ -21,9 +21,58 @@ spec:
         imagePullPolicy: {{ .Values.orchestrator.image.pullPolicy }}
         ports:
         - containerPort: 80
+        volumeMounts:
+          - mountPath: "/var/secrets"
+            name: secrets
+            readOnly: true
         envFrom:
           - configMapRef:
               name: {{ template "eoc-orchestrator.fullname" . }}
+        env:
+{{- if not .Values.global.mountSecrets }}
+  {{- if .Values.global.certificateArn }}
+          - name: CERTIFICATE_ARN
+            valueFrom:
+              secretKeyRef:
+                name: secrets-{{ template "eoc-orchestrator.fullname" . }}
+                key: certificate-arn
+  {{- end }}
+  {{- if .Values.orchestrator.duplo.token }}
+          - name: DUPLO_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: secrets-{{ template "eoc-orchestrator.fullname" . }}
+                key: duplo-token
+  {{- end }}
+  {{- if .Values.orchestrator.argocd.token }}
+          - name: ARGO_CD_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: secrets-{{ template "eoc-orchestrator.fullname" . }}
+                key: argocd-token
+  {{- end }}
+  {{- if .Values.global.fidLicense }}
+          - name: FID_LICENSE_KEY
+            valueFrom:
+              secretKeyRef:
+                name: secrets-{{ template "eoc-orchestrator.fullname" . }}
+                key: fid-license
+  {{- end }}
+  {{- if .Values.orchestrator.git.privateKey }}
+          - name: GIT_PRIVATE_KEY
+            valueFrom:
+              secretKeyRef:
+                name: secrets-{{ template "eoc-orchestrator.fullname" . }}
+                key: git-private-key
+  {{- end }}
+  {{- if .Values.backend.encryptionKey }}
+          - name: ENCRYPTION_KEY
+            valueFrom:
+              secretKeyRef:
+                name: secrets-{{ template "eoc-orchestrator.fullname" . }}
+                key: encryption-key
+  {{- end }}
+{{- end }}
         readinessProbe:
           tcpSocket:
             port: 3001
@@ -50,3 +99,7 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      volumes:
+        - name: secrets
+          secret:
+            secretName: secrets-{{ template "eoc-orchestrator.fullname" . }}
