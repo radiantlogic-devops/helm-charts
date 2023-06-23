@@ -26,10 +26,12 @@ ui:
   # override infrastructure name used for environment name prefix
   infrastructureName: ""
   kibanaApiPath: /kibana/index-patterns
+  amplitude:
+    key: ""
   image:
     repository: radiantone/eoc-ui
     pullPolicy: Always
-    # Overrides the image tag whose default is the chart appVersion.
+    # Overrides the image tag whose default is the chart appVersion.  #
     # tag: "dev"
   nodeSelector: {}
   tolerations: []
