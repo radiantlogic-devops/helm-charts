@@ -14,24 +14,10 @@ data:
   DATABASE_SCHEMA: {{ .Values.backend.database.schema | quote }}
   DATABASE_HOST: {{ .Values.backend.database.host | quote }}
   DATABASE_PORT: {{ .Values.backend.database.port | quote }}
-  DATABASE_USERNAME: {{ .Values.backend.database.auth.user | quote }}
-  DATABASE_PASSWORD: {{ .Values.backend.database.auth.pass | quote }}
 
-  JWT_SECRET: {{ .Values.backend.jwt.secret | quote }}
   JWT_EXPIRES_IN: {{ .Values.backend.jwt.expiresIn | quote }}
 
-  OAUTH_GOOGLE_CLIENT_ID: {{ .Values.backend.oauth.google.clientId | quote }}
-  OAUTH_GOOGLE_CLIENT_SECRET: {{ .Values.backend.oauth.google.clientSecret | quote }}
-
-  OAUTH_GITHUB_CLIENT_ID: {{ .Values.backend.oauth.github.clientId | quote }}
-  OAUTH_GITHUB_CLIENT_SECRET: {{ .Values.backend.oauth.github.clientSecret | quote }}
-
-  OAUTH_MICROSOFT_CLIENT_ID: {{ .Values.backend.oauth.microsoft.clientId | quote }}
-  OAUTH_MICROSOFT_CLIENT_SECRET: {{ .Values.backend.oauth.microsoft.clientSecret | quote }}
-
   EMAIL_FROM: {{ .Values.backend.smtp.from | quote }}
-  EMAIL_ID: {{ .Values.backend.smtp.user | quote }}
-  EMAIL_PASS: {{ .Values.backend.smtp.pass | quote }}
   EMAIL_HOST: {{ .Values.backend.smtp.host | quote }}
   EMAIL_PORT: {{ .Values.backend.smtp.port | quote }}
 
@@ -41,18 +27,11 @@ data:
 
   APP_ROOT_DIRECTORY: {{ .Values.backend.appRootDirectory | quote }}
 
-  ENCRYPTION_KEY: {{ .Values.backend.encryptionKey | quote }}
-
   KIBANA_API_LINK: {{ .Values.backend.kibana.apiUrl | quote }}
 
   GRAFANA_BASE_URL: {{ .Values.backend.grafana.host | quote }}
-  GRAFANA_USERNAME: {{ .Values.backend.grafana.username | quote }}
-  GRAFANA_PASSWORD: {{ .Values.backend.grafana.password | quote }}
 
   AGENTS_BASE_PATH: {{ .Values.backend.agents.api.endpoint | quote }}
-  AGENTS_CLIENT_ID: {{ .Values.backend.agents.api.clientId | quote }}
-  AGENTS_CLIENT_SECRET: {{ .Values.backend.agents.api.clientSecret | quote }}
-  AGENTS_INLETS_TOKEN: {{ .Values.backend.agents.inlets.token | quote }}
   AGENTS_SERVER_NAME: {{ .Values.backend.agents.inlets.serverName | quote }}
   AGENTS_SERVER_ENDPOINT: {{ .Values.backend.agents.inlets.serverEndpoint | quote }}
 
