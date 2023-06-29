@@ -29,7 +29,7 @@ spec:
           - configMapRef:
               name: {{ template "eoc-ui.fullname" . }}
         env:
-{{- if not .Values.global.mountSecrets }}
+{{- if not .Values.ui.mountSecrets }}
   {{- if .Values.ui.amplitude.key }}
           - name: VITE_AMPLITUDE_KEY
             valueFrom:

@@ -8,10 +8,10 @@ global:
   zones: 2
   amiImageId: "ami-0fe74570d87750175"
   minFidVersion: "7.5.0"
-  sealedSecrets: false
-  mountSecrets: false
 
 ui:
+  sealedSecrets: false
+  mountSecrets: false
   basePath: /eoc
   # example https://{fqdm}/eoc-backend
   apiBaseUrl: ""
@@ -38,6 +38,8 @@ ui:
   affinity: {}
 
 backend:
+  sealedSecrets: false
+  mountSecrets: false
   basePath: eoc-backend
   redis:
     # redundant, will be removed
@@ -122,6 +124,8 @@ backend:
   affinity: {}
 
 orchestrator:
+  sealedSecrets: false
+  mountSecrets: false
   duplo:
     token: ""
     baseUrl: ""

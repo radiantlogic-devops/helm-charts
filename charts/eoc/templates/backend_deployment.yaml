@@ -29,7 +29,7 @@ spec:
           - configMapRef:
               name: {{ template "eoc-backend.fullname" . }}
         env:
-{{- if not .Values.global.mountSecrets }}
+{{- if not .Values.backend.mountSecrets }}
   {{- if .Values.backend.database.auth.user }}
           - name: DATABASE_USERNAME
             valueFrom:

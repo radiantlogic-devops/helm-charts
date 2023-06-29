@@ -29,7 +29,7 @@ spec:
           - configMapRef:
               name: {{ template "eoc-orchestrator.fullname" . }}
         env:
-{{- if not .Values.global.mountSecrets }}
+{{- if not .Values.orchestrator.mountSecrets }}
   {{- if .Values.global.certificateArn }}
           - name: CERTIFICATE_ARN
             valueFrom:
