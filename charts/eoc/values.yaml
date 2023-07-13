@@ -8,7 +8,7 @@ global:
   zones: 2
   amiImageId: "ami-0fe74570d87750175"
   minFidVersion: "7.5.0"
-  
+
 features:
   mfa:
     enabled: false
