@@ -17,6 +17,9 @@ data:
   DATABASE_USERNAME: {{ .Values.backend.database.auth.user | quote }}
   DATABASE_PASSWORD: {{ .Values.backend.database.auth.pass | quote }}
 
+  ENABLE_MFA: {{ .Values.features.mfa.enabled | quote }}
+  APP_MFA_NAME: {{ .Values.features.mfa.appName | quote }}
+
   JWT_SECRET: {{ .Values.backend.jwt.secret | quote }}
   JWT_EXPIRES_IN: {{ .Values.backend.jwt.expiresIn | quote }}
 
