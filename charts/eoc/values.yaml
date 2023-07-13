@@ -8,6 +8,11 @@ global:
   zones: 2
   amiImageId: "ami-0fe74570d87750175"
   minFidVersion: "7.5.0"
+  
+features:
+  mfa:
+    enabled: false
+    appName: "Radiant Logic EOC"
 
 ui:
   basePath: /eoc
@@ -53,9 +58,6 @@ backend:
       user: eocadmin
       pass: eocadmin
   s3BucketName: ""
-  mfa:
-    enabled: false
-    appName: "Radiant Logic EOC"
   jwt:
     secret: mySecret
     expiresIn: 60m
