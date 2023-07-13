@@ -53,6 +53,9 @@ backend:
       user: eocadmin
       pass: eocadmin
   s3BucketName: ""
+  mfa:
+    enabled: false
+    appName: "Radiant Logic EOC"
   jwt:
     secret: mySecret
     expiresIn: 60m
