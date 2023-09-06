@@ -58,6 +58,11 @@ data:
   AGENTS_INLETS_TOKEN: {{ .Values.backend.agents.inlets.token | quote }}
   AGENTS_SERVER_NAME: {{ .Values.backend.agents.inlets.serverName | quote }}
   AGENTS_SERVER_ENDPOINT: {{ .Values.backend.agents.inlets.serverEndpoint | quote }}
+  SDC_AWS_ACCESS_KEY_ID: {{ .Values.backend.agents.client.accessKeyId | quote}}
+  SDC_AWS_ACCESS_KEY_SECRET: {{ .Values.backend.agents.client.accessKeySecret | quote }}
+  SDC_AWS_REGION: {{ .Values.backend.agents.client.s3Region | quote }}
+  SDC_AWS_S3_BUCKET_NAME: {{ .Values.backend.agents.client.s3BucketName | quote }}
+  SDC_CLIENT_VERSION: {{ .Values.backend.agents.client.version | quote }}
 
   MIN_ENVIRONMENT_VERSION: {{ .Values.global.minFidVersion | quote }}
   ENV_PREFIX: {{ .Values.global.infrastructureName | quote }}

@@ -115,6 +115,12 @@ backend:
       # external websocket
       # client-router.dc.federated-identity.com/duploservices-rliqa-svc/acmeco
       serverEndpoint: ""
+    client:
+      accessKeyId: ""
+      accessKeySecret: ""
+      s3Region: ""
+      s3BucketName: ""
+      version: ""
   image:
     repository: radiantone/eoc-backend
     pullPolicy: Always
