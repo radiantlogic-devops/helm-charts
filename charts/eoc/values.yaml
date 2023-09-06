@@ -118,9 +118,9 @@ backend:
     client:
       accessKeyId: ""
       accessKeySecret: ""
-      s3Region: ""
-      s3BucketName: ""
-      version: ""
+      s3Region: "us-east-2"
+      s3BucketName: "radiant-one-v8-sdc-distribution"
+      version: "0.2.4"
   image:
     repository: radiantone/eoc-backend
     pullPolicy: Always
