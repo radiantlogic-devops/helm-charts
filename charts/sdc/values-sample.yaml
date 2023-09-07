@@ -32,6 +32,7 @@ inlets:
     # Customer tunnels will connect with a URI of:
     # wss://uplink.example.com/namespace/tunnel
     domain: uplink.example.com/namespace/tunnel
+  inletsVersion: 0.9.21
 
 tunnel:
   tunnelname: r1tunnel
@@ -45,7 +46,7 @@ tunnel:
     - 8080
     - 8081
   portRange:
-    - "5001-5010"
+    - "5001-5100"
 
 # Postgresql should be deployed prior to deployment or should be enabled from below
 postgresql:

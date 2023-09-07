@@ -105,7 +105,7 @@ agents:
   clientSecret: "xxxxx"
   # PortForward__Range should match the start and end ports provided under tunnel
   # PortForward__Range can be a single port if only one port is opened
-  portForward__range: "5001-5009, 8080, 8081"
+  portForward__range: "5001-5100"
   endpoint: https://sdc-envname.radiantlogic.io  # domain for sdc
 
 
@@ -124,7 +124,7 @@ tunnel:
     - 8080
     - 8081
   portRange:
-    - "5001-5010"
+    - "5001-5100"
 
 inlets:
   nodeSelector: {}
@@ -169,7 +169,7 @@ inlets:
 
   # inlets Pro release version for tunnel server Pods
   # Check https://ghcr.io/inlets/inlets-pro for tags
-  inletsVersion: 0.9.18
+  inletsVersion: 0.9.21
   # monitoring tunnels
   prometheus:
     image: prom/prometheus:v2.40.1
