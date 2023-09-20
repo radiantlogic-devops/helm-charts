@@ -51,6 +51,7 @@ data:
   GRAFANA_BASE_URL: {{ .Values.backend.grafana.host | quote }}
   GRAFANA_USERNAME: {{ .Values.backend.grafana.username | quote }}
   GRAFANA_PASSWORD: {{ .Values.backend.grafana.password | quote }}
+  GRAFANA_METRICS_PREFIXES: {{ .Values.backend.grafana.metricsPrefixes | quote }}
 
   AGENTS_BASE_PATH: {{ .Values.backend.agents.api.endpoint | quote }}
   AGENTS_CLIENT_ID: {{ .Values.backend.agents.api.clientId | quote }}

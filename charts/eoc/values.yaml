@@ -102,6 +102,7 @@ backend:
     # should have enough permission to be able to create a service account
     username: admin
     password: xxxx
+    metricsPrefixes: ldap_,process_,push_,fid_
   agents:
     api:
       endpoint: ""
