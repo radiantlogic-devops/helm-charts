@@ -125,7 +125,7 @@ backend:
   image:
     repository: radiantone/eoc-backend
     pullPolicy: Always
-    # Overrides the image tag whose default is the chart appVersion.
+    # Overrides the image tag whose default is the chart appVersion. 
     # tag: "dev"
   nodeSelector: {}
   tolerations: []
