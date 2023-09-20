@@ -61,6 +61,6 @@ jobs:
                       --set=backend.database.auth.pass=eocadmin --set=backend.oauth.google.clientId=xxxxxx \
                       --set=backend.oauth.microsoft.clientSecret=xxxxxx --set=backend.oauth.microsoft.clientId=xxxxxx \
                       --set=backend.oauth.google.clientSecret=xxxxxx --set=backend.oauth.github.clientId=xxxxxx \
-                      --set=backend.oauth.github.clientSecret=xxxxxx --set=backend.s3BucketName=r1-eoc \
+                      --set=backend.oauth.github.clientSecret=xxxxxx --set=backend.s3BucketName=r1-eoc --set=backend.grafana.metricsPrefixes=ldap \
                       --set=features.mfa.enabled=false --set=features.mfa.appName="Radiant Logic EOC" \
                       --set=sss.s3.bucketName=r1-eoc --set=sss.s3.region=us-west-2" --upgrade
