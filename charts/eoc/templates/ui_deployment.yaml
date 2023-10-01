@@ -14,6 +14,10 @@ spec:
       name: {{ include "eoc-ui.fullname" . | nindent 8 }}
       labels:
         {{- include "eoc-ui.selectorLabels" . | nindent 8 }}   
+      annotations:
+      {{- if (.Values.checksumConfigMap).enabled | default true }}
+        checksum/environment: {{ include (print $.Template.BasePath "/ui_configmap.yaml") . | sha256sum }}
+      {{- end }}
     spec:
       containers:
       - name: {{ .Chart.Name }}

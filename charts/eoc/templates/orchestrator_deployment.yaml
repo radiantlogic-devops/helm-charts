@@ -14,6 +14,10 @@ spec:
       name: {{ include "eoc-orchestrator.fullname" . | nindent 8 }}
       labels:
         {{- include "eoc-orchestrator.selectorLabels" . | nindent 8 }}   
+      annotations:
+      {{- if (.Values.checksumConfigMap).enabled | default true }}
+        checksum/environment: {{ include (print $.Template.BasePath "/orchestrator_configmap.yaml") . | sha256sum }}
+      {{- end }}
     spec:
       containers:
       - name: {{ .Chart.Name }}
