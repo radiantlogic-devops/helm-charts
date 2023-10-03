@@ -9,7 +9,7 @@ global:
   amiImageId: "ami-0fe74570d87750175"
   minFidVersion: "7.5.0"
 
-applications: 
+applications:
   fid:
     nodeLimit: 0
   brainwave:
