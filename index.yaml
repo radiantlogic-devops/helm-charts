@@ -673,6 +673,38 @@ entries:
     version: 0.0.1-alpha.1
   sdc:
   - apiVersion: v2
+    appVersion: 0.2.6
+    created: "2023-10-03T16:52:52.65312238Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 12.1.3
+    - condition: cert-manager.enabled
+      name: cert-manager
+      repository: https://charts.jetstack.io
+      version: 1.11.0
+    - condition: pgadmin4.enabled
+      name: pgadmin4
+      repository: https://helm.runix.net
+      version: 1.13.8
+    - alias: inlets
+      condition: inlets.enabled
+      name: inlets-uplink-provider
+      repository: oci://ghcr.io/openfaasltd
+      version: 0.3.0
+    description: A Helm chart for Kubernetes
+    digest: fe42175a18cbda2fac00a5a4227aacbc573a746cb0fb859b5f6a2da011ca4749
+    maintainers:
+    - email: pgodey@radiantlogic.com
+      name: pgodey
+      url: https://www.radiantlogic.com
+    name: sdc
+    type: application
+    urls:
+    - https://github.com/radiantlogic-devops/helm-charts/releases/download/sdc-0.0.5/sdc-0.0.5.tgz
+    version: 0.0.5
+  - apiVersion: v2
     appVersion: 0.2.5
     created: "2023-09-07T06:11:26.69560416Z"
     dependencies:
@@ -939,4 +971,4 @@ entries:
     urls:
     - https://github.com/radiantlogic-devops/helm-charts/releases/download/sss-0.0.1-alpha.1/sss-0.0.1-alpha.1.tgz
     version: 0.0.1-alpha.1
-generated: "2023-10-01T00:07:04.067846479Z"
+generated: "2023-10-03T16:52:52.653308882Z"
