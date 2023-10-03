@@ -69,7 +69,7 @@ data:
   ENV_PREFIX: {{ .Values.global.infrastructureName | quote }}
   DOMAIN_NAME: {{ .Values.global.domainName | quote }}
 
-  NODE_LIMIT: {{ .Values.global.nodeLimit | quote }} # DEPRECATED
+  NODE_LIMIT: {{ .Values.global.nodeLimit | quote }}
   NODE_LIMIT_FID: {{ .Values.applications.fid.nodeLimit | quote }}
   NODE_LIMIT_BRAINWAVE: {{ .Values.applications.brainwave.nodeLimit | quote }}
 kind: ConfigMap

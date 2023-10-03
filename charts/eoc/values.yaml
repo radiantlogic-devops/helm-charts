@@ -3,7 +3,7 @@ global:
   domainName: ""
   certificateArn: ""
   infrastructureName: ""
-  nodeLimit: 10 # DEPRECATED
+  nodeLimit: 10
   fidLicense: ""
   zones: 2
   amiImageId: "ami-0fe74570d87750175"
