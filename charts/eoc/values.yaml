@@ -8,11 +8,16 @@ global:
   zones: 2
   amiImageId: "ami-0fe74570d87750175"
   minFidVersion: "8.0.0"
+  # duploservices-{common-services-tenant}
+  commonServicesNamespace: ""
+  environmentNamespacePrefix: "duploservices-"
 
 applications:
   fid:
+    minVersion: "8.0.0"
     nodeLimit: 0
   brainwave:
+    minVersion: "2.0.0"
     nodeLimit: 0
 
 features:
@@ -70,14 +75,17 @@ backend:
   oauth:
     # Get them from https://console.cloud.google.com/apis/credentials
     google:
+      enabled: true
       clientId: "xxxxxx"
       clientSecret: "xxxxxx"
     # Get them from https://github.com/settings/developers
     github:
+      enabled: true
       clientId: "xxxxxx"
       clientSecret: "xxxxxx"
     # Get them from https://portal.azure.com/#view/Microsoft_AAD_RegisteredApps/ApplicationsListBlade
     microsoft:
+      enabled: true
       clientId: "xxxxxx"
       clientSecret: "xxxxxx"
   # mailer module
