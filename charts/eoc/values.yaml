@@ -36,7 +36,7 @@ ui:
     loginReturnUrl: ""
   # link to kibana https://{fqdm}/kibana/app/discover
   loggingUrl: ""
-  # full external links to public grafana dashboard
+  # use full external links to public grafana dashboard
   reportingDashboardUrl: ""
   monitoringDashboardUrl: ""
   # override infrastructure name used for environment name prefix
