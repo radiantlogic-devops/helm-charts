@@ -72,8 +72,10 @@ data:
   ENV_PREFIX: {{ .Values.global.infrastructureName | quote }}
   DOMAIN_NAME: {{ .Values.global.domainName | quote }}
 
-  NODE_LIMIT_FID: {{ .Values.applications.fid.nodeLimit | quote }}
-  NODE_LIMIT_BRAINWAVE: {{ .Values.applications.brainwave.nodeLimit | quote }}
+  NODE_LIMIT_FID: {{ .Values.applications.fid.nodeLimit | default 1 | quote }}
+  NODE_LIMIT_BRAINWAVE: {{ .Values.applications.brainwave.nodeLimit | default 1 | quote }}
+  FID_MIN_VERSION: {{ .Values.applications.fid.minVersion | default .Values.global.minFidVersion | default "8.0.0" | quote }}
+  BW_MIN_VERSION: {{ .Values.applications.brainwave.minVersion | default "2.0.0" | quote }}
 
   DUPLO_SERVICES_NAMESPACE: {{  .Values.global.commonServicesNamespace | default .Values.orchestrator.duplo.servicesTenantName | quote }}
   ENVIRONMENT_NAMESPACE_PREFIX: {{ .Values.global.environmentNamespacePrefix | default "" | quote }}
