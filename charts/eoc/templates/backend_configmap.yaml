@@ -23,15 +23,15 @@ data:
   JWT_SECRET: {{ .Values.backend.jwt.secret | quote }}
   JWT_EXPIRES_IN: {{ .Values.backend.jwt.expiresIn | quote }}
 
-  OAUTH_GOOGLE_ENABLE: {{ .Values.backend.oauth.google.enabled | quote }}
+  OAUTH_GOOGLE_ENABLE: {{ .Values.backend.oauth.google.enabled | default true | quote }}
   OAUTH_GOOGLE_CLIENT_ID: {{ .Values.backend.oauth.google.clientId | quote }}
   OAUTH_GOOGLE_CLIENT_SECRET: {{ .Values.backend.oauth.google.clientSecret | quote }}
 
-  OAUTH_GITHUB_ENABLE: {{ .Values.backend.oauth.github.enabled | quote }}
+  OAUTH_GITHUB_ENABLE: {{ .Values.backend.oauth.github.enabled | default true | quote }}
   OAUTH_GITHUB_CLIENT_ID: {{ .Values.backend.oauth.github.clientId | quote }}
   OAUTH_GITHUB_CLIENT_SECRET: {{ .Values.backend.oauth.github.clientSecret | quote }}
 
-  OAUTH_MICROSOFT_ENABLE: {{ .Values.backend.oauth.microsoft.enabled | quote }}
+  OAUTH_MICROSOFT_ENABLE: {{ .Values.backend.oauth.microsoft.enabled | default true | quote }}
   OAUTH_MICROSOFT_CLIENT_ID: {{ .Values.backend.oauth.microsoft.clientId | quote }}
   OAUTH_MICROSOFT_CLIENT_SECRET: {{ .Values.backend.oauth.microsoft.clientSecret | quote }}
 
@@ -76,7 +76,7 @@ data:
   NODE_LIMIT_BRAINWAVE: {{ .Values.applications.brainwave.nodeLimit | quote }}
 
   DUPLO_SERVICES_NAMESPACE: {{  .Values.global.commonServicesNamespace | default .Values.orchestrator.duplo.servicesTenantName | quote }}
-  ENVIRONMENT_NAMESPACE_PREFIX: {{ .Values.global.environmentNamespacePrefix | quote }}
+  ENVIRONMENT_NAMESPACE_PREFIX: {{ .Values.global.environmentNamespacePrefix | default "" | quote }}
 kind: ConfigMap
 metadata:
   labels:
