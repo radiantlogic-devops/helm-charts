@@ -30,7 +30,7 @@ ui:
   # example https://{fqdm}/eoc-backend
   apiBaseUrl: ""
   auth:
-    # local storage key to store jwt token
+    # the local storage key to store jwt token
     tokenStoreKey: token
     # example https://{fqdm}
     loginReturnUrl: ""
