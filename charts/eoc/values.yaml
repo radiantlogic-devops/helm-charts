@@ -8,11 +8,16 @@ global:
   zones: 2
   amiImageId: "ami-0fe74570d87750175"
   minFidVersion: "8.0.0"
+  # duploservices-{common-services-tenant}
+  commonServicesNamespace: ""
+  environmentNamespacePrefix: "duploservices-"
 
 applications:
   fid:
+    minVersion: "8.0.0"
     nodeLimit: 0
   brainwave:
+    minVersion: "2.0.0"
     nodeLimit: 0
 
 features:
@@ -25,7 +30,7 @@ ui:
   # example https://{fqdm}/eoc-backend
   apiBaseUrl: ""
   auth:
-    # local storage key to store jwt token
+    # the local storage key to store jwt token
     tokenStoreKey: token
     # example https://{fqdm}
     loginReturnUrl: ""
@@ -70,14 +75,17 @@ backend:
   oauth:
     # Get them from https://console.cloud.google.com/apis/credentials
     google:
+      enabled: true
       clientId: "xxxxxx"
       clientSecret: "xxxxxx"
     # Get them from https://github.com/settings/developers
     github:
+      enabled: true
       clientId: "xxxxxx"
       clientSecret: "xxxxxx"
     # Get them from https://portal.azure.com/#view/Microsoft_AAD_RegisteredApps/ApplicationsListBlade
     microsoft:
+      enabled: true
       clientId: "xxxxxx"
       clientSecret: "xxxxxx"
   # mailer module

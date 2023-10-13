@@ -26,6 +26,9 @@ data:
   REDIS_PORT: {{ .Values.orchestrator.redis.port | quote }}
 
   ENCRYPTION_KEY: {{ .Values.backend.encryptionKey | quote }}
+
+  DUPLO_SERVICES_NAMESPACE: {{  .Values.global.commonServicesNamespace | default .Values.orchestrator.duplo.servicesTenantName | quote }}
+  ENVIRONMENT_NAMESPACE_PREFIX: {{ .Values.global.environmentNamespacePrefix | quote }}
 kind: ConfigMap
 metadata:
   labels:
