@@ -2,6 +2,33 @@ apiVersion: v1
 entries:
   eoc:
   - apiVersion: v2
+    appVersion: 1.0.0-rc.4
+    created: "2023-10-24T18:20:58.782141208Z"
+    dependencies:
+    - condition: redis.enabled
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: 17.3.16
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 12.1.3
+    - condition: sss.enabled
+      name: sss
+      repository: https://radiantlogic-devops.github.io/helm-charts
+      version: 0.0.1
+    description: Environment Operation Center (EOC) Helm Chart
+    digest: 539c402ba2c08982625358514f9218e6a5eabd556b072d9df69955cdd114460d
+    maintainers:
+    - email: pgodey@radiantlogic.com
+      name: pgodey
+      url: https://www.radiantlogic.com
+    name: eoc
+    type: application
+    urls:
+    - https://github.com/radiantlogic-devops/helm-charts/releases/download/eoc-1.0.0-rc.4/eoc-1.0.0-rc.4.tgz
+    version: 1.0.0-rc.4
+  - apiVersion: v2
     appVersion: 1.0.0-rc.3
     created: "2023-10-17T18:39:34.943646569Z"
     dependencies:
@@ -1052,4 +1079,4 @@ entries:
     urls:
     - https://github.com/radiantlogic-devops/helm-charts/releases/download/sss-0.0.1-alpha.1/sss-0.0.1-alpha.1.tgz
     version: 0.0.1-alpha.1
-generated: "2023-10-17T18:39:34.944141971Z"
+generated: "2023-10-24T18:20:58.783026147Z"
