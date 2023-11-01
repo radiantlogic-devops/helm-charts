@@ -79,6 +79,12 @@ data:
 
   DUPLO_SERVICES_NAMESPACE: {{  .Values.global.commonServicesNamespace | default .Values.orchestrator.duplo.servicesTenantName | quote }}
   ENVIRONMENT_NAMESPACE_PREFIX: {{ .Values.global.environmentNamespacePrefix | default "" | quote }}
+{{- range $key, $value := (.Values.backend).env }}
+  {{ tpl $key $ }}: {{ tpl (print $value) $ | quote }}
+{{- end }}
+{{- range $key, $value := (.Values.global).env }}
+  {{ tpl $key $ }}: {{ tpl (print $value) $ | quote }}
+{{- end }}
 kind: ConfigMap
 metadata:
   labels:
