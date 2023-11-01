@@ -11,6 +11,11 @@ global:
   # duploservices-{common-services-tenant}
   commonServicesNamespace: ""
   environmentNamespacePrefix: "duploservices-"
+  ## Extra environment variables that will be pass onto all deployment pods
+  ##
+  ## env:
+  ##   AWS_REGION: us-east-1
+  env: {}
 
 applications:
   fid:
@@ -52,6 +57,12 @@ ui:
   nodeSelector: {}
   tolerations: []
   affinity: {}
+  ## Extra environment variables that will be pass onto deployment pods
+  ##
+  ## env:
+  ##   AWS_ROLE_ARN: arn:aws:iam::123456789000:role/iam-role-name-here
+  ##   AWS_REGION: us-east-1
+  env: {}
 
 backend:
   basePath: eoc-backend
@@ -144,6 +155,12 @@ backend:
   nodeSelector: {}
   tolerations: []
   affinity: {}
+  ## Extra environment variables that will be pass onto deployment pods
+  ##
+  ## env:
+  ##   AWS_ROLE_ARN: arn:aws:iam::123456789000:role/iam-role-name-here
+  ##   AWS_REGION: us-east-1
+  env: {}
 
 orchestrator:
   duplo:
@@ -171,6 +188,12 @@ orchestrator:
   nodeSelector: {}
   tolerations: []
   affinity: {}
+  ## Extra environment variables that will be pass onto deployment pods
+  ##
+  ## env:
+  ##   AWS_ROLE_ARN: arn:aws:iam::123456789000:role/iam-role-name-here
+  ##   AWS_REGION: us-east-1
+  env: {}
 
 redis:
   enabled: true
