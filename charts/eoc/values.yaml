@@ -15,7 +15,7 @@ global:
   ##
   ## env:
   ##   AWS_REGION: us-east-1
-  env: {}  
+  env: {}
 
 applications:
   fid:
@@ -62,7 +62,7 @@ ui:
   ## env:
   ##   AWS_ROLE_ARN: arn:aws:iam::123456789000:role/iam-role-name-here
   ##   AWS_REGION: us-east-1
-  env: {}  
+  env: {}
 
 backend:
   basePath: eoc-backend
@@ -160,7 +160,7 @@ backend:
   ## env:
   ##   AWS_ROLE_ARN: arn:aws:iam::123456789000:role/iam-role-name-here
   ##   AWS_REGION: us-east-1
-  env: {}  
+  env: {}
 
 orchestrator:
   duplo:
@@ -193,7 +193,7 @@ orchestrator:
   ## env:
   ##   AWS_ROLE_ARN: arn:aws:iam::123456789000:role/iam-role-name-here
   ##   AWS_REGION: us-east-1
-  env: {}  
+  env: {}
 
 redis:
   enabled: true
