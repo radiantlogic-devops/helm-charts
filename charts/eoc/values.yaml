@@ -99,6 +99,8 @@ backend:
       enabled: true
       clientId: "xxxxxx"
       clientSecret: "xxxxxx"
+    local:
+      enabled: true
   # mailer module
   smtp:
     from: ""

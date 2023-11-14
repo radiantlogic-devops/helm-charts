@@ -35,6 +35,8 @@ data:
   OAUTH_MICROSOFT_CLIENT_ID: {{ .Values.backend.oauth.microsoft.clientId | quote }}
   OAUTH_MICROSOFT_CLIENT_SECRET: {{ .Values.backend.oauth.microsoft.clientSecret | quote }}
 
+  AUTH_LOCAL_ENABLE: {{ .Values.backend.oauth.local.enabled | default true | quote }}
+
   EMAIL_FROM: {{ .Values.backend.smtp.from | quote }}
   EMAIL_ID: {{ .Values.backend.smtp.user | quote }}
   EMAIL_PASS: {{ .Values.backend.smtp.pass | quote }}
