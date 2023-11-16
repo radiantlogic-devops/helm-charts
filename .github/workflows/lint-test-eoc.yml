@@ -62,7 +62,7 @@ jobs:
                       --set=backend.oauth.microsoft.enabled=true --set=backend.oauth.microsoft.clientSecret=xxxxxx --set=backend.oauth.microsoft.clientId=xxxxxx \
                       --set=backend.oauth.google.enabled=true --set=backend.oauth.google.clientSecret=xxxxxx --set=backend.oauth.github.clientId=xxxxxx \
                       --set=backend.oauth.github.enabled=true --set=backend.s3BucketName=r1-eoc --set=backend.grafana.metricsPrefixes=ldap \
-                      --set=features.mfa.enabled=false --set=features.mfa.appName=Radiant-Logic-EOC \
+                      --set=backend.oauth.local.enabled=true --set=features.mfa.enabled=false --set=features.mfa.appName=Radiant-Logic-EOC \
                       --set=applications.fid.nodeLimit=2 --set=applications.brainwave.nodeLimit=2 \
                       --set=applications.fid.minVersion=xxx --set=applications.brainwave.minVersion=xxx \
                       --set=global.commonServicesNamespace=xxxx --set=global.environmentNamespacePrefix=xxxx \
