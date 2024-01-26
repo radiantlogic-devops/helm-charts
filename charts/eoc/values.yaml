@@ -16,7 +16,12 @@ global:
   ## env:
   ##   AWS_REGION: us-east-1
   env: {}
-  imagePullSecrets: []
+
+## Image pull secrets to used to pull the images
+## Do not add under global as it is used by redis
+## imagePullSecrets:
+## - regcred
+imagePullSecrets: []
 
 applications:
   fid:
@@ -130,7 +135,7 @@ backend:
     # should have enough permission to be able to create a service account
     username: admin
     password: xxxx
-    metricsPrefixes: ldap_,process_,push_,fid_
+    metricsPrefixes: ldap_,process_,push_,fid_,ia_
   agents:
     api:
       endpoint: ""
@@ -149,7 +154,7 @@ backend:
       accessKeySecret: ""
       s3Region: "us-east-2"
       s3BucketName: "radiant-one-v8-sdc-distribution"
-      version: "0.2.4"
+      version: "0.2.7"
   image:
     repository: radiantone/eoc-backend
     pullPolicy: Always
