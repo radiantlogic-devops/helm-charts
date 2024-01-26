@@ -16,7 +16,12 @@ global:
   ## env:
   ##   AWS_REGION: us-east-1
   env: {}
-  imagePullSecrets: []
+
+## Image pull secrets to used to pull the images
+## Do not add under global as it is used by redis
+## imagePullSecrets:
+## - regcred
+imagePullSecrets: []
 
 applications:
   fid:
