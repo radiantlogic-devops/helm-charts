@@ -10,10 +10,10 @@ data:
   VITE_MONITORING_URL: {{ .Values.ui.monitoringDashboardUrl | quote }}
   VITE_KIBANA_API_PATH: {{ .Values.ui.kibanaApiPath | quote }}
   VITE_AMPLITUDE_KEY: {{ .Values.ui.amplitude.key | quote }}
-  VITE_GOOGLE_AUTH_ENABLED: {{ .Values.backend.oauth.google.enabled | default true | quote }}
-  VITE_GITHUB_AUTH_ENABLED: {{ .Values.backend.oauth.github.enabled | default true | quote }}
-  VITE_LOCAL_AUTH_ENABLED: {{ .Values.backend.oauth.local.enabled | default true | quote }}
-  VITE_MICROSOFT_AUTH_ENABLED: {{ .Values.backend.oauth.microsoft.enabled | default true | quote }}
+  VITE_GOOGLE_AUTH_ENABLED: {{ .Values.backend.oauth.google.enabled | quote }}
+  VITE_GITHUB_AUTH_ENABLED: {{ .Values.backend.oauth.github.enabled | quote }}
+  VITE_LOCAL_AUTH_ENABLED: {{ .Values.backend.oauth.local.enabled | quote }}
+  VITE_MICROSOFT_AUTH_ENABLED: {{ .Values.backend.oauth.microsoft.enabled | quote }}
 {{- range $key, $value := (.Values.ui).env }}
   {{ tpl $key $ }}: {{ tpl (print $value) $ | quote }}
 {{- end }}  
