@@ -50,6 +50,8 @@ ui:
   # full external links to public grafana dashboard
   reportingDashboardUrl: ""
   monitoringDashboardUrl: ""
+  # add a jwt Token to the grafana iFrame url
+  insertMonitoringJwtToken: false
   # override infrastructure name used for environment name prefix
   infrastructureName: ""
   kibanaApiPath: /kibana/index-patterns
