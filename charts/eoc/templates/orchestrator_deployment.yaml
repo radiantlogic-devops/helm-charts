@@ -35,15 +35,15 @@ spec:
         readinessProbe:
           tcpSocket:
             port: 3001
-          initialDelaySeconds: 60
-          periodSeconds: 30
+          initialDelaySeconds: {{ .Values.orchestrator.initialDelaySeconds }}
+          periodSeconds: {{ .Values.orchestrator.periodSeconds }}
           failureThreshold: 5
           successThreshold: 1
         livenessProbe:
           tcpSocket:
             port: 3001
-          initialDelaySeconds: 60
-          periodSeconds: 30
+          initialDelaySeconds: {{ .Values.orchestrator.initialDelaySeconds }}
+          periodSeconds: {{ .Values.orchestrator.periodSeconds }}
           failureThreshold: 5
           successThreshold: 1
       serviceAccount: eoc-orchestrator

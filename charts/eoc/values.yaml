@@ -65,6 +65,8 @@ ui:
   nodeSelector: {}
   tolerations: []
   affinity: {}
+  initialDelaySeconds: 120
+  periodSeconds: 30
   ## Extra environment variables that will be pass onto deployment pods
   ##
   ## env:
@@ -165,6 +167,8 @@ backend:
   nodeSelector: {}
   tolerations: []
   affinity: {}
+  initialDelaySeconds: 120
+  periodSeconds: 30
   ## Extra environment variables that will be pass onto deployment pods
   ##
   ## env:
@@ -198,6 +202,8 @@ orchestrator:
   nodeSelector: {}
   tolerations: []
   affinity: {}
+  initialDelaySeconds: 60
+  periodSeconds: 30
   ## Extra environment variables that will be pass onto deployment pods
   ##
   ## env:
