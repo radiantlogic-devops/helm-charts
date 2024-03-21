@@ -85,7 +85,7 @@ data:
 
   DEFAULT_TIER: {{ .Values.backend.defaultTierName | default "Tier1" | quote }}
 
-  DISABLE_SEQUENTIAL_APP_VERSION_UPDATE: {{ .Values.backend.disableSequentialAppVersionUpdate | default True | quote }}
+  DISABLE_SEQUENTIAL_APP_VERSION_UPDATE: {{ .Values.backend.disableSequentialAppVersionUpdate | default true | quote }}
 
   OIDC_TEMPLATES: {{ .Values.backend.oidcTemplates | toJson | quote }}
 
