@@ -67,6 +67,8 @@ ui:
   affinity: {}
   initialDelaySeconds: 120
   periodSeconds: 30
+  tiersVisibility: false
+  multiTenantEnabled: false
   ## Extra environment variables that will be pass onto deployment pods
   ##
   ## env:
@@ -123,6 +125,7 @@ backend:
     email: user@example.com
     firstName: User
     lastName: Example
+    password: ""
   # Default on *nix if not explicitly specified
   # APP_ROOT_DIRECTORY=${HOME}/.cloudmanager
   # Custom value (if running as a systemd service for example)
@@ -169,6 +172,26 @@ backend:
   affinity: {}
   initialDelaySeconds: 120
   periodSeconds: 30
+  defaultTierName: "Tier1"
+  disableSequentialAppVersionUpdate: true
+  oidcTemplates:
+    - name: "OIDC"
+      discoveryUrl: "https://accounts.google.com/.well-known/openid-configuration"
+    - name: "Microsoft"
+      discoveryUrl: "https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration"
+    - name: "SalesForce"
+      discoveryUrl: "https://{replace-with-your-instance}.my.salesforce.com/.well-known/openid-configuration"
+    - name: "Okta"
+      discoveryUrl: "https://{replace-with-your-Okta-Domain}/.well-known/openid-configuration"
+    - name: "Github"
+  releaseChannels:
+    - name: "Official"
+      url: "https://radiantlogic-devops.github.io/release-stable/index.yaml"
+      isDefault: true
+    - name: "Beta"
+      url: "https://radiantlogic-devops.github.io/release-beta/index.yaml"
+    - name: "Nightly"
+      url: "https://radiantlogic-devops.github.io/release-nightly/index.yaml"
   ## Extra environment variables that will be pass onto deployment pods
   ##
   ## env:
