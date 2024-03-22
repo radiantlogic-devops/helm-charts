@@ -85,11 +85,11 @@ data:
 
   DEFAULT_TIER: {{ .Values.backend.defaultTierName | default "Tier1" | quote }}
 
-  DISABLE_SEQUENTIAL_APP_VERSION_UPDATE: {{ .Values.backend.disableSequentialAppVersionUpdate | default true | quote }}
+  DISABLE_SEQUENTIAL_APP_VERSION_UPDATE: {{ .Values.backend.disableSequentialAppVersionUpdate | default "true" | quote }}
 
-  OIDC_TEMPLATES: {{ .Values.backend.oidcTemplates | toJson | quote }}
+  OIDC_TEMPLATES: {{ .Values.backend.oidcTemplates | default "" | toJson | quote }}
 
-  RELEASE_CHANNELS: {{ .Values.backend.releaseChannels | toJson | quote }}
+  RELEASE_CHANNELS: {{ .Values.backend.releaseChannels | default "" | toJson | quote }}
 
 {{- range $key, $value := (.Values.backend).env }}
   {{ tpl $key $ }}: {{ tpl (print $value) $ | quote }}
