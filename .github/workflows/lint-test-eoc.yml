@@ -62,7 +62,7 @@ jobs:
             releaseChannels:
               - name: "Official"
                 url: "https://radiantlogic-devops.github.io/release-stable/index.yaml"
-                isDefault: true
+                isDefault: "true"
           EOF
 
       - name: Run chart-testing (install)
