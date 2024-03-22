@@ -67,5 +67,5 @@ jobs:
                       --set=applications.fid.minVersion=xxx --set=applications.brainwave.minVersion=xxx \
                       --set=global.commonServicesNamespace=xxxx --set=global.environmentNamespacePrefix=xxxx \
                       --set=sss.s3.bucketName=r1-eoc --set=sss.s3.region=us-west-2 \
-                      --set=backend.releaseChannels=[]" \
+                      --set=backend.releaseChannels=\"{\"name\":\"Official\",\"url\":\"https://radiantlogic-devops.github.io/release-stable/index.yaml\",\"isDefault\":true}\"" \
                       --upgrade
