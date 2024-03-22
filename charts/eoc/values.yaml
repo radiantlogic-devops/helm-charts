@@ -173,7 +173,7 @@ backend:
   initialDelaySeconds: 120
   periodSeconds: 30
   defaultTierName: "Tier1"
-  disableSequentialAppVersionUpdate: true
+  disableSequentialAppVersionUpdate: "true"
   oidcTemplates:
     - name: "OIDC"
       discoveryUrl: "https://accounts.google.com/.well-known/openid-configuration"
@@ -187,7 +187,7 @@ backend:
   releaseChannels:
     - name: "Official"
       url: "https://radiantlogic-devops.github.io/release-stable/index.yaml"
-      isDefault: true
+      isDefault: "true"
     - name: "Beta"
       url: "https://radiantlogic-devops.github.io/release-beta/index.yaml"
     - name: "Nightly"
