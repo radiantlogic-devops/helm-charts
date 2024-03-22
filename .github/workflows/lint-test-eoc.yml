@@ -55,6 +55,16 @@ jobs:
           kubectl cluster-info --context kind-chart-testing
           kubectl get nodes --context kind-chart-testing
 
+      - name: Create temporary values file
+        run: |
+          cat << EOF > temp-values.yaml
+          backend:
+            releaseChannels:
+              - name: "Official"
+                url: "https://radiantlogic-devops.github.io/release-stable/index.yaml"
+                isDefault: true
+          EOF
+
       - name: Run chart-testing (install)
         run: |
           ct install --charts=charts/eoc --debug --helm-extra-args="--timeout=15m0s" --helm-extra-set-args="--set=postgresql.enabled=true \
@@ -67,5 +77,4 @@ jobs:
                       --set=applications.fid.minVersion=xxx --set=applications.brainwave.minVersion=xxx \
                       --set=global.commonServicesNamespace=xxxx --set=global.environmentNamespacePrefix=xxxx \
                       --set=sss.s3.bucketName=r1-eoc --set=sss.s3.region=us-west-2 \
-                      --set=backend.releaseChannels=" \
-                      --upgrade
+                      --values temp-values.yaml" --upgrade
