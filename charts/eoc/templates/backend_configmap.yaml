@@ -46,6 +46,7 @@ data:
   ADMIN_EMAIL: {{ .Values.backend.admin.email | quote }}
   ADMIN_FIRST_NAME: {{ .Values.backend.admin.firstName | quote }}
   ADMIN_LAST_NAME: {{ .Values.backend.admin.lastName | quote }}
+  ADMIN_PASSWORD: {{ .Values.backend.admin.password | default "" | quote }}
 
   APP_ROOT_DIRECTORY: {{ .Values.backend.appRootDirectory | quote }}
 
@@ -64,23 +65,32 @@ data:
   AGENTS_INLETS_TOKEN: {{ .Values.backend.agents.inlets.token | quote }}
   AGENTS_SERVER_NAME: {{ .Values.backend.agents.inlets.serverName | quote }}
   AGENTS_SERVER_ENDPOINT: {{ .Values.backend.agents.inlets.serverEndpoint | quote }}
+
   SDC_AWS_ACCESS_KEY_ID: {{ .Values.backend.agents.client.accessKeyId | quote}}
   SDC_AWS_ACCESS_KEY_SECRET: {{ .Values.backend.agents.client.accessKeySecret | quote }}
   SDC_AWS_REGION: {{ .Values.backend.agents.client.s3Region | quote }}
   SDC_AWS_S3_BUCKET_NAME: {{ .Values.backend.agents.client.s3BucketName | quote }}
   SDC_CLIENT_VERSION: {{ .Values.backend.agents.client.version | quote }}
 
-  MIN_ENVIRONMENT_VERSION: {{ .Values.global.minFidVersion | quote }}
   ENV_PREFIX: {{ .Values.global.infrastructureName | quote }}
   DOMAIN_NAME: {{ .Values.global.domainName | quote }}
 
   NODE_LIMIT_FID: {{ .Values.applications.fid.nodeLimit | default 1 | quote }}
   NODE_LIMIT_BRAINWAVE: {{ .Values.applications.brainwave.nodeLimit | default 1 | quote }}
-  FID_MIN_VERSION: {{ .Values.applications.fid.minVersion | default .Values.global.minFidVersion | default "8.0.0" | quote }}
+  FID_MIN_VERSION: {{ .Values.applications.fid.minVersion | default "8.0.0" | quote }}
   BW_MIN_VERSION: {{ .Values.applications.brainwave.minVersion | default "2.0.0" | quote }}
 
   DUPLO_SERVICES_NAMESPACE: {{  .Values.global.commonServicesNamespace | default .Values.orchestrator.duplo.servicesTenantName | quote }}
   ENVIRONMENT_NAMESPACE_PREFIX: {{ .Values.global.environmentNamespacePrefix | default "" | quote }}
+
+  DEFAULT_TIER: {{ .Values.backend.defaultTierName | default "Tier1" | quote }}
+
+  DISABLE_SEQUENTIAL_APP_VERSION_UPDATE: {{ .Values.backend.disableSequentialAppVersionUpdate | default "true" | quote }}
+
+  OIDC_TEMPLATES: {{ .Values.backend.oidcTemplates | default "" | toJson | quote }}
+
+  RELEASE_CHANNELS: {{ .Values.backend.releaseChannels | default "" | toJson | quote }}
+
 {{- range $key, $value := (.Values.backend).env }}
   {{ tpl $key $ }}: {{ tpl (print $value) $ | quote }}
 {{- end }}

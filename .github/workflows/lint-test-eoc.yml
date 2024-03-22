@@ -8,14 +8,14 @@ on:
 jobs:
   lint-test:
     runs-on: ubuntu-latest
-    
+
     steps:
-    
+
       - name: Clear any existing tool cache
         run: |
           mv "${{ runner.tool_cache }}" "${{ runner.tool_cache }}.old"
           mkdir -p "${{ runner.tool_cache }}"
-          
+
       - name: Checkout
         uses: actions/checkout@v2
         with:
@@ -42,18 +42,28 @@ jobs:
           fi
           helm repo add bitnami https://charts.bitnami.com/bitnami
           helm repo add radiantone https://radiantlogic-devops.github.io/helm-charts
-          
+
       - name: Run chart-testing (lint)
         run: ct lint --target-branch ${{ github.event.repository.default_branch }}
 
       - name: Create kind cluster
         uses: helm/kind-action@v1.2.0
         if: steps.list-changed.outputs.changed == 'true'
-        
+
       - name: Kind cluster-info
         run: |
           kubectl cluster-info --context kind-chart-testing
           kubectl get nodes --context kind-chart-testing
+
+      - name: Create temporary values file
+        run: |
+          cat << EOF > temp-values.yaml
+          backend:
+            releaseChannels:
+              - name: "Official"
+                url: "https://radiantlogic-devops.github.io/release-stable/index.yaml"
+                isDefault: "true"
+          EOF
 
       - name: Run chart-testing (install)
         run: |
@@ -66,4 +76,5 @@ jobs:
                       --set=applications.fid.nodeLimit=2 --set=applications.brainwave.nodeLimit=2 \
                       --set=applications.fid.minVersion=xxx --set=applications.brainwave.minVersion=xxx \
                       --set=global.commonServicesNamespace=xxxx --set=global.environmentNamespacePrefix=xxxx \
-                      --set=sss.s3.bucketName=r1-eoc --set=sss.s3.region=us-west-2" --upgrade
+                      --set=sss.s3.bucketName=r1-eoc --set=sss.s3.region=us-west-2 \
+                      --values temp-values.yaml" --upgrade
