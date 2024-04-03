@@ -91,7 +91,7 @@ data:
 
   RELEASE_CHANNELS: {{ .Values.backend.releaseChannels | default "[{\"isDefault\":\"true\",\"name\":\"Official\",\"url\":\"https://radiantlogic-devops.github.io/release-stable/index.yaml\"}]" | toJson | quote }}
 
-  TIERS: {{ .Values.backend.tiers | default "[{\"name\":\"BaseTier\",\"asg\":{\"MinSize\":0,\"MaxSize\":3,\"DesiredCapacity\":1,\"Capacity\":\"m5a.large\",\"MetaData\":[{\"Key\":\"OsDiskSize\",\"Value\":\"50Gi\"}]},\"fid\":{\"persistence\":{\"enabled\":true,\"storageClass\":\"gp3\",\"size\":\"100Gi\"},\"resources\":{\"limits\":{\"cpu\":1,\"memory\":\"4Gi\"},\"requests\":{\"cpu\":1,\"memory\":\"4Gi\"}}},\"bwigrc\":{\"resources\":{\"limits\":{\"cpu\":1,\"memory\":\"4Gi\"},\"requests\":{\"cpu\":1,\"memory\":\"4Gi\"}}}},{\"name\":\"Tier1\",\"asg\":{\"Capacity\":\"m5a.xlarge\"},\"fid\":{\"persistence\":{\"size\":\"100Gi\"},\"resources\":{\"limits\":{\"cpu\":2,\"memory\":\"8Gi\"},\"requests\":{\"cpu\":2,\"memory\":\"8Gi\"}}},\"bwigrc\":{\"resources\":{\"limits\":{\"cpu\":2,\"memory\":\"8Gi\"}}}},{\"name\":\"Tier2\",\"asg\":{\"Capacity\":\"m5a.2xlarge\"},\"fid\":{\"persistence\":{\"size\":\"200Gi\"},\"resources\":{\"limits\":{\"cpu\":4,\"memory\":\"16Gi\"},\"requests\":{\"cpu\":4,\"memory\":\"16Gi\"}}},\"bwigrc\":{\"resources\":{\"limits\":{\"cpu\":4,\"memory\":\"16Gi\"},\"requests\":{\"cpu\":4,\"memory\":\"16Gi\"}}}}]" | toJson | quote}}
+  TIERS: {{ .Values.backend.tiers | default "" | toJson | quote}}
 
 {{- range $key, $value := (.Values.backend).env }}
   {{ tpl $key $ }}: {{ tpl (print $value) $ | quote }}
