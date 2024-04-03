@@ -55,15 +55,63 @@ jobs:
           kubectl cluster-info --context kind-chart-testing
           kubectl get nodes --context kind-chart-testing
 
-      # - name: Create temporary values file
-      #   run: |
-      #     cat << EOF > temp-values.yaml
-      #     backend:
-      #       releaseChannels:
-      #         - name: "Official"
-      #           url: "https://radiantlogic-devops.github.io/release-stable/index.yaml"
-      #           isDefault: "true"
-      #     EOF
+      - name: Create temporary values file
+        run: |
+          cat << EOF > temp-values.yaml
+          backend:
+            releaseChannels:
+              - name: "Official"
+                url: "https://radiantlogic-devops.github.io/release-stable/index.yaml"
+                isDefault: "true"
+            tiers:
+              - name: BaseTier
+                asg:
+                  Capacity: m5a.large
+                  DesiredCapacity: 1
+                  MinSize: 0
+                  MaxSize: 3
+                  MetaData:
+                  - Key: OsDiskSize
+                    Value: 50Gi
+                bwigrc:
+                  resources:
+                    limits:
+                      cpu: 1
+                      memory: 4Gi
+                    requests:
+                      cpu: 1
+                      memory: 4Gi
+                fid:
+                  persistence:
+                    enabled: true
+                    size: 100Gi
+                    storageClass: gp3
+                  resources:
+                    limits:
+                      cpu: 1
+                      memory: 4Gi
+                    requests:
+                      cpu: 1
+                      memory: 4Gi
+              - name: Tier1
+                asg:
+                  Capacity: m5a.xlarge
+                bwigrc:
+                  resources:
+                    limits:
+                      cpu: 2
+                      memory: 8Gi
+                fid:
+                  persistence:
+                    size: 100Gi
+                  resources:
+                    limits:
+                      cpu: 2
+                      memory: 8Gi
+                    requests:
+                      cpu: 2
+                      memory: 8Gi
+          EOF
 
       - name: Run chart-testing (install)
         run: |
@@ -76,4 +124,5 @@ jobs:
                       --set=applications.fid.nodeLimit=2 --set=applications.brainwave.nodeLimit=2 \
                       --set=applications.fid.minVersion=xxx --set=applications.brainwave.minVersion=xxx \
                       --set=global.commonServicesNamespace=xxxx --set=global.environmentNamespacePrefix=xxxx \
-                      --set=sss.s3.bucketName=r1-eoc --set=sss.s3.region=us-west-2" --upgrade
+                      --set=sss.s3.bucketName=r1-eoc --set=sss.s3.region=us-west-2 \
+                      --values temp-values.yaml" --upgrade
