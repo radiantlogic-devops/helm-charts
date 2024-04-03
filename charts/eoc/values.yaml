@@ -188,10 +188,10 @@ backend:
     - name: "Official"
       url: "https://radiantlogic-devops.github.io/release-stable/index.yaml"
       isDefault: "true"
-    - name: "Beta"
-      url: "https://radiantlogic-devops.github.io/release-beta/index.yaml"
-    - name: "Nightly"
-      url: "https://radiantlogic-devops.github.io/release-nightly/index.yaml"
+#    - name: "Beta"
+#      url: "https://radiantlogic-devops.github.io/release-beta/index.yaml"
+#    - name: "Nightly"
+#      url: "https://radiantlogic-devops.github.io/release-nightly/index.yaml"
   tiers:
     - name: BaseTier
       asg:
