@@ -12,5 +12,5 @@ data:
   PortForward__Range: {{ .Values.agents.portForward__range | quote }}
   {{- end }}
   Jwt__Issuer: {{ .Values.agents.endpoint | quote }}
-  ASPNETCORE_URLS: {{- printf "%s-%s" "http://+:" {{ .Values.service.port }} -}}
+  ASPNETCORE_URLS: http://+:{{- .Values.service.port -}}
 
