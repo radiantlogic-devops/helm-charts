@@ -188,10 +188,79 @@ backend:
     - name: "Official"
       url: "https://radiantlogic-devops.github.io/release-stable/index.yaml"
       isDefault: "true"
-    - name: "Beta"
-      url: "https://radiantlogic-devops.github.io/release-beta/index.yaml"
-    - name: "Nightly"
-      url: "https://radiantlogic-devops.github.io/release-nightly/index.yaml"
+#    - name: "Beta"
+#      url: "https://radiantlogic-devops.github.io/release-beta/index.yaml"
+#    - name: "Nightly"
+#      url: "https://radiantlogic-devops.github.io/release-nightly/index.yaml"
+  tiers:
+    - name: BaseTier
+      asg:
+        Capacity: m5a.large
+        DesiredCapacity: 1
+        MinSize: 0
+        MaxSize: 3
+        MetaData:
+        - Key: OsDiskSize
+          Value: 50Gi
+      bwigrc:
+        resources:
+          limits:
+            cpu: 1
+            memory: 4Gi
+          requests:
+            cpu: 1
+            memory: 4Gi
+      fid:
+        persistence:
+          enabled: true
+          size: 100Gi
+          storageClass: gp3
+        resources:
+          limits:
+            cpu: 1
+            memory: 4Gi
+          requests:
+            cpu: 1
+            memory: 4Gi
+    - name: Tier1
+      asg:
+        Capacity: m5a.xlarge
+      bwigrc:
+        resources:
+          limits:
+            cpu: 2
+            memory: 8Gi
+      fid:
+        persistence:
+          size: 100Gi
+        resources:
+          limits:
+            cpu: 2
+            memory: 8Gi
+          requests:
+            cpu: 2
+            memory: 8Gi
+    - name: Tier2
+      asg:
+        Capacity: m5a.2xlarge
+      bwigrc:
+        resources:
+          limits:
+            cpu: 4
+            memory: 16Gi
+          requests:
+            cpu: 4
+            memory: 16Gi
+      fid:
+        persistence:
+          size: 200Gi
+        resources:
+          limits:
+            cpu: 4
+            memory: 16Gi
+          requests:
+            cpu: 4
+            memory: 16Gi
   ## Extra environment variables that will be pass onto deployment pods
   ##
   ## env:
