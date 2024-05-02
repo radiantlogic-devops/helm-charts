@@ -113,6 +113,7 @@ backend:
       clientSecret: "xxxxxx"
     local:
       enabled: true
+      mfa: false
   # mailer module
   smtp:
     from: ""
