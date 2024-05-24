@@ -136,7 +136,7 @@ backend:
   encryptionKey: 1194c5c206aa26d37091c4e6d09dc9de
   kibana:
     # https://{fqdn}/kibana/api/
-    apiUrl: "hhttp://kibana:5601/eoc-backend/kibana/api/"
+    apiUrl: "http://kibana:5601/eoc-backend/kibana/api/"
     basicAuth: ""
   grafana:
     host: http://grafana
