@@ -54,7 +54,7 @@ ui:
   insertMonitoringJwtToken: false
   # override infrastructure name used for environment name prefix
   infrastructureName: ""
-  kibanaApiPath: /kibana/index-patterns
+  kibanaApiPath: /eoc-kibana/index-patterns
   amplitude:
     key: ""
   image:
@@ -136,7 +136,8 @@ backend:
   encryptionKey: 1194c5c206aa26d37091c4e6d09dc9de
   kibana:
     # https://{fqdn}/kibana/api/
-    apiUrl: "https://{fqdn}/kibana/api/"
+    apiUrl: "hhttp://kibana:5601/eoc-backend/kibana/api/"
+    baseAuth: ""
   grafana:
     host: http://grafana
     # used to create a service account for managing alerts and integrations
@@ -144,6 +145,7 @@ backend:
     username: admin
     password: xxxx
     metricsPrefixes: ldap_,process_,push_,fid_,ia_
+    baseAuth: ""
   agents:
     api:
       endpoint: ""
