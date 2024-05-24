@@ -54,13 +54,13 @@ data:
   ENCRYPTION_KEY: {{ .Values.backend.encryptionKey | quote }}
 
   KIBANA_API_LINK: {{ .Values.backend.kibana.apiUrl | quote }}
-  KIBANA_BASE_AUTH: {{ .Values.backend.kibana.baseAuth | default "" | quote }}
+  KIBANA_BASIC_AUTH: {{ .Values.backend.kibana.basicAuth | default "" | quote }}
 
   GRAFANA_BASE_URL: {{ .Values.backend.grafana.host | quote }}
   GRAFANA_USERNAME: {{ .Values.backend.grafana.username | quote }}
   GRAFANA_PASSWORD: {{ .Values.backend.grafana.password | quote }}
   GRAFANA_METRICS_PREFIXES: {{ .Values.backend.grafana.metricsPrefixes | quote }}
-  GRAFANA_BASE_AUTH: {{ .Values.backend.grafana.baseAuth | default "" | quote }}
+  GRAFANA_BASIC_AUTH: {{ .Values.backend.grafana.basicAuth | default "" | quote }}
 
   AGENTS_BASE_PATH: {{ .Values.backend.agents.api.endpoint | quote }}
   AGENTS_CLIENT_ID: {{ .Values.backend.agents.api.clientId | quote }}

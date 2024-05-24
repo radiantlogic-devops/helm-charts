@@ -137,7 +137,7 @@ backend:
   kibana:
     # https://{fqdn}/kibana/api/
     apiUrl: "hhttp://kibana:5601/eoc-backend/kibana/api/"
-    baseAuth: ""
+    basicAuth: ""
   grafana:
     host: http://grafana
     # used to create a service account for managing alerts and integrations
@@ -145,7 +145,7 @@ backend:
     username: admin
     password: xxxx
     metricsPrefixes: ldap_,process_,push_,fid_,ia_
-    baseAuth: ""
+    basicAuth: ""
   agents:
     api:
       endpoint: ""
