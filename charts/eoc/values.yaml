@@ -191,10 +191,6 @@ backend:
     - name: "Official"
       url: "https://radiantlogic-devops.github.io/release-stable/index.yaml"
       isDefault: "true"
-#    - name: "Beta"
-#      url: "https://radiantlogic-devops.github.io/release-beta/index.yaml"
-#    - name: "Nightly"
-#      url: "https://radiantlogic-devops.github.io/release-nightly/index.yaml"
   tiers:
     - name: BaseTier
       asg:
@@ -204,15 +200,33 @@ backend:
         MaxSize: 3
         MetaData:
         - Key: OsDiskSize
-          Value: 50Gi
+          Value: 50
       bwigrc:
-        resources:
-          limits:
-            cpu: 1
-            memory: 4Gi
-          requests:
-            cpu: 1
-            memory: 4Gi
+        portal:
+          resources:
+            limits:
+              cpu: 1
+              memory: 4Gi
+            requests:
+              cpu: 1
+              memory: 4Gi
+        batch:
+          resources:
+            limits:
+              cpu: 1
+              memory: 4Gi
+            requests:
+              cpu: 1
+              memory: 4Gi
+        cnpg:
+          resources:
+            requests:
+              memory: 512Mi
+              cpu: 500m
+            limits:
+              memory: 1Gi
+              cpu: 1
+          walStorage: 32Gi
       fid:
         persistence:
           enabled: true
@@ -229,10 +243,30 @@ backend:
       asg:
         Capacity: m5a.xlarge
       bwigrc:
-        resources:
-          limits:
-            cpu: 2
-            memory: 8Gi
+        portal:
+          resources:
+            limits:
+              cpu: 2
+              memory: 8Gi
+            requests:
+              cpu: 2
+              memory: 8Gi
+        batch:
+          resources:
+            limits:
+              cpu: 2
+              memory: 8Gi
+            requests:
+              cpu: 2
+              memory: 8Gi
+        cnpg:
+          resources:
+            requests:
+              memory: 1Gi
+              cpu: 1
+            limits:
+              memory: 2Gi
+              cpu: 2
       fid:
         persistence:
           size: 100Gi
@@ -247,13 +281,30 @@ backend:
       asg:
         Capacity: m5a.2xlarge
       bwigrc:
-        resources:
-          limits:
-            cpu: 4
-            memory: 16Gi
-          requests:
-            cpu: 4
-            memory: 16Gi
+        portal:
+          resources:
+            limits:
+              cpu: 4
+              memory: 16Gi
+            requests:
+              cpu: 4
+              memory: 16Gi
+        batch:
+          resources:
+            limits:
+              cpu: 4
+              memory: 16Gi
+            requests:
+              cpu: 4
+              memory: 16Gi
+        cnpg:
+          resources:
+            requests:
+              memory: 2Gi
+              cpu: 2
+            limits:
+              memory: 4Gi
+              cpu: 4
       fid:
         persistence:
           size: 200Gi
