@@ -17,7 +17,7 @@ global:
   ##   AWS_REGION: us-east-1
   env: {}
 
-## Image pull secrets to used to pull the images
+## Image pull secrets to pull the images
 ## Do not add under global as it is used by redis
 ## imagePullSecrets:
 ## - regcred
@@ -26,9 +26,11 @@ imagePullSecrets: []
 applications:
   fid:
     minVersion: "8.0.0"
-    nodeLimit: 0
+    minVersionUpdate: "8.0.0"
+    nodeLimitUpdate: 0
   brainwave:
-    minVersion: "2.0.0"
+    minVersion: "3.0.0"
+    minVersionUpdate: "3.0.0"
     nodeLimit: 0
 
 features:
@@ -69,6 +71,7 @@ ui:
   periodSeconds: 30
   tiersVisibility: false
   multiTenantEnabled: false
+  serviceStatusEnabled: false
   ## Extra environment variables that will be pass onto deployment pods
   ##
   ## env:
@@ -164,7 +167,7 @@ backend:
       accessKeySecret: ""
       s3Region: "us-east-2"
       s3BucketName: "radiant-one-v8-sdc-distribution"
-      version: "0.2.7"
+      version: "1.0.0"
   image:
     repository: radiantone/eoc-backend
     pullPolicy: Always
@@ -178,7 +181,7 @@ backend:
   defaultTierName: "Tier1"
   disableSequentialAppVersionUpdate: "true"
   oidcTemplates:
-    - name: "OIDC"
+    - name: "Google"
       discoveryUrl: "https://accounts.google.com/.well-known/openid-configuration"
     - name: "Microsoft"
       discoveryUrl: "https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration"
