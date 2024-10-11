@@ -67,7 +67,7 @@ ui:
   nodeSelector: {}
   tolerations: []
   affinity: {}
-  initialDelaySeconds: 120
+  initialDelaySeconds: 60
   periodSeconds: 30
   tiersVisibility: false
   multiTenantEnabled: false
@@ -176,7 +176,7 @@ backend:
   nodeSelector: {}
   tolerations: []
   affinity: {}
-  initialDelaySeconds: 120
+  initialDelaySeconds: 60
   periodSeconds: 30
   defaultTierName: "Tier1"
   disableSequentialAppVersionUpdate: "true"
