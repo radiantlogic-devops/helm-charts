@@ -36,7 +36,7 @@ spec:
           httpGet:
             path: /eoc-backend/health
             port: 3000
-          initialDelaySeconds: {{ default 120 .Values.backend.initialDelaySeconds }}
+          initialDelaySeconds: {{ default 60 .Values.backend.initialDelaySeconds }}
           periodSeconds: {{ default 30 .Values.backend.periodSeconds }}
           failureThreshold: 10
           successThreshold: 1
@@ -44,7 +44,7 @@ spec:
           httpGet:
               path: /eoc-backend/health
               port: 3000
-          initialDelaySeconds: {{ default 120 .Values.backend.initialDelaySeconds }}
+          initialDelaySeconds: {{ default 60 .Values.backend.initialDelaySeconds }}
           periodSeconds: {{ default 30 .Values.backend.periodSeconds }}
           failureThreshold: 10
           successThreshold: 1

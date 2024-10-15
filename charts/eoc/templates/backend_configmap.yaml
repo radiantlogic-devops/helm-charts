@@ -81,7 +81,10 @@ data:
   NODE_LIMIT_FID: {{ .Values.applications.fid.nodeLimit | default 1 | quote }}
   NODE_LIMIT_BRAINWAVE: {{ .Values.applications.brainwave.nodeLimit | default 1 | quote }}
   FID_MIN_VERSION: {{ .Values.applications.fid.minVersion | default "8.0.0" | quote }}
-  BW_MIN_VERSION: {{ .Values.applications.brainwave.minVersion | default "2.0.0" | quote }}
+  BW_MIN_VERSION: {{ .Values.applications.brainwave.minVersion | default "3.0.0" | quote }}
+
+  FID_MIN_VERSION_UPDATE: {{ .Values.applications.fid.minVersionUpdate | default "8.0.0" | quote }}
+  BW_MIN_VERSION_UPDATE: {{ .Values.applications.brainwave.minVersionUpdate | default "3.0.0" | quote }}
 
   DUPLO_SERVICES_NAMESPACE: {{  .Values.global.commonServicesNamespace | default .Values.orchestrator.duplo.servicesTenantName | quote }}
   ENVIRONMENT_NAMESPACE_PREFIX: {{ .Values.global.environmentNamespacePrefix | default "" | quote }}
@@ -95,6 +98,8 @@ data:
   RELEASE_CHANNELS: {{ .Values.backend.releaseChannels | default "[{\"isDefault\":\"true\",\"name\":\"Official\",\"url\":\"https://radiantlogic-devops.github.io/release-stable/index.yaml\"}]" | toJson | quote }}
 
   TIERS: {{ .Values.backend.tiers | default "[{\"name\":\"BaseTier\",\"asg\":{\"MinSize\":0,\"MaxSize\":3,\"DesiredCapacity\":1,\"Capacity\":\"m5a.large\",\"MetaData\":[{\"Key\":\"OsDiskSize\",\"Value\":\"50Gi\"}]},\"fid\":{\"persistence\":{\"enabled\":true,\"storageClass\":\"gp3\",\"size\":\"100Gi\"},\"resources\":{\"limits\":{\"cpu\":1,\"memory\":\"4Gi\"},\"requests\":{\"cpu\":1,\"memory\":\"4Gi\"}}},\"bwigrc\":{\"resources\":{\"limits\":{\"cpu\":1,\"memory\":\"4Gi\"},\"requests\":{\"cpu\":1,\"memory\":\"4Gi\"}}}},{\"name\":\"Tier1\",\"asg\":{\"Capacity\":\"m5a.xlarge\"},\"fid\":{\"persistence\":{\"size\":\"100Gi\"},\"resources\":{\"limits\":{\"cpu\":2,\"memory\":\"8Gi\"},\"requests\":{\"cpu\":2,\"memory\":\"8Gi\"}}},\"bwigrc\":{\"resources\":{\"limits\":{\"cpu\":2,\"memory\":\"8Gi\"}}}},{\"name\":\"Tier2\",\"asg\":{\"Capacity\":\"m5a.2xlarge\"},\"fid\":{\"persistence\":{\"size\":\"200Gi\"},\"resources\":{\"limits\":{\"cpu\":4,\"memory\":\"16Gi\"},\"requests\":{\"cpu\":4,\"memory\":\"16Gi\"}}},\"bwigrc\":{\"resources\":{\"limits\":{\"cpu\":4,\"memory\":\"16Gi\"},\"requests\":{\"cpu\":4,\"memory\":\"16Gi\"}}}}]" | toJson | quote}}
+
+  SERVICE_STATUS_CONFIG: {{ .Values.backend.serviceStatusConfig | default "" | toJson | quote }}
 
 {{- range $key, $value := (.Values.backend).env }}
   {{ tpl $key $ }}: {{ tpl (print $value) $ | quote }}
