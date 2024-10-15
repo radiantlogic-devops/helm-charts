@@ -318,6 +318,20 @@ backend:
           requests:
             cpu: 4
             memory: 16Gi
+  serviceStatusConfig: []
+    # - name: eoc
+    #   enabled: true
+    #   namespace: duploservices-ensemble-svc
+    #   services:
+    #     - name: redis-master
+    #       kind: StatefulSet
+    #       label: Redis
+    #       enabled: true
+    #     - name: sss
+    #       kind: Deployment
+    #       label: Storage Service
+    #       enabled: true
+
   ## Extra environment variables that will be pass onto deployment pods
   ##
   ## env:
