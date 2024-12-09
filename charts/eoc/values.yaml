@@ -29,6 +29,12 @@ applications:
     minVersionUpdate: "8.0.0"
     nodeLimitUpdate: 0
     logsConfig:
+      connector:
+        enabled: true
+        path: "/opt/radiantone/vds/logs/sync_agents/*/connector.log"
+        index: connector
+        aggregators: ["Default"]
+        retention_days: 30
       vds_server:
         enabled: true
         path: "/opt/radiantone/vds/vds_server/logs/vds_server.log"
@@ -95,7 +101,6 @@ applications:
         index: admin_rest_api_access.log
         retention_days: 30
         aggregators: ["Default"]
-
   brainwave:
     minVersion: "3.0.0"
     minVersionUpdate: "3.0.0"
