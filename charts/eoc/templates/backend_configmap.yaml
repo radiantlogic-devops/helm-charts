@@ -101,9 +101,9 @@ data:
 
   SERVICE_STATUS_CONFIG: {{ .Values.backend.serviceStatusConfig | default "" | toJson | quote }}
 
-  FID_LOG_SETTINGS: {{ .Values.backend.logsConfig | default "" | toJson | quote }}
+  FID_LOG_SETTINGS: {{ .Values.applications.fid.logsConfig | default "" | toJson | quote }}
 
-  DEFAULT_AGGREGATOR: {{ .Values.backend.defaultLogAggregators | default "" | toJson | quote }}
+  DEFAULT_AGGREGATOR: {{ .Values.backend.defaultLogAggregator | default "" | toJson | quote }}
 
   SCHEDULED_MAINTENANCE_CONFIG: {{ .Values.backend.scheduledMaintenanceConfig | default "" | toJson | quote }}
 
