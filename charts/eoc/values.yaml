@@ -408,7 +408,7 @@ backend:
     # name: uptime-kuma
     # baseUrl: 'http://uptime-kuma.duploservices-ensemble-svc.svc.cluster.local:8000'
     # username: admin
-    # password: 6rXUfw@VSWqZ!isAG3  
+    # password: 6rXUfw@VSWqZ!isAG3
   ## Extra environment variables that will be pass onto deployment pods
   ##
   ## env:
