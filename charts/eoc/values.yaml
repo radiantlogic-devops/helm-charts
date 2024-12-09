@@ -331,7 +331,103 @@ backend:
     #       kind: Deployment
     #       label: Storage Service
     #       enabled: true
-
+  logsConfig:
+    vds_server:
+      enabled: true
+      path: "/opt/radiantone/vds/vds_server/logs/vds_server.log"
+      index: vds_server.log
+      # custom_index: vds_server_testing.log
+      # splunk_index: vds_server_splunk_testing.log
+      # splunk_source: testingsource
+      # splunk_sourcetype: testingsourcetype
+    vds_server_access:
+      enabled: true
+      path: "/opt/radiantone/vds/vds_server/logs/vds_server_access.csv"
+      index: vds_server_access.log
+      # custom_index:
+      # splunk_index:
+      # splunk_source:
+      # splunk_sourcetype:
+      parse: |-
+        <parse>
+          @type tsv
+          keys LOGID,LOGDATE,LOGTIME,LOGTYPE,SERVERID,SERVERPORT,SESSIONID,MSGID,CLIENTIP,BINDDN,BINDUSER,CONNNB,OPNB,OPCODE,OPNAME,BASEDN,ATTRIBUTES,SCOPE,FILTER,SIZELIMIT,TIMELIMIT,LDAPCONTROLS,CHANGES,RESULTCODE,ERRORMESSAGE,MATCHEDDN,NBENTRIES,ETIME
+          types LOGID:integer,LOGDATE:string,LOGTIME:string,LOGTYPE:integer,SERVERID:string,SERVERPORT:integer,SESSIONID:integer,MSGID:integer,CLIENTIP:string,BINDDN:string,BINDUSER:string,CONNNB:integer,OPNB:integer,OPCODE:integer,OPNAME:string,BASEDN:string,ATTRIBUTES:string,SCOPE:string,FILTER:string,SIZELIMIT:integer,TIMELIMIT:integer,LDAPCONTROLS:string,CHANGES:string,RESULTCODE:integer,ERRORMESSAGE:string,MATCHEDDN:string,NBENTRIES:integer,ETIME:integer
+        </parse>
+    vds_events:
+      enabled: true
+      path: "/opt/radiantone/vds/vds_server/logs/vds_events.log"
+      index: vds_events.log
+      # custom_index:
+      # splunk_index:
+      # splunk_source:
+      # splunk_sourcetype:
+    periodiccache:
+      enabled: true
+      path: "/opt/radiantone/vds/vds_server/logs/periodiccache.log"
+      index: periodiccache.log
+      # custom_index:
+      # splunk_index:
+      # splunk_source
+      # splunk_sourcetype
+    web:
+      enabled: true
+      path: "/opt/radiantone/vds/vds_server/logs/jetty//web.log"
+      index: web.log
+      # custom_index:
+      # splunk_index:
+      # splunk_source
+      # splunk_sourcetype
+    web_access:
+      enabled: true
+      path: "/opt/radiantone/vds/vds_server/logs/jetty/web_access.log"
+      index: web_access.log
+      # custom_index:
+      # splunk_index:
+      # splunk_source
+      # splunk_sourcetype
+    sync_engine:
+      enabled: true
+      path: "/opt/radiantone/vds/vds_server/logs/sync_engine.log"
+      index: sync_engine.log
+      # custom_index:
+      # splunk_index:
+      # splunk_source
+      # splunk_sourcetype
+    alerts:
+      enabled: true
+      path: "/opt/radiantone/vds/vds_server/logs/alerts.log"
+      index: alerts.log
+      # custom_index:
+      # splunk_index:
+      # splunk_source
+      # splunk_sourcetype
+    adap_access:
+      enabled: true
+      path: "/opt/radiantone/vds/vds_server/logs/adap_access.log"
+      index: adap_access.log
+      # custom_index:
+      # splunk_index:
+      # splunk_source
+      # splunk_sourcetype
+    admin_rest_api_access:
+      enabled: true
+      path: "/opt/radiantone/vds/vds_server/logs/admin_rest_api_access.log"
+      index: admin_rest_api_access.log
+      # custom_index:
+      # splunk_index:
+      # splunk_source
+      # splunk_sourcetype
+  defaultLogAggregators:
+    type: "elasticsearch"
+    host: "elasticsearch-master"
+    port: "9200"
+    index_prefix: "es-index"
+  scheduledMaintenanceConfig:
+    # name: uptime-kuma
+    # baseUrl: 'http://uptime-kuma.duploservices-ensemble-svc.svc.cluster.local:8000'
+    # username: admin
+    # password: 6rXUfw@VSWqZ!isAG3  
   ## Extra environment variables that will be pass onto deployment pods
   ##
   ## env:

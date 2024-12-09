@@ -101,6 +101,12 @@ data:
 
   SERVICE_STATUS_CONFIG: {{ .Values.backend.serviceStatusConfig | default "" | toJson | quote }}
 
+  FID_LOG_SETTINGS: {{ .Values.backend.logsConfig | default "" | toJson | quote }}
+
+  DEFAULT_AGGREGATOR: {{ .Values.backend.defaultLogAggregators | default "" | toJson | quote }}
+
+  SCHEDULED_MAINTENANCE_CONFIG: {{ .Values.backend.scheduledMaintenanceConfig | default "" | toJson | quote }}
+
 {{- range $key, $value := (.Values.backend).env }}
   {{ tpl $key $ }}: {{ tpl (print $value) $ | quote }}
 {{- end }}
