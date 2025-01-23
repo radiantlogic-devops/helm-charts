@@ -430,7 +430,7 @@ backend:
     #   in_app:
     #     enabled: true
     #   email:
-    #     enabled: true  
+    #     enabled: true
   ## Extra environment variables that will be pass onto deployment pods
   ##
   ## env:
