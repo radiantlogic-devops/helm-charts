@@ -414,6 +414,22 @@ backend:
     # baseUrl: 'http://uptime-kuma.duploservices-ensemble-svc.svc.cluster.local:8000'
     # username: admin
     # password: 6rXUfw@VSWqZ!isAG3
+  userNotificationsConfig: {}
+    # enabled: true
+    # notifyOn:
+    #   created: true
+    #   updated: true
+    #   remainders:
+    #   - 1d
+    #   - 12h
+    #   - 3h
+    #   executing: false
+    #   ended: false
+    # notificationMethod:
+    #   in_app:
+    #     enabled: true
+    #   email:
+    #     enabled: true  
   ## Extra environment variables that will be pass onto deployment pods
   ##
   ## env:
