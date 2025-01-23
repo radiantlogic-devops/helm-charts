@@ -145,6 +145,7 @@ ui:
   tiersVisibility: false
   multiTenantEnabled: false
   serviceStatusEnabled: false
+  scheduledMaintenanceEnabled: true
   ## Extra environment variables that will be pass onto deployment pods
   ##
   ## env:
