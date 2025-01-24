@@ -18,6 +18,7 @@ data:
   VITE_TIERS_ENABLED: {{ .Values.ui.tiersVisibility | default false | quote }}
   VITE_MULTI_TENANT_ENABLED: {{ .Values.ui.multiTenantEnabled | default false | quote }}
   VITE_SERVICE_STATUS_ENABLED: {{ .Values.ui.serviceStatusEnabled | default false | quote }}
+  VITE_SCHEDULED_MAINTENANCE_ENABLED: {{ .Values.ui.scheduledMaintenanceEnabled | default false | quote }}
 {{- range $key, $value := (.Values.ui).env }}
   {{ tpl $key $ }}: {{ tpl (print $value) $ | quote }}
 {{- end }}
