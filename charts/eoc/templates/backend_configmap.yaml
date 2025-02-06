@@ -108,6 +108,8 @@ data:
   SCHEDULED_MAINTENANCE_CONFIG: {{ .Values.backend.scheduledMaintenanceConfig | default "" | toJson | quote }}
 
   NOTIFICATION_CONFIG: {{ .Values.backend.userNotificationsConfig | default "" | toJson | quote }}
+  
+  REGION: {{ .Values.global.region | quote }}
 
 {{- range $key, $value := (.Values.backend).env }}
   {{ tpl $key $ }}: {{ tpl (print $value) $ | quote }}
