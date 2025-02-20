@@ -4,33 +4,6 @@
 
 replicaCount: 1
 
-# metrics:
-#   enabled: false
-#   sdc:
-#     enabled: false
-#     serviceMonitor:
-#       enabled: false
-#       namespace: ""
-#       interval: ""
-#       scrapeTimeout: ""
-#       selector: {}
-#       labels: {}
-#       annotations: {}
-#       additionalLabels: {}
-#       additionalAnnotations: {}
-#   inlets:
-#     enabled: false
-#     serviceMonitor:
-#       enabled: false
-#       namespace: ""
-#       interval: ""
-#       scrapeTimeout: ""
-#       selector: {}
-#       labels: {}
-#       annotations: {}
-#       additionalLabels: {}
-#       additionalAnnotations: {}
-
 image:
   repository: radiantone/sdc-server
   pullPolicy: Always
