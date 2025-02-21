@@ -7,6 +7,8 @@ metadata:
 {{- if .Values.prometheus.enabled }}
   annotations:
     prometheus.io/scrape: 'true'
+    # prometheus.io/port: "{{ .Values.service.port }}"
+    # prometheus.io/path: "/metrics"
 {{- end }}
 spec:
   type: {{ .Values.service.type }}
