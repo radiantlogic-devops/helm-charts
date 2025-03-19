@@ -105,7 +105,11 @@ applications:
     minVersion: "3.0.0"
     minVersionUpdate: "3.0.0"
     nodeLimit: 0
-
+  ido:
+    enabled: false
+    nodeLimit: 10
+    minVersion: "1.0.0"
+    minVersionUpdate: "1.0.0"
 features:
   mfa:
     enabled: false
@@ -146,6 +150,9 @@ ui:
   multiTenantEnabled: false
   serviceStatusEnabled: false
   scheduledMaintenanceEnabled: true
+  taskManagementLogsEnabled: false
+  taskManagementReRunEnabled: false
+  taskManagementCancelEnabled: false
   ## Extra environment variables that will be pass onto deployment pods
   ##
   ## env:
@@ -432,6 +439,12 @@ backend:
           enabled: true
         email:
           enabled: true
+  ## Enable prometheus metrics
+  ##
+  ## metrics:
+  ##   enabled: true
+  metrics:
+    enabled: false
   ## Extra environment variables that will be pass onto deployment pods
   ##
   ## env:

@@ -19,6 +19,10 @@ data:
   VITE_MULTI_TENANT_ENABLED: {{ .Values.ui.multiTenantEnabled | default false | quote }}
   VITE_SERVICE_STATUS_ENABLED: {{ .Values.ui.serviceStatusEnabled | default false | quote }}
   VITE_SCHEDULED_MAINTENANCE_ENABLED: {{ .Values.ui.scheduledMaintenanceEnabled | default false | quote }}
+  VITE_IDO_ENABLED: {{ .Values.applications.ido.enabled | default false | quote }}
+  VITE_TASK_MANAGEMENT_LOGS_ENABLED: {{ .Values.ui.taskManagementLogsEnabled | default false | quote }}
+  VITE_TASK_MANAGEMENT_RE_RUN_ENABLED: {{ .Values.ui.taskManagementReRunEnabled | default false | quote }}
+  VITE_TASK_MANAGEMENT_CANCEL_ENABLED: {{ .Values.ui.taskManagementCancelEnabled | default false | quote }}
 {{- range $key, $value := (.Values.ui).env }}
   {{ tpl $key $ }}: {{ tpl (print $value) $ | quote }}
 {{- end }}
