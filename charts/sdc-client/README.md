@@ -139,7 +139,6 @@ When you deploy this chart:
 3. The overall architecture enables:
    - Multiple tunnels from a single Kubernetes cluster
    - Independent configuration for each tunnel
-   - Isolated failure domains (if one tunnel fails, others continue to operate)
 
 ## Minimal values.yaml file
 
