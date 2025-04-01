@@ -41,9 +41,9 @@ spec:
             - name: http
               containerPort: 80
               protocol: TCP
-          envFrom:
-            - configMapRef:
-                name: {{ include "agent.fullname.agent" (dict "root" $ "agentName" .name) }}-env
+          env:
+            - name: ServerHubConfiguration__AgentToken
+              value: {{ .token | quote }}
           resources:
             {{- if .resources }}
             {{- toYaml .resources | nindent 12 }}
