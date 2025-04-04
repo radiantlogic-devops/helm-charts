@@ -1,56 +1,81 @@
+{{- if .Values.agents }}
+# Create deployments for each agent
+{{- range .Values.agents }}
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "agent.fullname" . }}
+  name: {{ include "agent.fullname.agent" (dict "root" $ "agentName" .name) }}
   labels:
-    {{- include "agent.labels" . | nindent 4 }}
+    {{- include "agent.labels.agent" (dict "root" $ "agentName" .name) | nindent 4 }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.replicaCount }}
+  {{- if not $.Values.autoscaling.enabled }}
+  replicas: {{ $.Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "agent.selectorLabels" . | nindent 6 }}
+      {{- include "agent.selectorLabels.agent" (dict "root" $ "agentName" .name) | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
+      {{- with $.Values.podAnnotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "agent.selectorLabels" . | nindent 8 }}
+        {{- include "agent.selectorLabels.agent" (dict "root" $ "agentName" .name) | nindent 8 }}
     spec:
-      {{- with .Values.imagePullSecrets }}
+      {{- with $.Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "agent.serviceAccountName" . }}
+      serviceAccountName: {{ include "agent.serviceAccountName" $ }}
       securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+        {{- toYaml $.Values.podSecurityContext | nindent 8 }}
       containers:
-        - name: {{ .Chart.Name }}
+        - name: {{ $.Chart.Name }}
           securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ $.Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+            {{- toYaml $.Values.securityContext | nindent 12 }}
+          image: "{{ $.Values.image.repository }}:{{ $.Values.image.tag | default $.Chart.AppVersion }}"
+          imagePullPolicy: {{ $.Values.image.pullPolicy }}
           ports:
             - name: http
               containerPort: 80
               protocol: TCP
-          envFrom:
-            - configMapRef:
-                name: {{ template "agent.fullname" . }}-env
+          env:
+            - name: ServerHubConfiguration__AgentToken
+              value: {{ .token | quote }}
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
-      {{- with .Values.nodeSelector }}
+            {{- if .resources }}
+            {{- toYaml .resources | nindent 12 }}
+            {{- else }}
+            {{- toYaml $.Values.resources | nindent 12 }}
+            {{- end }}
+      {{- if .nodeSelector }}
+      nodeSelector:
+        {{- toYaml .nodeSelector | nindent 8 }}
+      {{- else }}
+      {{- with $.Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.affinity }}
+      {{- end }}
+      {{- if .affinity }}
+      affinity:
+        {{- toYaml .affinity | nindent 8 }}
+      {{- else }}
+      {{- with $.Values.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.tolerations }}
+      {{- end }}
+      {{- if .tolerations }}
+      tolerations:
+        {{- toYaml .tolerations | nindent 8 }}
+      {{- else }}
+      {{- with $.Values.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      {{- end }}
+{{- end }}
+{{- end }}
