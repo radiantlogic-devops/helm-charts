@@ -27,7 +27,7 @@ applications:
   fid:
     minVersion: "8.0.0"
     minVersionUpdate: "8.0.0"
-    nodeLimitUpdate: 0
+    nodeLimit: 0
     logsConfig:
       connector:
         enabled: true
@@ -107,7 +107,7 @@ applications:
     nodeLimit: 0
   ido:
     enabled: false
-    nodeLimit: 10
+    nodeLimit: 0
     minVersion: "1.0.0"
     minVersionUpdate: "1.0.0"
 features:
@@ -228,7 +228,7 @@ backend:
     # should have enough permission to be able to create a service account
     username: admin
     password: xxxx
-    metricsPrefixes: ldap_,process_,push_,fid_,ia_
+    metricsPrefixes: ldap_,process_,push_,fid_,ia_,sdc_,agent_
     basicAuth: ""
   agents:
     api:
@@ -248,7 +248,7 @@ backend:
       accessKeySecret: ""
       s3Region: "us-east-2"
       s3BucketName: "radiant-one-v8-sdc-distribution"
-      version: "1.0.0"
+      version: "1.2.1"
   image:
     repository: radiantone/eoc-backend
     pullPolicy: Always
@@ -391,14 +391,14 @@ backend:
               cpu: 4
       fid:
         persistence:
-          size: 200Gi
+          size: 500Gi
         resources:
           limits:
-            cpu: 4
-            memory: 16Gi
+            cpu: 8
+            memory: 32Gi
           requests:
-            cpu: 4
-            memory: 16Gi
+            cpu: 6
+            memory: 24Gi
   serviceStatusConfig: []
     # - name: eoc
     #   enabled: true
