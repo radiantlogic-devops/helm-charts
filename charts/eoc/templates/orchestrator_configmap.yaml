@@ -19,6 +19,8 @@ data:
   REDIS_HOST: {{ .Values.orchestrator.redis.host | quote }}
   REDIS_PORT: {{ .Values.orchestrator.redis.port | quote }}
   ENCRYPTION_KEY: {{ .Values.backend.encryptionKey | quote }}
+  APP_GIT_PRIVATE_KEY: {{ .Values.orchestrator.app.git.privateKey | quote }}
+  APP_GIT_REPO: {{ .Values.orchestrator.app.git.repo | quote }}
   DUPLO_SERVICES_NAMESPACE: {{  .Values.global.commonServicesNamespace | default .Values.orchestrator.duplo.servicesTenantName | quote }}
   ENVIRONMENT_NAMESPACE_PREFIX: {{ .Values.global.environmentNamespacePrefix | quote }}
 {{- range $key, $value := (.Values.orchestrator).env }}
