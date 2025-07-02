@@ -124,7 +124,7 @@ features:
     appName: "Radiant Logic EOC"
   pipeline:
     enabled: false
-    appName: "Promotion pipelines feature"    
+    appName: "Promotion pipelines feature"
 
 ui:
   basePath: /eoc
