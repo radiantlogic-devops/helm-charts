@@ -23,6 +23,7 @@ data:
   VITE_TASK_MANAGEMENT_LOGS_ENABLED: {{ .Values.ui.taskManagementLogsEnabled | default false | quote }}
   VITE_TASK_MANAGEMENT_RE_RUN_ENABLED: {{ .Values.ui.taskManagementReRunEnabled | default false | quote }}
   VITE_TASK_MANAGEMENT_CANCEL_ENABLED: {{ .Values.ui.taskManagementCancelEnabled | default false | quote }}
+  VITE_PROMOTION_PIPELINES_ENABLED: {{ .Values.features.pipeline.enabled | default false | quote }}
 {{- range $key, $value := (.Values.ui).env }}
   {{ tpl $key $ }}: {{ tpl (print $value) $ | quote }}
 {{- end }}

@@ -28,6 +28,14 @@ applications:
     minVersion: "8.0.0"
     minVersionUpdate: "8.0.0"
     nodeLimit: 0
+    pipelineConfig:
+      # git config for promotion pipeline feature
+      git:
+        repo: ""
+        privateKey: |
+          -----BEGIN OPENSSH PRIVATE KEY-----
+          {private key needs to be multi-line and indented by 8}
+          -----END OPENSSH PRIVATE KEY-----
     logsConfig:
       connector:
         enabled: true
@@ -114,6 +122,9 @@ features:
   mfa:
     enabled: false
     appName: "Radiant Logic EOC"
+  pipeline:
+    enabled: false
+    appName: "Promotion pipelines feature"
 
 ui:
   basePath: /eoc
