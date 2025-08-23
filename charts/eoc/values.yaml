@@ -427,7 +427,6 @@ backend:
     type: "elasticsearch"
     host: "elasticsearch-master"
     port: "9200"
-    index_prefix: "es-index"
   scheduledMaintenanceConfig: {}
     # name: uptime-kuma
     # baseUrl: 'http://uptime-kuma.duploservices-ensemble-svc.svc.cluster.local:8000'
