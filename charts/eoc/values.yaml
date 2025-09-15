@@ -500,6 +500,34 @@ orchestrator:
 redis:
   enabled: true
   fullnameOverride: redis
+  image:
+    registry: docker.io
+    repository: radiantone/redis
+    tag: 7.0.6-debian-11-r0
+  sentinel:
+    enabled: false
+    image:
+      registry: docker.io
+      repository: radiantone/redis-sentinel
+      tag: 7.0.5-debian-11-r26
+  metrics:
+    enabled: false
+    image:
+      registry: docker.io
+      repository: radiantone/redis-exporter
+      tag: 1.45.0-debian-11-r14
+  volumePermissions:
+    enabled: false
+    image:
+      registry: docker.io
+      repository: radiantone/bitnami-shell
+      tag: 11-debian-11-r60
+  sysctl:
+    enabled: false
+    image:
+      registry: docker.io
+      repository: radiantone/bitnami-shell
+      tag: 11-debian-11-r60
   architecture: standalone
   auth:
     ## @param auth.enabled Enable password authentication
