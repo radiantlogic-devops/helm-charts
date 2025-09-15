@@ -520,6 +520,22 @@ redis:
 postgresql:
   enabled: false
   fullnameOverride: postgresql
+  image:
+    registry: docker.io
+    repository: radiantone/postgresql
+    tag: 15.1.0-debian-11-r7
+  volumePermissions:
+    enabled: false
+    image:
+      registry: docker.io
+      repository: radiantone/bitnami-shell
+      tag: 11-debian-11-r57
+  metrics:
+    enabled: false
+    image:
+      registry: docker.io
+      repository: radiantone/postgres-exporter
+      tag: 0.11.1-debian-11-r34
   primary:
     nodeSelector: {}
       # tenantname: duploservices-ensemble-svc
