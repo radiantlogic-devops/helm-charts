@@ -23,7 +23,6 @@ data:
   APP_GIT_PRIVATE_KEY: {{ .Values.applications.fid.pipelineConfig.git.privateKey | quote }}
   DUPLO_SERVICES_NAMESPACE: {{  .Values.global.commonServicesNamespace | default .Values.orchestrator.duplo.servicesTenantName | quote }}
   ENVIRONMENT_NAMESPACE_PREFIX: {{ .Values.global.environmentNamespacePrefix | quote }}
-  GRAFANA_BASIC_AUTH: {{ .Values.backend.grafana.basicAuth | default "" | quote }}
 {{- range $key, $value := (.Values.orchestrator).env }}
   {{ tpl $key $ }}: {{ tpl (print $value) $ | quote }}
 {{- end }}
