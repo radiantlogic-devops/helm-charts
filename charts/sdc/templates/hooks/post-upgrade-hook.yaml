@@ -21,7 +21,7 @@ spec:
       restartPolicy: Never
       containers:
       - name: post-upgrade-job
-        image: bitnami/kubectl:latest
+        image: radiantone/kubectl:latest
         command:
         - sh
         - -c
