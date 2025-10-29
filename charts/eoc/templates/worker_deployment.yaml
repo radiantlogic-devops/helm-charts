@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "eoc-worker.fullname" . }}
+  labels:
+    {{- include "eoc-worker.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "eoc-worker.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      name: {{ include "eoc-worker.fullname" . | nindent 8 }}
+      labels:
+        {{- include "eoc-worker.selectorLabels" . | nindent 8 }}   
+      annotations:
+      {{- if (.Values.checksumConfigMap).enabled | default true }}
+        checksum/environment: {{ include (print $.Template.BasePath "/worker_configmap.yaml") . | sha256sum }}
+      {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 6 }}
+      {{- end }}
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.worker.image.repository }}:{{ .Values.worker.image.tag | default .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.worker.image.pullPolicy }}
+        ports:
+        - containerPort: 80
+        envFrom:
+          - configMapRef:
+              name: {{ template "eoc-worker.fullname" . }}
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 3000
+          initialDelaySeconds: {{ default 60 .Values.worker.initialDelaySeconds }}
+          periodSeconds: {{ default 30 .Values.worker.periodSeconds }}
+          failureThreshold: 10
+          successThreshold: 1
+        readinessProbe:
+          httpGet:
+              path: /health
+              port: 3000
+          initialDelaySeconds: {{ default 60 .Values.worker.initialDelaySeconds }}
+          periodSeconds: {{ default 30 .Values.worker.periodSeconds }}
+          failureThreshold: 10
+          successThreshold: 1
+      {{- with .Values.worker.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.worker.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.worker.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+

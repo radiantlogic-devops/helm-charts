@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "eoc-worker.fullname" . }}-service
+spec:
+  ports:
+    - name: {{ include "eoc-worker.fullname" . }}-service-port
+      protocol: TCP
+      port: 80
+      targetPort: 3000
+  selector:
+    {{- include "eoc-worker.selectorLabels" . | nindent 4 }}
+

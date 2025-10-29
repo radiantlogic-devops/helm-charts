@@ -462,6 +462,26 @@ backend:
   ##   AWS_REGION: us-east-1
   env: {}
 
+worker:
+  # Worker shares backend configuration (redis, database, smtp, appRootDirectory, encryptionKey)
+  # Only worker-specific settings are defined here
+  image:
+    repository: radiantone/eoc-worker
+    pullPolicy: Always
+    # Overrides the image tag whose default is the chart appVersion.
+    # tag: "dev"
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  initialDelaySeconds: 60
+  periodSeconds: 30
+  ## Extra environment variables that will be pass onto deployment pods
+  ##
+  ## env:
+  ##   AWS_ROLE_ARN: arn:aws:iam::123456789000:role/iam-role-name-here
+  ##   AWS_REGION: us-east-1
+  env: {}
+
 orchestrator:
   duplo:
     token: ""
