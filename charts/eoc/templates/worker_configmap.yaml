@@ -1,8 +1,13 @@
 apiVersion: v1
 data:
+  # Worker shares most backend configuration since it's a clone that processes BullMQ jobs
+  
+  # Redis - Critical for BullMQ
+  BULL_REDIS_URL: {{ .Values.backend.redis.bullUrl | quote }}
   REDIS_HOST: {{ .Values.backend.redis.host | quote }}
   REDIS_PORT: {{ .Values.backend.redis.port | quote }}
 
+  # Database
   DATABASE_NAME: {{ .Values.backend.database.name | quote }}
   DATABASE_SCHEMA: {{ .Values.backend.database.schema | quote }}
   DATABASE_HOST: {{ .Values.backend.database.host | quote }}
@@ -10,15 +15,24 @@ data:
   DATABASE_USERNAME: {{ .Values.backend.database.auth.user | quote }}
   DATABASE_PASSWORD: {{ .Values.backend.database.auth.pass | quote }}
 
+  # Email/SMTP
   EMAIL_FROM: {{ .Values.backend.smtp.from | quote }}
   EMAIL_ID: {{ .Values.backend.smtp.user | quote }}
   EMAIL_PASS: {{ .Values.backend.smtp.pass | quote }}
   EMAIL_HOST: {{ .Values.backend.smtp.host | quote }}
   EMAIL_PORT: {{ .Values.backend.smtp.port | quote }}
 
+  # App Configuration
   APP_ROOT_DIRECTORY: {{ .Values.backend.appRootDirectory | quote }}
-
   ENCRYPTION_KEY: {{ .Values.backend.encryptionKey | quote }}
+
+  # Global Configuration
+  ENV_PREFIX: {{ .Values.global.infrastructureName | quote }}
+  DOMAIN_NAME: {{ .Values.global.domainName | quote }}
+  REGION: {{ .Values.global.region | quote }}
+  DUPLO_SERVICES_NAMESPACE: {{  .Values.global.commonServicesNamespace | default .Values.orchestrator.duplo.servicesTenantName | quote }}
+  ENVIRONMENT_NAMESPACE_PREFIX: {{ .Values.global.environmentNamespacePrefix | default "" | quote }}
+
 
 {{- range $key, $value := (.Values.worker).env }}
   {{ tpl $key $ }}: {{ tpl (print $value) $ | quote }}
