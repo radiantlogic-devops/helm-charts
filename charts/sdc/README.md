@@ -23,9 +23,12 @@ Additionally CERT-MANAGER, POSTGRES and PGADMIN can also be deployed as dependen
 - cert-manager adds certificates and certificate issuers as resource types in Kubernetes clusters, and simplifies the process of obtaining, renewing and using those certificates.
 - It will ensure certificates are valid and up to date, and attempt to renew certificates at a configured time before expiry.
 
-3. Posgresql
+3. PostgreSQL
 
 - PostgreSQL, also known as Postgres, is a free and open-source relational database management system emphasizing extensibility and SQL compliance
+- **Chart Version:** 16.7.27 (Bitnami PostgreSQL Helm chart)
+- **Image:** radiantone/postgresql:16.3.0
+- **PostgreSQL Version:** 16.3.0
 
 4. PGAdmin
 
