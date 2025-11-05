@@ -30,7 +30,7 @@ maintainers:
 
 dependencies:
   - name: postgresql
-    version: 12.1.3
+    version: 17.0.1
     repository: https://charts.bitnami.com/bitnami
     condition: postgresql.enabled
   - name: cert-manager
