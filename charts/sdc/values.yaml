@@ -209,9 +209,8 @@ postgresql:
   enabled: false
   fullnameOverride: postgresql
   image:
-    registry: docker.io
     repository: radiantone/postgresql
-    tag: 16.3.0
+    tag: 15.1.0-debian-11-r7
   primary:
     nodeSelector: {}
       # tenantname: xxxx
