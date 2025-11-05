@@ -21,3 +21,20 @@
 .idea/
 *.tmproj
 .vscode/
+# Documentation and sample files
+*.md
+!README.md
+!CHANGELOG.md
+values-sample.yaml
+# CI/CD files
+.github/
+.gitlab-ci.yml
+.travis.yml
+# Test files
+*_test.yaml
+*_test.yml
+test/
+tests/
+# Helm specific
+requirements.lock
+Chart.lock.bak

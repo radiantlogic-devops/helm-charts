@@ -137,7 +137,7 @@ hooks:
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.bitnami.com/bitnami | postgresql | 12.1.3 |
+| https://charts.bitnami.com/bitnami | postgresql | 16.7.27 |
 | https://charts.jetstack.io | cert-manager | 1.11.0 |
 | https://helm.runix.net | pgadmin4 | 1.13.8 |
 | oci://ghcr.io/openfaasltd | inlets(inlets-uplink-provider) | 0.2.9 |
