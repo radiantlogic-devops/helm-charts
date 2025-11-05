@@ -26,7 +26,7 @@ Additionally CERT-MANAGER, POSTGRES and PGADMIN can also be deployed as dependen
 3. PostgreSQL
 
 - PostgreSQL, also known as Postgres, is a free and open-source relational database management system emphasizing extensibility and SQL compliance
-- **Chart Version:** 16.7.27 (Bitnami PostgreSQL Helm chart)
+- **Chart Version:** 15.5.20 (Bitnami PostgreSQL Helm chart)
 - **Image:** radiantone/postgresql:16.3.0
 - **PostgreSQL Version:** 16.3.0
 
@@ -140,7 +140,7 @@ hooks:
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.bitnami.com/bitnami | postgresql | 16.7.27 |
+| https://charts.bitnami.com/bitnami | postgresql | 15.5.20 |
 | https://charts.jetstack.io | cert-manager | 1.11.0 |
 | https://helm.runix.net | pgadmin4 | 1.13.8 |
 | oci://ghcr.io/openfaasltd | inlets(inlets-uplink-provider) | 0.2.9 |
