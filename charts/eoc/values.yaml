@@ -127,6 +127,7 @@ features:
     appName: "Promotion pipelines feature"
 
 ui:
+  replicas: 1
   basePath: /eoc
   # example https://{fqdm}/eoc-backend
   apiBaseUrl: ""
@@ -172,6 +173,7 @@ ui:
   env: {}
 
 backend:
+  replicas: 1
   basePath: eoc-backend
   redis:
     # redundant, will be removed
@@ -463,6 +465,7 @@ backend:
   env: {}
 
 worker:
+  replicas: 1
   # Worker shares backend configuration (redis, database, smtp, appRootDirectory, encryptionKey)
   # Only worker-specific settings are defined here
   image:
@@ -483,6 +486,7 @@ worker:
   env: {}
 
 orchestrator:
+  replicas: 1
   duplo:
     token: ""
     baseUrl: ""

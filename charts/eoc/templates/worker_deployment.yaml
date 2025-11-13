@@ -5,7 +5,7 @@ metadata:
   labels:
     {{- include "eoc-worker.labels" . | nindent 4 }}
 spec:
-  replicas: 1
+  replicas: {{ .Values.worker.replicas | default 1 }}
   selector:
     matchLabels:
       {{- include "eoc-worker.selectorLabels" . | nindent 6 }}
