@@ -17,6 +17,20 @@ global:
   ##   AWS_REGION: us-east-1
   env: {}
 
+## Cloud Provider Accounts Configuration
+## This configuration will be converted to JSON and set as CLOUD_PROVIDER_ACCOUNTS env var
+## For backend: credential block will be excluded
+## For orchestrator: full configuration including credentials will be included
+##
+## cloudProviderAccounts:
+##   - name: ops01
+##     manager: radiant-managed
+##     platform: aws  # Supported values: aws, azure, gcp
+##     credential:
+##       token: AQAAANCMnd8BFdERjHoAwE_Cl-sBAAAAnEDyvf
+##       baseUrl: https://ops01.dc.radiantlogic.io
+cloudProviderAccounts: []
+
 ## Image pull secrets to pull the images
 ## Do not add under global as it is used by redis
 ## imagePullSecrets:

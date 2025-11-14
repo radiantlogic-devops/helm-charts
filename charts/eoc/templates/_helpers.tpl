@@ -285,3 +285,34 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+CLOUD PROVIDER ACCOUNTS HELPERS
+*/}}
+
+{{/*
+Cloud Provider Accounts with credentials (for orchestrator)
+*/}}
+{{- define "eoc.cloudProviderAccounts.withCredentials" -}}
+{{- if .Values.cloudProviderAccounts }}
+{{- .Values.cloudProviderAccounts | toJson }}
+{{- else }}
+{{- "[]" }}
+{{- end }}
+{{- end }}
+
+{{/*
+Cloud Provider Accounts without credentials (for backend)
+*/}}
+{{- define "eoc.cloudProviderAccounts.withoutCredentials" -}}
+{{- if .Values.cloudProviderAccounts }}
+{{- $accounts := list }}
+{{- range .Values.cloudProviderAccounts }}
+{{- $account := dict "name" .name "manager" .manager "platform" .platform }}
+{{- $accounts = append $accounts $account }}
+{{- end }}
+{{- $accounts | toJson }}
+{{- else }}
+{{- "[]" }}
+{{- end }}
+{{- end }}

@@ -114,6 +114,8 @@ data:
   
   REGION: {{ .Values.global.region | quote }}
 
+  CLOUD_PROVIDER_ACCOUNTS: {{ include "eoc.cloudProviderAccounts.withoutCredentials" . | quote }}
+
 {{- range $key, $value := (.Values.backend).env }}
   {{ tpl $key $ }}: {{ tpl (print $value) $ | quote }}
 {{- end }}
