@@ -308,7 +308,7 @@ Cloud Provider Accounts without credentials (for backend)
 {{- if .Values.cloudProviderAccounts }}
 {{- $accounts := list }}
 {{- range .Values.cloudProviderAccounts }}
-{{- $account := dict "name" .name "manager" .manager "platform" .platform }}
+{{- $account := dict "name" .name "label" .label "managedBy" .managedBy "platform" .platform }}
 {{- $accounts = append $accounts $account }}
 {{- end }}
 {{- $accounts | toJson }}

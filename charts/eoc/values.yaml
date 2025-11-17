@@ -24,7 +24,8 @@ global:
 ##
 ## cloudProviderAccounts:
 ##   - name: ops01
-##     manager: radiant-managed
+##     label: Operations Account 01
+##     managedBy: radiant
 ##     platform: aws  # Supported values: aws, azure, gcp
 ##     credential:
 ##       token: AQAAANCMnd8BFdERjHoAwE_Cl-sBAAAAnEDyvf
