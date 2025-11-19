@@ -40,6 +40,9 @@ data:
   # Scheduled Maintenance Configuration
   SCHEDULED_MAINTENANCE_CONFIG: {{ .Values.worker.scheduledMaintenanceConfig | default "" | toJson | quote }}
 
+  # User Notifications Configuration
+  NOTIFICATION_CONFIG: {{ .Values.worker.userNotificationsConfig | default "" | toJson | quote }}
+
 {{- range $key, $value := (.Values.worker).env }}
   {{ tpl $key $ }}: {{ tpl (print $value) $ | quote }}
 {{- end }}
