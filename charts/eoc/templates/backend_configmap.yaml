@@ -108,8 +108,6 @@ data:
 
   DEFAULT_AGGREGATOR: {{ .Values.backend.defaultLogAggregator | default "" | toJson | quote }}
 
-  SCHEDULED_MAINTENANCE_CONFIG: {{ .Values.backend.scheduledMaintenanceConfig | default "" | toJson | quote }}
-
   NOTIFICATION_CONFIG: {{ .Values.backend.userNotificationsConfig | default "" | toJson | quote }}
   
   REGION: {{ .Values.global.region | quote }}

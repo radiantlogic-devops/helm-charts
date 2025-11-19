@@ -37,6 +37,9 @@ data:
   JWT_SECRET: {{ .Values.backend.jwt.secret | quote }}
   JWT_EXPIRES_IN: {{ .Values.backend.jwt.expiresIn | quote }}
 
+  # Scheduled Maintenance Configuration
+  SCHEDULED_MAINTENANCE_CONFIG: {{ .Values.worker.scheduledMaintenanceConfig | default "" | toJson | quote }}
+
 {{- range $key, $value := (.Values.worker).env }}
   {{ tpl $key $ }}: {{ tpl (print $value) $ | quote }}
 {{- end }}

@@ -444,11 +444,6 @@ backend:
     type: "elasticsearch"
     host: "elasticsearch-master"
     port: "9200"
-  scheduledMaintenanceConfig: {}
-    # name: uptime-kuma
-    # baseUrl: 'http://uptime-kuma.duploservices-ensemble-svc.svc.cluster.local:8000'
-    # username: admin
-    # password: 6rXUfw@VSWqZ!isAG3
   userNotificationsConfig:
     scheduledMaintenances:
       enabled: true
@@ -493,6 +488,11 @@ worker:
   affinity: {}
   initialDelaySeconds: 60
   periodSeconds: 30
+  scheduledMaintenanceConfig: {}
+    # name: uptime-kuma
+    # baseUrl: 'http://uptime-kuma.duploservices-ensemble-svc.svc.cluster.local:8000'
+    # username: admin
+    # password: 6rXUfw@VSWqZ!isAG3
   ## Extra environment variables that will be pass onto deployment pods
   ##
   ## env:
