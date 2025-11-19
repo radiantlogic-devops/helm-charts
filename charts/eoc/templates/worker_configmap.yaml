@@ -38,10 +38,10 @@ data:
   JWT_EXPIRES_IN: {{ .Values.backend.jwt.expiresIn | quote }}
 
   # Scheduled Maintenance Configuration
-  SCHEDULED_MAINTENANCE_CONFIG: {{ .Values.worker.scheduledMaintenanceConfig | default "" | toJson | quote }}
+  SCHEDULED_MAINTENANCE_CONFIG: {{ .Values.backend.scheduledMaintenanceConfig | default "" | toJson | quote }}
 
   # User Notifications Configuration
-  NOTIFICATION_CONFIG: {{ .Values.worker.userNotificationsConfig | default "" | toJson | quote }}
+  NOTIFICATION_CONFIG: {{ .Values.backend.userNotificationsConfig | default "" | toJson | quote }}
 
 {{- range $key, $value := (.Values.worker).env }}
   {{ tpl $key $ }}: {{ tpl (print $value) $ | quote }}
