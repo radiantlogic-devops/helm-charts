@@ -5,7 +5,7 @@ metadata:
   labels:
     {{- include "sss.labels" . | nindent 4 }}
 spec:
-  replicas: 1
+  replicas: {{ ((.Values.global).hibernate | default false) | ternary 0 .Values.replicaCount }}
   selector:
     matchLabels:
       {{- include "sss.selectorLabels" . | nindent 6 }}
