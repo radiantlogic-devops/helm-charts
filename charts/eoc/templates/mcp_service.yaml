@@ -1,0 +1,20 @@
+{{- if .Values.mcp.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "eoc-mcp.fullname" . }}-service
+  labels:
+    {{- include "eoc-mcp.labels" . | nindent 4 }}
+spec:
+  type: NodePort
+  ports:
+    - name: {{ include "eoc-mcp.fullname" . }}-service-port
+      protocol: TCP
+      port: {{ .Values.mcp.service.port | default 80 }}
+      targetPort: 3000
+      {{- if .Values.mcp.service.nodePort }}
+      nodePort: {{ .Values.mcp.service.nodePort }}
+      {{- end }}
+  selector:
+    {{- include "eoc-mcp.selectorLabels" . | nindent 4 }}
+{{- end }}

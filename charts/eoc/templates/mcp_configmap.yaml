@@ -1,0 +1,28 @@
+{{- if .Values.mcp.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "eoc-mcp.fullname" . }}
+  labels:
+    app: {{ template "eoc-mcp.fullname" . }}
+    chart: "{{ template "eoc-mcp.chart" . }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    role: eoc-mcp
+data:
+  # Server Configuration
+  PORT: "3000"
+  NODE_ENV: {{ .Values.mcp.nodeEnv | default "production" | quote }}
+
+  # Global Configuration
+  ENV_PREFIX: {{ .Values.global.infrastructureName | quote }}
+  DOMAIN_NAME: {{ .Values.global.domainName | quote }}
+  REGION: {{ .Values.global.region | quote }}
+
+{{- range $key, $value := (.Values.mcp).env }}
+  {{ tpl $key $ }}: {{ tpl (print $value) $ | quote }}
+{{- end }}
+{{- range $key, $value := (.Values.global).env }}
+  {{ tpl $key $ }}: {{ tpl (print $value) $ | quote }}
+{{- end }}
+{{- end }}

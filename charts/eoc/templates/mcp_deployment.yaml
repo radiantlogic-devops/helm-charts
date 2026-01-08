@@ -1,0 +1,64 @@
+{{- if .Values.mcp.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "eoc-mcp.fullname" . }}
+  labels:
+    {{- include "eoc-mcp.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.mcp.replicas | default 1 }}
+  selector:
+    matchLabels:
+      {{- include "eoc-mcp.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      name: {{ include "eoc-mcp.fullname" . | nindent 8 }}
+      labels:
+        {{- include "eoc-mcp.selectorLabels" . | nindent 8 }}   
+      annotations:
+      {{- if (.Values.checksumConfigMap).enabled | default true }}
+        checksum/environment: {{ include (print $.Template.BasePath "/mcp_configmap.yaml") . | sha256sum }}
+      {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 6 }}
+      {{- end }}
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.mcp.image.repository }}:{{ .Values.mcp.image.tag | default .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.mcp.image.pullPolicy }}
+        ports:
+        - containerPort: 3000
+        envFrom:
+          - configMapRef:
+              name: {{ template "eoc-mcp.fullname" . }}
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 3000
+          initialDelaySeconds: {{ default 60 .Values.mcp.initialDelaySeconds }}
+          periodSeconds: {{ default 30 .Values.mcp.periodSeconds }}
+          failureThreshold: 10
+          successThreshold: 1
+        readinessProbe:
+          httpGet:
+              path: /health
+              port: 3000
+          initialDelaySeconds: {{ default 60 .Values.mcp.initialDelaySeconds }}
+          periodSeconds: {{ default 30 .Values.mcp.periodSeconds }}
+          failureThreshold: 10
+          successThreshold: 1
+      {{- with .Values.mcp.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.mcp.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.mcp.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end }}

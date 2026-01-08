@@ -316,3 +316,75 @@ Cloud Provider Accounts without credentials (for backend)
 {{- "[]" }}
 {{- end }}
 {{- end }}
+
+{{/*
+MCP
+*/}}
+
+{{/*
+Expand the name of the chart.
+*/}}
+{{- define "eoc-mcp.name" -}}
+{{- if .Values.nameOverride }}
+{{- printf "%s-%s" .Values.nameOverride "mcp" | trunc 63 | trimSuffix "-" }}
+{{- else }}
+{{- printf "%s-%s" .Chart.Name "mcp" | trunc 63 | trimSuffix "-" }}
+{{- end }}
+{{- end }}
+
+{{/*
+Create a default fully qualified app name.
+We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
+If release name contains chart name it will be used as a full name.
+*/}}
+{{- define "eoc-mcp.fullname" -}}
+{{- if .Values.fullnameOverride }}
+{{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
+{{- else }}
+{{- $_name := default .Chart.Name .Values.nameOverride }}
+{{- $name := printf "%s-%s" $_name "mcp" }}
+{{- if contains $name .Release.Name }}
+{{- .Release.Name | trunc 63 | trimSuffix "-" }}
+{{- else }}
+{{- printf "%s" $name | trunc 63 | trimSuffix "-" }}
+{{- end }}
+{{- end }}
+{{- end }}
+
+{{/*
+Create chart name and version as used by the chart label.
+*/}}
+{{- define "eoc-mcp.chart" -}}
+{{- printf "%s-%s-%s" .Chart.Name "mcp" .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
+{{- end }}
+
+{{/*
+Common labels
+*/}}
+{{- define "eoc-mcp.labels" -}}
+helm.sh/chart: {{ include "eoc-mcp.chart" . }}
+{{ include "eoc-mcp.selectorLabels" . }}
+{{- if .Chart.AppVersion }}
+app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+{{- end }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- end }}
+
+{{/*
+Selector labels
+*/}}
+{{- define "eoc-mcp.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "eoc-mcp.name" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
+
+{{/*
+Create the name of the service account to use
+*/}}
+{{- define "eoc-mcp.serviceAccountName" -}}
+{{- if .Values.serviceAccount.create }}
+{{- default (include "eoc-mcp.fullname" .) .Values.serviceAccount.name }}
+{{- else }}
+{{- default "default" .Values.serviceAccount.name }}
+{{- end }}
+{{- end }}

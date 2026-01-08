@@ -500,6 +500,35 @@ worker:
   ##   AWS_REGION: us-east-1
   env: {}
 
+mcp:
+  # Enable or disable the MCP server deployment
+  enabled: false
+  replicas: 1
+  # Node environment (production, development)
+  nodeEnv: production
+  image:
+    repository: radiantone/eoc-mcp
+    pullPolicy: Always
+    # Overrides the image tag whose default is the chart appVersion.
+    # tag: "dev"
+  service:
+    # Service port (external)
+    port: 80
+    # NodePort value (optional, Kubernetes will auto-assign if not specified)
+    # Valid range: 30000-32767
+    # nodePort: 30080
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  initialDelaySeconds: 60
+  periodSeconds: 30
+  ## Extra environment variables that will be pass onto deployment pods
+  ##
+  ## env:
+  ##   AWS_ROLE_ARN: arn:aws:iam::123456789000:role/iam-role-name-here
+  ##   AWS_REGION: us-east-1
+  env: {}
+
 orchestrator:
   replicas: 1
   duplo:
