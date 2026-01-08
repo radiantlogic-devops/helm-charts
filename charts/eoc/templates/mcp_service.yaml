@@ -2,19 +2,16 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "eoc-mcp.fullname" . }}-service
+  name: {{ include "eoc-mcp.fullname" . }}
   labels:
     {{- include "eoc-mcp.labels" . | nindent 4 }}
 spec:
-  type: NodePort
+  type: {{ .Values.mcp.service.type }}
   ports:
-    - name: {{ include "eoc-mcp.fullname" . }}-service-port
+    - port: {{ .Values.mcp.service.port }}
+      targetPort: http
       protocol: TCP
-      port: {{ .Values.mcp.service.port | default 80 }}
-      targetPort: 3000
-      {{- if .Values.mcp.service.nodePort }}
-      nodePort: {{ .Values.mcp.service.nodePort }}
-      {{- end }}
+      name: http
   selector:
     {{- include "eoc-mcp.selectorLabels" . | nindent 4 }}
 {{- end }}

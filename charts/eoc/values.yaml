@@ -512,11 +512,8 @@ mcp:
     # Overrides the image tag whose default is the chart appVersion.
     # tag: "dev"
   service:
-    # Service port (external)
+    type: NodePort
     port: 80
-    # NodePort value (optional, Kubernetes will auto-assign if not specified)
-    # Valid range: 30000-32767
-    # nodePort: 30080
   nodeSelector: {}
   tolerations: []
   affinity: {}

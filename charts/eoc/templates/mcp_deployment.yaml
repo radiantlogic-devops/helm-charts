@@ -29,7 +29,9 @@ spec:
         image: "{{ .Values.mcp.image.repository }}:{{ .Values.mcp.image.tag | default .Chart.AppVersion }}"
         imagePullPolicy: {{ .Values.mcp.image.pullPolicy }}
         ports:
-        - containerPort: 3000
+          - name: http
+            containerPort: 3000
+            protocol: TCP
         envFrom:
           - configMapRef:
               name: {{ template "eoc-mcp.fullname" . }}
