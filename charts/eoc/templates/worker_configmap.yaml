@@ -44,6 +44,25 @@ data:
   # User Notifications Configuration
   NOTIFICATION_CONFIG: {{ .Values.backend.userNotificationsConfig | default "" | toJson | quote }}
 
+  AGENTS_BASE_PATH: {{ .Values.backend.agents.api.endpoint | quote }}
+  AGENTS_CLIENT_ID: {{ .Values.backend.agents.api.clientId | quote }}
+  AGENTS_CLIENT_SECRET: {{ .Values.backend.agents.api.clientSecret | quote }}
+  AGENTS_INLETS_TOKEN: {{ .Values.backend.agents.inlets.token | quote }}
+  AGENTS_SERVER_NAME: {{ .Values.backend.agents.inlets.serverName | quote }}
+  AGENTS_SERVER_ENDPOINT: {{ .Values.backend.agents.inlets.serverEndpoint | quote }}
+
+  SDC_AWS_ACCESS_KEY_ID: {{ .Values.backend.agents.client.accessKeyId | quote}}
+  SDC_AWS_ACCESS_KEY_SECRET: {{ .Values.backend.agents.client.accessKeySecret | quote }}
+  SDC_AWS_REGION: {{ .Values.backend.agents.client.s3Region | quote }}
+  SDC_AWS_S3_BUCKET_NAME: {{ .Values.backend.agents.client.s3BucketName | quote }}
+  SDC_CLIENT_VERSION: {{ .Values.backend.agents.client.version | quote }}
+
+  GRAFANA_BASE_URL: {{ .Values.backend.grafana.host | quote }}
+  GRAFANA_USERNAME: {{ .Values.backend.grafana.username | quote }}
+  GRAFANA_PASSWORD: {{ .Values.backend.grafana.password | quote }}
+  GRAFANA_METRICS_PREFIXES: {{ .Values.backend.grafana.metricsPrefixes | quote }}
+  GRAFANA_BASIC_AUTH: {{ .Values.backend.grafana.basicAuth | default "" | quote }}
+
 {{- range $key, $value := (.Values.worker).env }}
   {{ tpl $key $ }}: {{ tpl (print $value) $ | quote }}
 {{- end }}
