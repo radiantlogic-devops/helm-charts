@@ -116,6 +116,12 @@ data:
 
   CLOUD_PROVIDER_ACCOUNTS: {{ include "eoc.cloudProviderAccounts.withoutCredentials" . | quote }}
 
+  TIERS_ENABLED: {{ .Values.ui.tiersVisibility | default false | quote }}
+  TASK_MANAGEMENT_LOGS_ENABLED: {{ .Values.ui.taskManagementLogsEnabled | default false | quote }}
+  TASK_MANAGEMENT_RE_RUN_ENABLED: {{ .Values.ui.taskManagementReRunEnabled | default false | quote }}
+  TASK_MANAGEMENT_CANCEL_ENABLED: {{ .Values.ui.taskManagementCancelEnabled | default false | quote }}
+  PROMOTION_PIPELINES_ENABLED: {{ .Values.features.pipeline.enabled | default false | quote }}
+
 {{- range $key, $value := (.Values.backend).env }}
   {{ tpl $key $ }}: {{ tpl (print $value) $ | quote }}
 {{- end }}
