@@ -3,7 +3,7 @@ name: Release EOC Beta Chart
 on:
   push:
     branches:
-      - eoc-2.0.0-rc.1
+      - eoc-2.0.0-rc.2
 
 jobs:
   release:
@@ -25,7 +25,7 @@ jobs:
           name: eoc
           repository: radiantlogic-devops/helm-charts
           path: charts/eoc
-          tag: 2.0.0-rc.1
+          tag: 2.0.0-rc.2
           registry: ghcr.io
           update_dependencies: true
           registry_username: "$GITHUB_ACTOR"
