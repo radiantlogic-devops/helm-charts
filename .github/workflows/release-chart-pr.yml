@@ -1,0 +1,136 @@
+name: Create Chart Release PR
+
+# On-demand helper that bumps a chart's version + appVersion and opens a
+# release PR. Merging that PR to `master` is what actually cuts the release,
+# via the existing `release.yml` (helm/chart-releaser-action).
+#
+# Usage: Actions tab -> "Create Chart Release PR" -> Run workflow -> pick the
+# chart and enter the new version.
+
+on:
+  workflow_dispatch:
+    inputs:
+      chart:
+        description: Chart to release
+        required: true
+        type: choice
+        options:
+          - sdc
+          - sdc-client
+          - eoc
+          - sss
+      version:
+        description: New chart version (semver, e.g. 1.4.0)
+        required: true
+        type: string
+      app_version:
+        description: appVersion / image tag (defaults to version if left blank)
+        required: false
+        type: string
+      base_branch:
+        description: Branch to base the PR on (for stacked releases; defaults to master)
+        required: false
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release-pr:
+    runs-on: ubuntu-latest
+    env:
+      CHART: ${{ inputs.chart }}
+      VERSION: ${{ inputs.version }}
+      APP_VERSION: ${{ inputs.app_version }}
+      BASE_BRANCH: ${{ inputs.base_branch }}
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Validate inputs
+        run: |
+          set -euo pipefail
+          if ! printf '%s' "$VERSION" | grep -qE '^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.]+)?$'; then
+            echo "::error::version '$VERSION' is not valid semver (e.g. 1.4.0 or 1.4.0-rc.1)"; exit 1
+          fi
+          if [ -n "$APP_VERSION" ] && ! printf '%s' "$APP_VERSION" | grep -qE '^[0-9A-Za-z.+-]+$'; then
+            echo "::error::app_version '$APP_VERSION' contains unexpected characters"; exit 1
+          fi
+          test -f "charts/${CHART}/Chart.yaml" || { echo "::error::charts/${CHART}/Chart.yaml not found"; exit 1; }
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Bump Chart.yaml
+        id: bump
+        run: |
+          set -euo pipefail
+          APP="${APP_VERSION:-$VERSION}"
+          BASE="${BASE_BRANCH:-master}"
+          CHARTFILE="charts/${CHART}/Chart.yaml"
+          OLD_VER=$(grep -E '^version:' "$CHARTFILE" | head -1 | awk '{print $2}')
+
+          git fetch origin "$BASE"
+          git checkout "origin/$BASE"
+
+          # Only the top-level version:/appVersion: keys are anchored to column 0;
+          # dependency versions and apiVersion are indented or differently named.
+          sed -i -E "s/^version:.*/version: ${VERSION}/" "$CHARTFILE"
+          sed -i -E "s/^appVersion:.*/appVersion: \"${APP}\"/" "$CHARTFILE"
+
+          echo "Diff:"; git --no-pager diff -- "$CHARTFILE"
+          {
+            echo "old_ver=$OLD_VER"
+            echo "app=$APP"
+            echo "base=$BASE"
+            echo "branch=${CHART}/${VERSION}"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Commit, push, and open PR
+        run: |
+          set -euo pipefail
+          APP="${{ steps.bump.outputs.app }}"
+          BASE="${{ steps.bump.outputs.base }}"
+          BRANCH="${{ steps.bump.outputs.branch }}"
+          OLD_VER="${{ steps.bump.outputs.old_ver }}"
+          CHARTFILE="charts/${CHART}/Chart.yaml"
+
+          if git ls-remote --exit-code --heads origin "$BRANCH" >/dev/null 2>&1; then
+            echo "::error::branch $BRANCH already exists on origin"; exit 1
+          fi
+
+          git checkout -b "$BRANCH"
+          git add "$CHARTFILE"
+          git commit -m "[${CHART}] Bump version to ${VERSION} for new ${CHART} release"
+          git push origin "$BRANCH"
+
+          BODY=$(cat <<EOF
+          ## ${CHART} Helm Chart v${VERSION}
+
+          Bump the \`${CHART}\` chart to version \`${VERSION}\` to align with the new ${CHART} release.
+
+          ### Changes
+          - \`${CHARTFILE}\`: \`version\` ${OLD_VER} -> ${VERSION}
+          - \`${CHARTFILE}\`: \`appVersion\` -> ${APP}
+
+          The container image tag defaults to the chart \`appVersion\`, so no \`values.yaml\` change is required.
+
+          ### Release Process
+          Once merged to \`master\`, \`chart-releaser-action\` (release.yml) will automatically:
+          1. Package the chart as \`${CHART}-${VERSION}.tgz\`
+          2. Create GitHub release / tag \`${CHART}-${VERSION}\`
+          3. Update the \`gh-pages\` Helm repo index
+
+          _Opened by the **Create Chart Release PR** workflow._
+          EOF
+          )
+
+          gh pr create --base "$BASE" --head "$BRANCH" \
+            --title "[${CHART}] ${CHART} version ${VERSION} release" \
+            --body "$BODY"
