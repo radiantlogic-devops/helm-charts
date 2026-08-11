@@ -71,12 +71,11 @@ data:
 {{- end }}
 kind: ConfigMap
 metadata:
-  labels:
-    role: eoc-worker
   name: {{ template "eoc-worker.fullname" . }}
   labels:
     app: {{ template "eoc-worker.fullname" . }}
     chart: "{{ template "eoc-worker.chart" . }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
+    role: eoc-worker
 
