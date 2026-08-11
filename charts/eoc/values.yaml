@@ -28,7 +28,7 @@ global:
 ##     managedBy: radiant
 ##     platform: aws  # Supported values: aws, azure, gcp
 ##     credential:
-##       token: AQAAANCMnd8BFdERjHoAwE_Cl-sBAAAAnEDyvf
+##       token: <redacted-token>
 ##       baseUrl: https://ops01.dc.radiantlogic.io
 cloudProviderAccounts: []
 
