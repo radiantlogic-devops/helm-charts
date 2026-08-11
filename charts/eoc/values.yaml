@@ -17,6 +17,21 @@ global:
   ##   AWS_REGION: us-east-1
   env: {}
 
+## Cloud Provider Accounts Configuration
+## This configuration will be converted to JSON and set as CLOUD_PROVIDER_ACCOUNTS env var
+## For backend: credential block will be excluded
+## For orchestrator: full configuration including credentials will be included
+##
+## cloudProviderAccounts:
+##   - name: ops01
+##     label: Operations Account 01
+##     managedBy: radiant
+##     platform: aws  # Supported values: aws, azure, gcp
+##     credential:
+##       token: <redacted-token>
+##       baseUrl: https://ops01.dc.radiantlogic.io
+cloudProviderAccounts: []
+
 ## Image pull secrets to pull the images
 ## Do not add under global as it is used by redis
 ## imagePullSecrets:
@@ -127,6 +142,7 @@ features:
     appName: "Promotion pipelines feature"
 
 ui:
+  replicas: 1
   basePath: /eoc
   # example https://{fqdm}/eoc-backend
   apiBaseUrl: ""
@@ -172,6 +188,7 @@ ui:
   env: {}
 
 backend:
+  replicas: 1
   basePath: eoc-backend
   redis:
     # redundant, will be removed
@@ -462,7 +479,55 @@ backend:
   ##   AWS_REGION: us-east-1
   env: {}
 
+worker:
+  replicas: 1
+  # Worker shares backend configuration (redis, database, smtp, appRootDirectory, encryptionKey)
+  # Only worker-specific settings are defined here
+  image:
+    repository: radiantone/eoc-worker
+    pullPolicy: Always
+    # Overrides the image tag whose default is the chart appVersion.
+    # tag: "dev"
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  initialDelaySeconds: 60
+  periodSeconds: 30
+  ## Extra environment variables that will be pass onto deployment pods
+  ##
+  ## env:
+  ##   AWS_ROLE_ARN: arn:aws:iam::123456789000:role/iam-role-name-here
+  ##   AWS_REGION: us-east-1
+  env: {}
+
+mcp:
+  # Enable or disable the MCP server deployment
+  enabled: false
+  replicas: 1
+  # Node environment (production, development)
+  nodeEnv: production
+  image:
+    repository: radiantone/eoc-mcp
+    pullPolicy: Always
+    # Overrides the image tag whose default is the chart appVersion.
+    # tag: "dev"
+  service:
+    type: NodePort
+    port: 80
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  initialDelaySeconds: 60
+  periodSeconds: 30
+  ## Extra environment variables that will be pass onto deployment pods
+  ##
+  ## env:
+  ##   AWS_ROLE_ARN: arn:aws:iam::123456789000:role/iam-role-name-here
+  ##   AWS_REGION: us-east-1
+  env: {}
+
 orchestrator:
+  replicas: 1
   duplo:
     token: ""
     baseUrl: ""

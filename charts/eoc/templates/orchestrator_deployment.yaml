@@ -5,7 +5,7 @@ metadata:
   labels:
     {{- include "eoc-orchestrator.labels" . | nindent 4 }}
 spec:
-  replicas: 1
+  replicas: {{ .Values.orchestrator.replicas | default 1 }}
   selector:
     matchLabels:
       {{- include "eoc-orchestrator.selectorLabels" . | nindent 6 }}
